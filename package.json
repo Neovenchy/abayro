@@ -16,7 +16,7 @@
   "dependencies": {
     "@discordjs/uws": "^11.149.1",
     "body-parser": "^1.18.3",
-    "bootstrap": "^4.2.1",
+    "bootstrap": "^4.3.1",
     "canvas": "git+https://github.com/chearon/node-canvas.git#12971f64a66b",
     "dblapi.js": "^2.2.0",
     "discord-akairo": "^7.5.5",
