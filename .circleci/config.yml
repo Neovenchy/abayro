@@ -1,0 +1,28 @@
+# 0.0.1 Abayro CI
+version: 2
+jobs:
+  # build:
+  #   #...
+  deploy:
+    machine:
+      enabled: true
+    steps:
+      # - add_ssh_keys:
+      #     fingerprints:
+      #       - "b7:35:a6:4e:9b:0d:6d:d4:78:1e:9a:97:2a:66:6b:be"
+      # TODO: refactor this shit V
+      - run:
+          name: Deploy Over SSH
+          command: |
+            ssh -t $USER@$HOST "cd ./abayro && sh -ac '. ./.env; ./deploy/pull.sh'"
+
+
+workflows:
+  version: 2
+  build-and-deploy:
+    jobs:
+      # - build
+      - deploy:
+          filters:
+            branches:
+              only: release/v4
