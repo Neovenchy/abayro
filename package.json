@@ -33,7 +33,7 @@
     "jquery": "^3.3.1",
     "lyricist": "^2.2.2",
     "mdbootstrap": "^4.7.1",
-    "memorystore": "^1.6.0",
+    "memorystore": "^1.6.1",
     "moment": "^2.22.2",
     "moment-duration-format": "^2.2.2",
     "nekos.life": "^2.0.2",
