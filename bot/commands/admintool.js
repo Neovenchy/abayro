@@ -11,7 +11,7 @@ class AdminToolCommand extends Command {
 			ownerOnly: true,
 			args: [{
 				id: 'method',
-				type: ['increase', 'remove', 'zero']
+				type: ['increase', 'update', 'zero']
 			},
 			{
 				id: 'typo',
@@ -56,7 +56,7 @@ class AdminToolCommand extends Command {
 			await update(user.id, typo, '0');
 			message.channel.send(`${emojis.yes}**| ${message.author.username}**, I zeroed **${typo}** from **${user.tag}**.`);
 		} else {
-			return message.channel.send(`INVALID USAGE, BOI.`);
+			return message.channel.send(`${emojis.no}**| ${message.author.username}**, Invalid usage.`);
 		}
 	}
 }
