@@ -5,14 +5,14 @@
   "main": "index.js",
   "repository": {
     "type": "git",
-    "url": "git+https://gitlab.com/NourBot/nourbotv3.git"
+    "url": "git+https://github.com/abayro/abayro.git"
   },
   "author": "Abady & NourEldien",
   "license": "ISC",
   "bugs": {
-    "url": "https://gitlab.com/NourBot/nourbotv3/issues"
+    "url": "https://github.com/abayro/abayro/issues"
   },
-  "homepage": "https://gitlab.com/NourBot/nourbotv3#README",
+  "homepage": "https://github.com/abayro/abayro#README",
   "dependencies": {
     "@discordjs/uws": "^11.149.1",
     "body-parser": "^1.18.3",
