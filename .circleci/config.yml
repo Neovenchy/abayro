@@ -25,4 +25,4 @@ workflows:
       - deploy:
           filters:
             branches:
-              only: release/v4
+              only: master
