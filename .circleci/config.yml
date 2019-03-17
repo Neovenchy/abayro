@@ -1,4 +1,4 @@
-# 0.0.1 Abayro CI
+# 0.0.2 Abayro CI
 version: 2
 jobs:
   # build:
