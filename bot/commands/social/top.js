@@ -47,7 +47,7 @@ class TopCommand extends Command {
 		const embed = new Embed()
 			.setTitle(`**global ${method} leaderboard**`.toUpperCase())
 			.setDescription(
-				leader.map(user => `**${this.client.users.get(user.id).username || 'User Left'}**  XP: **${user[type]}**xp`)
+				leader.map((user, rank) => `#${rank + 1} **${this.client.users.get(user.id).username || 'User Left'}**  XP: **${user[type]}**xp`)
 			);
 		return message.channel.send(embed);
 	}

@@ -41,6 +41,7 @@ class TransferCommand extends Command {
 	exec(message, { user, transferamount }) {
 		if (!user) return message.channel.send(`${emojis.no} | Not a vaild member.`);
 		if (!transferamount || transferamount <= 0) return message.channel.send(`${emojis.no} | Not a vaild amount.`);
+		if (transferamount > ) return message.channel.send(``)
 		transferamount = Math.floor(transferamount);
 		increase(user.id, 'credits', transferamount);
 		decrease(message.author.id, 'credits', transferamount);
