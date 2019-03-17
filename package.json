@@ -5,14 +5,14 @@
   "main": "bot/index.js",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/abayro/abayro.git"
+    "url": "git+https://github.com/Abady321x123/abayro.git"
   },
   "author": "Abady & NourEldien",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/abayro/abayro/issues"
+    "url": "https://github.com/Abady321x123/abayro/issues"
   },
-  "homepage": "https://github.com/abayro/abayro#README",
+  "homepage": "https://github.com/Abady321x123/abayro#README",
   "dependencies": {
     "@discordjs/uws": "^11.149.1",
     "canvas": "^2.4.0",

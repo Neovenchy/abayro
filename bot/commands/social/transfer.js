@@ -1,6 +1,6 @@
 const { Command } = require('discord-akairo');
 const { emojis } = require('../../struct/bot');
-const { increase, decrease } = require('../../database/Users');
+const { increase, decrease, find } = require('../../database/Users');
 
 class TransferCommand extends Command {
 	constructor() {
@@ -38,10 +38,11 @@ class TransferCommand extends Command {
 		});
 	}
 
-	exec(message, { user, transferamount }) {
+	async exec(message, { user, transferamount }) {
+		const currentCredits = await find(message.author.id, 'credits', 0);
 		if (!user) return message.channel.send(`${emojis.no} | Not a vaild member.`);
 		if (!transferamount || transferamount <= 0) return message.channel.send(`${emojis.no} | Not a vaild amount.`);
-		if (transferamount > ) return message.channel.send(``)
+		if (transferamount > currentCredits) return message.channel.send(`${emojis.no} | You don't have enough money.`);
 		transferamount = Math.floor(transferamount);
 		increase(user.id, 'credits', transferamount);
 		decrease(message.author.id, 'credits', transferamount);

@@ -27,9 +27,7 @@ class ClearCommand extends Command {
 
 	async exec(message, { amount }) {
 		if (!amount) {
-			message.channel.bulkDelete(100, true).catch(() => {
-		    return message.channel.send(`${emojis.no}**| ${message.author.username}**, I can't **delete** some **messages** that were **older** than **14 days**.`);
-		 });
+			message.channel.bulkDelete(100, true).catch(() => message.channel.send(`${emojis.no}**| ${message.author.username}**, I can't **delete** some **messages** that were **older** than **14 days**.`));
 		  message.channel.send(`${emojis.yes}**| ${message.author.username}**, I deleted \`100\` **messages**.`).then(msg => {
 			 msg.delete(6000);
 		 });
@@ -37,9 +35,7 @@ class ClearCommand extends Command {
 		 if (isNaN(amount)) return message.channel.send(`${emojis.no}**| ${message.author.username}**, Please enter a **valid number**.`);
 		 if (amount > 100) return message.channel.send(`${emojis.no} | **Please supply a number less than \`100\`**.`);
 		 await message.delete().catch(() => null);
-		 await message.channel.bulkDelete(amount).catch(() => {
-			 return message.channel.send(`${emojis.no}**| ${message.author.username}**, I can't **delete** some **messages** that were **older** than **14 days**.`);
-		 });
+		 await message.channel.bulkDelete(amount).catch(() => message.channel.send(`${emojis.no}**| ${message.author.username}**, I can't **delete** some **messages** that were **older** than **14 days**.`));
 		 message.channel.send(`${emojis.yes}**| ${message.author.username}**, I deleted **\`${amount}\`/\`100\` messages**.`).then(msg => {
 			 msg.delete(6000);
 		 });
