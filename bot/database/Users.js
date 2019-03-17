@@ -68,5 +68,3 @@ exports.rank = async (id, method, defaultValue) => {
  * @description ONLY USE THIS IF YOU KNOW WHAT YOU ARE DOING!
  */
 exports.users = users;
-
-exports.Op = require('../struct/Database').Op;

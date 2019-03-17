@@ -1,7 +1,8 @@
 const { Command } = require('discord-akairo');
-const Embed = require('../../util/Embed');
 const { emojis: { no } } = require('../../struct/bot');
-const { users, Op } = require('../../database/Users');
+const { users } = require('../../database/Users');
+const Embed = require('../../util/Embed');
+const Sequelize = require('sequelize');
 
 class TopCommand extends Command {
 	constructor() {
@@ -39,7 +40,7 @@ class TopCommand extends Command {
 		const leader = await users.findAll({
 			order: [[type, 'DESC']], offset: (page * 10) - 10, limit: 10, attributes: ['id', type], where: {
 				[type]: {
-					[Op.gt]: 0
+					[Sequelize.Op.gt]: 0
 				}
 			}
 		});
