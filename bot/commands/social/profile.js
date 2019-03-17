@@ -4,7 +4,7 @@ const { find, rank } = require('../../database/Users');
 // TODO: use request-promise instead of jimp! (https://www.npmjs.com/package/request-promise)
 const { read, MIME_PNG } = require('jimp');
 const { wrapText, trimString } = require('../../util/Util');
-const Canvas = require('canvas');
+const { createCanvas, registerFont, Image } = require('canvas');
 // TODO: use tsubaki (https://www.npmjs.com/package/tsubaki) on fs
 const fs = require('fs');
 
@@ -53,12 +53,11 @@ class ProfileCommand extends Command {
 		const textxp = _user.textxp || 0;
 
 		/*  CANVAS  */
-		Canvas.registerFont(assets('fonts/Uni-Sans-Heavy.otf'), { family: 'UniSans' });
-		Canvas.registerFont(assets('fonts/Montserrat-Regular.ttf'), { family: 'Montserrat' });
-		Canvas.registerFont(assets('fonts/Montserrat-Light.ttf'), { family: 'MontserratLight' });
+		registerFont(assets('fonts/Uni-Sans-Heavy.otf'), { family: 'UniSans' });
+		registerFont(assets('fonts/Montserrat-Regular.ttf'), { family: 'Montserrat' });
+		registerFont(assets('fonts/Montserrat-Light.ttf'), { family: 'MontserratLight' });
 
-		const { Image } = Canvas;
-		const canvas = new Canvas(500, 600);
+		const canvas = createCanvas(500, 600);
 		const ctx = canvas.getContext('2d');
 		const lines = await wrapText(ctx, ptitle, 110);
 		const username = trimString(user.username, 15);
