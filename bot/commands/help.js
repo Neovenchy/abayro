@@ -75,7 +75,7 @@ class HelpCommand extends Command {
 				const categoryEmoji = categoriesEmojis.find(m => m.id === category.id.toLowerCase()) || {
 					emoji: ''
 				};
-				return allhelplist.push(`**${categoryEmoji.emoji} ${category.id.replace(/(\b\w)/gi, lc => lc.toUpperCase())} Commands**:\n\n**${category.filter(cmd => cmd.aliases.length).map(cmd => `❯ \`${this.handler.prefix(message)[0]}${cmd.aliases[0]}\` → ${cmd.description.content}`).join('\n')}\n**\n**~~━~~~~━~~~~━~~~~━~~~~━~~~~━~~~~━~~~~━~~~~━~~~~━~~~~━~~~~━~~~~━~~~~━~~~~━~~~~━~~~~━~~~~━~~~~━~~~~━~~~~━~~**\n`);
+				return allhelplist.push(`**${categoryEmoji.emoji} ${category.id.replace(/(\b\w)/gi, lc => lc.toUpperCase())} Commands**:\n\n**${category.filter(cmd => cmd.aliases.length).map(cmd => `❯ \`${this.handler.prefix(message)}${cmd.aliases[0]}\` → ${cmd.description.content}`).join('\n')}\n**\n**~~━~~~~━~~~~━~~~~━~~~~━~~~~━~~~~━~~~~━~~~~━~~~~━~~~~━~~~~━~~~~━~~~~━~~~~━~~~~━~~~~━~~~~━~~~~━~~~~━~~~~━~~**\n`);
 			});
 			// TODO: if you want less message sents just do sort() in allhelplist.
 			allhelplist.sort((a, b) => a.length - b.length);
