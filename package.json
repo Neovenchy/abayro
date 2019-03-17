@@ -15,7 +15,7 @@
   "homepage": "https://github.com/abayro/abayro#README",
   "dependencies": {
     "@discordjs/uws": "^11.149.1",
-    "canvas": "git+https://github.com/chearon/node-canvas.git#12971f64a66b",
+    "canvas": "^2.4.0",
     "dblapi.js": "^2.2.0",
     "discord-akairo": "^7.5.5",
     "discord.js": "^11.4.2",
