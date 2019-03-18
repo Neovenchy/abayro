@@ -28,7 +28,9 @@ class MessageInvaildListener extends Listener {
 
 		if (userExpLvl > userLvl) {
 			increase(message.author.id, 'textlevel', userExpLvl);
-			return message.channel.send(`:up: ${message.author} You've leveld up to ${userExpLvl}!`);
+			if (this.client.settings.get(message.guild.id, 'lvlup-msg') === 'enabled') {
+				return message.channel.send(`:up: ${message.author} You've leveld up to ${userExpLvl}!`);
+			}
 		}
 
 
