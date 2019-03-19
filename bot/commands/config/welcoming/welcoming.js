@@ -43,7 +43,7 @@ class WlcmCommand extends Command {
 			 .addField('Status:', `**${this.client.settings.get(message.guild.id, 'wlcstatus', 'off').replace('off', 'OFF `(not active)`').replace('on', 'ON `(active)`')}**`, true)
 			 .addField('Channel:', `**<#${this.client.settings.get(message.guild.id, 'wlcchannel', 404)}>**`, true)
 			 .addField('Type:', `**${this.client.settings.get(message.guild.id, 'wlctype', 'text')}**`, true)
-			 .addField('Message:', `\`\`\`${this.client.settings.get(message.guild.id, 'wlcmsg', `[member] Joined the server`)}\`\`\`
+			 .addField('Message:', `\`\`\`${this.client.settings.get(message.guild.id, 'wlcmsg', '[member] Joined the server')}\`\`\`
 __**[Welcomer usage:](https://abayro.xyz/commands/welcoming/usage)**__
 \`\`\`md
 > ━━━━━━━━━━━━━━━━━━━━━

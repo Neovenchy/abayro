@@ -13,7 +13,7 @@ class guildMemberRemoveEvent extends Listener {
 	exec(member) {
 		if (this.client.settings.get(member.guild.id, 'gdbstatus') === 'off') return;
 		if (this.client.settings.get(member.guild.id, 'gdbstatus') === 'on') {
-			const msg = this.client.settings.get(member.guild.id, 'gdbmsg');
+			const msg = this.client.settings.get(member.guild.id, 'gdbmsg', '[member] Left the server');
 			if (!msg || msg === null) return;
 			const gdbmc = this.client.settings.get(member.guild.id, 'gdbchannel');
 			const gdbmChannel = member.guild.channels.get(gdbmc);
