@@ -45,7 +45,7 @@ class GoodbyeCommand extends Command {
 			 .addField('Status:', `**${this.client.settings.get(message.guild.id, 'gdbstatus', 'off').replace('off', 'OFF `(not active)`').replace('on', 'ON `(active)`')}**`, true)
 			 .addField('Channel:', `**<#${this.client.settings.get(message.guild.id, 'gdbchannel', 404)}>**`, true)
 			 .addField('Type:', `**${this.client.settings.get(message.guild.id, 'gdbtype', 'text')}**`, true)
-			 .addField('Message:', `\`\`\`${this.client.settings.get(message.guild.id, 'gdbmsg', `[member] Left the server`)}\`\`\`
+			 .addField('Message:', `\`\`\`${this.client.settings.get(message.guild.id, 'gdbmsg', '[member] Left the server')}\`\`\`
 __**[Goodbyer usage:](https://abayro.xyz/commands/goodbyer/usage)**__
 \`\`\`md
 > ━━━━━━━━━━━━━━━━━━━━━

@@ -9,7 +9,7 @@ exports.library = {
 	dj: djsVersion
 };
 
-exports.staff = ['171259176029257728', '354716386716811264'];
+exports.staff = ['171259176029257728', '556036680352792596'];
 
 exports.emojis = {
 	yes: ':white_check_mark:',

@@ -11,7 +11,7 @@ class AdminToolCommand extends Command {
 			ownerOnly: true,
 			args: [{
 				id: 'method',
-				type: ['increase', 'update', 'zero']
+				type: 'string'
 			},
 			{
 				id: 'typo',

@@ -6,7 +6,7 @@ class LogsCommand extends Command {
 	constructor() {
 		super('logs', {
 			aliases: ['logs'],
-			cooldown: 6000,
+			cooldown: 3000,
 			ratelimit: 5,
 			category: 'config',
 			channelRestriction: 'guild',

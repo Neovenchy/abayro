@@ -22,7 +22,7 @@ class guildMemberAddEvent extends Listener {
 		 }
 		if (this.client.settings.get(member.guild.id, 'wlcstatus') === 'off') return;
 		if (this.client.settings.get(member.guild.id, 'wlcstatus') === 'on') {
-			const msg = this.client.settings.get(member.guild.id, 'wlcmsg');
+			const msg = this.client.settings.get(member.guild.id, 'wlcmsg', '[member] Joined the server');
 			if (!msg || msg === null) return;
 			const wlcmc = this.client.settings.get(member.guild.id, 'wlcchannel');
 			const wlcmChannel = member.guild.channels.get(wlcmc);

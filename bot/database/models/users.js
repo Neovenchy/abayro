@@ -46,7 +46,7 @@ module.exports = (sequelize, DataTypes) =>
 		},
 		pcolor: {
 			type: DataTypes.TEXT(),
-			defaultValue: '#000'
+			defaultValue: '#007fff'
 		},
 		blimit: {
 			type: DataTypes.REAL()
