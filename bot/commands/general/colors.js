@@ -59,7 +59,7 @@ class ColorsCommand extends Command {
 				ch = 510;
 			}
 			const { Image } = Canvas;
-			const canvas = new Canvas(500, ch);
+			const canvas = Canvas.createCanvas(500, ch);
 			const ctx = canvas.getContext('2d');
 
 			function roundedImage(x, y, width, height, radius) {
@@ -92,54 +92,53 @@ class ColorsCommand extends Command {
 			cc.sort((b1, b2) => b1.name - b2.name).forEach(role => {
 				if (!role) return message.channel.send(`${emojis.no}**|** No **color roles** was found\ntry \`=colors add [number]\` to add a **color**.`);
 				if (taken[role.name]) {
-					null;
-				} else {
-					ctx.shadowColor = '#000';
-					ctx.shadowOffsetX = 0;
-					ctx.shadowOffsetY = 0;
-					ctx.shadowBlur = 15;
+					return null;
+				}
+				ctx.shadowColor = '#000';
+				ctx.shadowOffsetX = 0;
+				ctx.shadowOffsetY = 0;
+				ctx.shadowBlur = 15;
 
-					ctx.beginPath();
-					ctx.arc(h + 24, w - 8, 19, 0, Math.PI * 2, false);
-					ctx.fillStyle = `${role.hexColor.replace('#000000', '#99aab5')}`;
-					ctx.fill();
+				ctx.beginPath();
+				ctx.arc(h + 24, w - 8, 19, 0, Math.PI * 2, false);
+				ctx.fillStyle = `${role.hexColor.replace('#000000', '#99aab5')}`;
+				ctx.fill();
 
-					if (role.name.length >= 1) {
-						ctx.font = 'bold 18px PSansBold';
-						ctx.fontSize = '18px';
-					} else if (role.name.length > 2) {
-						ctx.font = 'bold 15px PSansBold';
-						ctx.fontSize = '15px';
-					}
-					// ctx.fontSize = '72px';
-					ctx.fillStyle = hhexcolor;
-					ctx.beginPath();
+				if (role.name.length >= 1) {
+					ctx.font = 'bold 18px PSansBold';
+					ctx.fontSize = '18px';
+				} else if (role.name.length > 2) {
+					ctx.font = 'bold 15px PSansBold';
+					ctx.fontSize = '15px';
+				}
+				// ctx.fontSize = '72px';
+				ctx.fillStyle = hhexcolor;
+				ctx.beginPath();
 
-					ctx.shadowColor = '#000';
-					ctx.shadowBlur = 3;
-					ctx.strokeStyle = '#000000';
+				ctx.shadowColor = '#000';
+				ctx.shadowBlur = 3;
+				ctx.strokeStyle = '#000000';
 					 ctx.stroke();
 					 ctx.save();
-					let x;
-					if (role.name.length === 1) {
-						x = h - 5;
-					} else if (role.name.length === 2) {
-						x = h - 8.9;
-					} else if (role.name.length === 3) {
-						x = h - 12.5;
-					}
-					ctx.fillText(`${role.name}`, x + 15, w);
-					ctx.restore();
+				let x;
+				if (role.name.length === 1) {
+					x = h - 5;
+				} else if (role.name.length === 2) {
+					x = h - 8.9;
+				} else if (role.name.length === 3) {
+					x = h - 12.5;
+				}
+				ctx.fillText(`${role.name}`, x + 15, w);
+				ctx.restore();
 
 
-					h += 40;
-					taken[role.name] = role.name;
-					n++;
-					if (n === 10) {
-						h = 43;
-						w += 40;
-						n = 0;
-					}
+				h += 40;
+				taken[role.name] = role.name;
+				n++;
+				if (n === 10) {
+					h = 43;
+					w += 40;
+					n = 0;
 				}
 			});
 
