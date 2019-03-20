@@ -26,7 +26,7 @@ class DailyCommand extends Command {
 		const time = cooldown - (Date.now() - daily);
 
 		if (daily !== null && time > 0) {
-			return message.channel.send(`${emojis.info} **| ${message.author.username}**, You can get another **daily pounds** in **${moment.duration(time).format('HH [hours], mm [minutes] and ss [seconds]', { trim: true })}**.`);
+			return message.channel.send(`${emojis.info} **| ${message.author.username}**, You can get another **daily pounds** in **${moment.duration(1, 'days').format()}`);
 		}
 
 		const dailyAmount = randomDaily(100, 300);
