@@ -10,8 +10,9 @@ class AdminToolCommand extends Command {
 			ratelimit: 1,
 			ownerOnly: true,
 			args: [{
-				id: ['increase', 'update', 'zero'],
-				type: 'string'
+				id: 'method',
+				type: 'string',
+				index: 0
 			},
 			{
 				id: 'typo',

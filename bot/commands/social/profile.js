@@ -43,8 +43,8 @@ class ProfileCommand extends Command {
 
 		/*  Getting User Data  */
 		const _user = await find(user.id, '', false); // this will search for all things if there's no user this will return false
-		const ptitle = _user.ptitle || 'Y-You seems to don\'t have a title sempai!';
-		const pcolor = _user.pcolor || '#000';
+		const ptitle = _user.ptitle || 'I like cheese.';
+		const pcolor = _user.pcolor || '#007fff';
 		const credits = _user.credits || 0;
 		const rep = _user.rep || 0;
 
@@ -130,7 +130,7 @@ class ProfileCommand extends Command {
 					ctx.fillText(`TOTAL XP: ${textxp}`, 239, 581);
 
 					/* XP BAR*/
-					ctx.fillStyle = `${pcolor}`;
+					ctx.fillStyle = pcolor;
 					ctx.fillRect(0, 593, textxp, 8);
 
 
@@ -140,7 +140,7 @@ class ProfileCommand extends Command {
 					if (textlevel > 9) {
 						ctx.beginPath();
 						ctx.arc(210, 460, 27, 0, Math.PI * 2, false);
-						ctx.fillStyle = `${pcolor}`;
+						ctx.fillStyle = pcolor;
 						ctx.fill();
 						ctx.lineWidth = 5;
 						// ///////////
@@ -154,7 +154,7 @@ class ProfileCommand extends Command {
 					if (textlevel > 19) {
 						ctx.beginPath();
 						ctx.arc(275, 460, 27, 0, Math.PI * 2, false);
-						ctx.fillStyle = `${pcolor}`;
+						ctx.fillStyle = pcolor;
 						ctx.fill();
 						ctx.lineWidth = 5;
 						// ///////////
@@ -169,7 +169,7 @@ class ProfileCommand extends Command {
 					if (rep > 50) {
 						ctx.beginPath();
 						ctx.arc(210, 525, 27, 0, Math.PI * 2, false);
-						ctx.fillStyle = `${pcolor}`;
+						ctx.fillStyle = pcolor;
 						ctx.fill();
 						ctx.lineWidth = 5;
 						// ///////////
@@ -183,7 +183,7 @@ class ProfileCommand extends Command {
 					if (rep > 100) {
 						ctx.beginPath();
 						ctx.arc(275, 525, 27, 0, Math.PI * 2, false);
-						ctx.fillStyle = `${pcolor}`;
+						ctx.fillStyle = pcolor;
 						ctx.fill();
 						ctx.lineWidth = 5;
 						// ///////////
