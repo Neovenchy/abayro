@@ -14,7 +14,6 @@ class DailyCommand extends Command {
 			channelRestriction: 'guild',
 			description: {
 				content: 'Get your daily credits',
-				examples: ['', '354716386716811264', '@NourEliden'],
 				usage: ['[user]']
 			}
 		});
@@ -26,7 +25,7 @@ class DailyCommand extends Command {
 		const time = cooldown - (Date.now() - daily);
 
 		if (daily !== null && time > 0) {
-			return message.channel.send(`${emojis.info} **| ${message.author.username}**, You can get another **daily pounds** in **${moment.duration(time, 'milliseconds').format('HH [hours], mm [minutes] [and] ss [seconds]', { trim: false })}**.`);
+			return message.channel.send(`${emojis.info} **| ${message.author.username}**, You can get another **daily pounds** in **${moment.duration(time, 'milliseconds').format('hh [ hours], mm [ minutes] [and] ss [ seconds]', { trim: false })}**.`);
 		}
 
 		const dailyAmount = randomDaily(100, 300);
