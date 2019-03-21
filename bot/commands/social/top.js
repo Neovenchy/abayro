@@ -46,10 +46,12 @@ class TopCommand extends Command {
 		});
 		if (leader.length < 1) return message.channel.send(`${no} | Seems that **${message.guild.name}** doesn't have a ${method} leaderboard yet!`);
 		const embed = new Embed()
-			.setTitle(`**global ${method} leaderboard**`.toUpperCase())
+			.setAuthor(`global ${method} leaderboard`.toUpperCase(), message.guild.iconURL)
 			.setDescription(
-				leader.map((user, rank) => `#${rank + 1} **${this.client.users.get(user.id) ? this.client.users.get(user.id).username : 'User Left'}**  XP: **${user[type]}**xp`)
-			);
+				leader.map((user, rank) => `\`\`\`md\n#${rank + 1} - ${this.client.users.get(user.id) ? this.client.users.get(user.id).username : '`INVALID USER`'}**\n> XP: **${user[type]}**xp\`\`\``)
+			)
+			.setFooter(`Requested by ${message.author.username}`, message.author.displayAvatarURL)
+			.setTimestamp();
 		return message.channel.send(embed);
 	}
 }
