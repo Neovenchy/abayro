@@ -17,7 +17,7 @@
     "@discordjs/uws": "^11.149.1",
     "canvas": "^2.4.1",
     "dblapi.js": "^2.2.0",
-    "discord-akairo": "^7.5.5",
+    "discord-akairo": "^7.5.6",
     "discord.js": "^11.4.2",
     "dotenv": "^7.0.0",
     "erlpack": "hammerandchisel/erlpack",
