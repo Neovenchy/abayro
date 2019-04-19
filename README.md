@@ -10,9 +10,8 @@
 <a href="https://circleci.com/gh/abayro"> <img src="https://circleci.com/gh/Abady321x123/abayro.svg?style=svg&circle-token=11277ce31161184c64ef07332039c07f60f9c521" alt="Circle CI" /></a>  </p>
 </div>
 
-## Info
-- version: **4.x.x**
-- website: **https://abayro.xyz**
-- developers: **Abady & NourEliden**
+## Abayro
+> Super Duper Bot
 
-© 2018-2019 Abayro
+## Copyrights
+**Abayro** © [Abady](https://github.com/Abady321x123) & [NourEldienHE](https://github.com/NourEldienHE)
