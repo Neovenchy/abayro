@@ -45,8 +45,6 @@ class AbayroClient extends AkairoClient {
 			blockBots: true,
 			blockClient: true
 		});
-
-		this.inhibitorHandler = new InhibitorHandler(this, { inhibitorDirectory: join(__dirname, '..', 'inhibitors') });
 		this.listenerHandler = new ListenerHandler(this, { listenerDirectory: join(__dirname, '..', 'listeners') });
 		await this.loadAll();
 		await this.logger.info(`[DATABASE] Syncing modules to database...`);
