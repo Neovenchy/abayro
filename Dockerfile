@@ -10,7 +10,7 @@ COPY package.json yarn.lock ./
 
 RUN apk add --update \
 && apk add --no-cache ca-certificates \
-&& apk add --no-cache --virtual .build-deps git curl build-base build-essential libcairo2-dev libpango1.0-dev libjpeg-dev libgif-dev librsvg2-dev python g++ make \
+&& apk add --no-cache --virtual .build-deps git curl build-base build-pixman-dev cairo-dev pangomm-dev libjpeg-turbo-dev giflib-dev python g++ make \
 && yarn install \
 && apk del .build-deps
 
