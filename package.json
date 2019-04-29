@@ -46,7 +46,7 @@
     "erlpack": "hammerandchisel/erlpack"
   },
   "scripts": {
-    "test": "npm run lint",
+    "test": "yarn lint",
     "dev": "nodemon --watch app --watch bootstrap --watch config --watch .env -x node website/server.js",
     "lint": "eslint . --fix",
     "build": "sh ./deploy/start.sh",
