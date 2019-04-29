@@ -9,8 +9,8 @@ const { Inhibitor } = require('discord-akairo');
  	}
 
  	exec(message) {
- 		const whitelist = this.client.ownerID.concat(['212745501345382400']);
- 		return !whitelist.includes(message.author.id);
+ 		const blacklisted = this.client.settings.get('global', 'blacklist', []);
+ 		return blacklisted.includes(message.author.id);
  	}
  }
 
