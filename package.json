@@ -7,7 +7,13 @@
     "type": "git",
     "url": "git+https://github.com/Abady321x123/abayro.git"
   },
-  "author": "Abady & NourEldien",
+  "author": "NourEldien",
+  "contributors": [
+    {
+      "name": "Abady",
+      "email": "gamersspeaks@gmail.com"
+    }
+  ],
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/Abady321x123/abayro/issues"
