@@ -48,7 +48,7 @@ class TopCommand extends Command {
 		const embed = new Embed()
 			.setAuthor(`global ${method} leaderboard`.toUpperCase(), message.guild.iconURL)
 			.setDescription(`\`\`\`md\n* ━━━━━━━
-				${leader.map((user, rank) => `#${rank + 1} ${this.client.users.get(user.id) ? this.client.users.get(user.id).username : 'INVALID USER'}\n> XP: ${user[type]}xp`)}
+				${leader.map((user, rank) => `#${rank + 1} ${this.client.users.get(user.id) ? this.client.users.get(user.id).username : 'INVALID USER'}\n> XP: ${user[type]}xp\n`)}
 			\n* ━━━━━━━\`\`\``)
 			.setFooter(`Requested by ${message.author.username}`, message.author.displayAvatarURL)
 			.setTimestamp();
