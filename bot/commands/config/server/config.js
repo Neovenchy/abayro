@@ -35,7 +35,7 @@ class ConfigsCommand extends Command {
 			await message.channel.send(`${emojis.info}**| ${message.author.username}**, Current **config** for **${message.guild.name}** is:`);
 			message.channel.send(
 				new RichEmbed()
-					.setColor('#307FFF')
+					.setColor('#FB542B')
 					.setAuthor(message.guild.name, message.guild.iconURL)
 					.addField('lvlup-msg:', `**${this.client.settings.get(message.guild.id, 'lvlup-msg', 'disabled')}**
 
