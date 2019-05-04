@@ -36,7 +36,7 @@ class MediaCommand extends Command {
 			await message.channel.send(`${emojis.info}**| ${message.author.username}**, Current **media settings** for **${message.guild.name}** is:`);
 			message.channel.send(
 				new RichEmbed()
-				 .setColor('#307FFF')
+				 .setColor('#FB542B')
 				 .setAuthor(message.guild.name, message.guild.iconURL)
 				 .addField('Status:', `**${this.client.settings.get(message.guild.id, 'mediast', 'off').replace('off', 'OFF `(not active)`').replace('on', 'ON `(active)`')}**`, true)
 				 .addField('Media channel:', `**<#${this.client.settings.get(message.guild.id, 'mediachnl', '404')}>**
