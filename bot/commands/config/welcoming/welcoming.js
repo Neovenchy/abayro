@@ -38,7 +38,7 @@ class WlcmCommand extends Command {
 		if (!welcoming) {
 			await message.channel.send(`${emojis.info}**|** Current **welcomer settings** for **${message.guild.name}** is:`);
 			const embed = new RichEmbed()
-			 .setColor('#307FFF')
+			 .setColor('#FB542B')
 			 .setAuthor(message.guild.name, message.guild.iconURL)
 			 .addField('Status:', `**${this.client.settings.get(message.guild.id, 'wlcstatus', 'off').replace('off', 'OFF `(not active)`').replace('on', 'ON `(active)`')}**`, true)
 			 .addField('Channel:', `**<#${this.client.settings.get(message.guild.id, 'wlcchannel', 404)}>**`, true)
