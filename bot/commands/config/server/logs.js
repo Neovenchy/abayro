@@ -36,7 +36,7 @@ class LogsCommand extends Command {
 			await message.channel.send(`${emojis.info}**| ${message.author.username}**, Current **logs settings** for **${message.guild.name}** is:`);
 			message.channel.send(
 				new RichEmbed()
-				 .setColor('#307FFF')
+				 .setColor('#FB542B')
 				 .setAuthor(message.guild.name, message.guild.iconURL)
 				 .addField('Status:', `**${this.client.settings.get(message.guild.id, 'logs', 'off').replace('off', 'OFF `(not active)`').replace('on', 'ON `(active)`')}**`, true)
 				 .addField('Logging channel:', `**<#${this.client.settings.get(message.guild.id, 'logschnl', '404')}>**
