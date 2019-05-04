@@ -42,7 +42,7 @@ class AutoRoleCommand extends Command {
 			 await message.channel.send(`${emojis.info}**| ${message.author.username},** Current **autorole settings** for **${message.guild.name}** is:`);
 			message.channel.send(
 				new RichEmbed()
-				 .setColor('#307FFF')
+				 .setColor('#FB542B')
 				 .setAuthor(message.guild.name, message.guild.iconURL)
 				 .addField('Status:', `**${this.client.settings.get(message.guild.id, 'autorole', 'off').replace('off', 'OFF `(not active)`').replace('on', 'ON `(active)`')}**`, true)
 				 .addField('Autorole:', `**${this.client.settings.get(message.guild.id, 'autorolest', 'No autorole set')}**
