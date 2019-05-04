@@ -33,7 +33,7 @@ class LimitsCommand extends Command {
 			await message.channel.send(`${emojis.info}**| ${message.author.username}**, Current **limits settings** for **${message.guild.name}** is:`);
 			message.channel.send(
 				new RichEmbed()
-				 .setColor('#307FFF')
+				 .setColor('#FB542B')
 				 .setAuthor(message.guild.name, message.guild.iconURL)
 				 .addField('Banslimit:', `**${this.client.settings.get(message.guild.id, 'banlimit', 20)}** bans per day`, true)
 				 .addField('Kickslimit:', `**${this.client.settings.get(message.guild.id, 'kicklimit', 20)}** kicks per day`, true)
