@@ -36,7 +36,7 @@ class PROTCommand extends Command {
 			await message.channel.send(`${emojis.info}**| ${message.author.username}**, Current **protection settings** for **${message.guild.name}** is:`);
 			message.channel.send(
 				new RichEmbed()
-				 .setColor('#307FFF')
+				 .setColor('#FB542B')
 				 .setAuthor(message.guild.name, message.guild.iconURL)
 				 .addField('Anti Bot join:', `**${this.client.settings.get(message.guild.id, 'antibotj', 'off').replace('off', 'OFF `(not active)`').replace('on', 'ON `(active)`')}**`, true)
 				 .addField('Anti advertise:', `**${this.client.settings.get(message.guild.id, 'antiadv', 'off').replace('off', 'OFF `(not active)`').replace('on', 'ON `(active)`')}**`, true)
