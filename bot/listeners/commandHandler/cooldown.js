@@ -16,7 +16,7 @@ class Cooldown extends Listener {
 	}
 
 	exec(message, command, ms) {
-		message.channel.send(`${emojis.info}**|** You need to wait **${this.msToSeconds(ms)}** seconds to use **${command.id}** again.`).then(msg => {
+		message.channel.send(`${emojis.info} **|** You need to wait **${this.msToSeconds(ms)}** seconds to use **${command.id}** again.`).then(msg => {
 			msg.delete(3000);
 		});
 	}

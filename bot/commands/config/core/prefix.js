@@ -23,11 +23,11 @@ class SprefixCommand extends Command {
 
 	 exec(message, { newPrefix }) {
 		if (newPrefix) {
-			if (newPrefix.length > 5) return message.channel.send(`${emojis.no}**| ${message.author.username}**, The **prefix** must be between **1** to **5** letters.`);
+			if (newPrefix.length > 5) return message.channel.send(`${emojis.no}** | ${message.author.username}**, The **prefix** must be between **1** to **5** letters.`);
 			this.client.settings.set(message.guild.id, 'prefix', newPrefix);
-			return message.channel.send(`${emojis.yes}**| ${message.author.username}**, My **prefix** has been **changed** to: \`${newPrefix.toLowerCase()}\``);
+			return message.channel.send(`${emojis.yes}** | ${message.author.username}**, My **prefix** has been **changed** to: \`${newPrefix.toLowerCase()}\``);
 		}
-		return message.channel.send(`${emojis.info}**| ${message.author.username}**, Current **prefix** for **${message.guild.name}** is: \`\`${this.handler.prefix(message)}\`\`\nUse \`${this.handler.prefix(message)}prefix [new prefix]\` to set a **new prefix**.`);
+		return message.channel.send(`${emojis.info}** | ${message.author.username}**, Current **prefix** for **${message.guild.name}** is: \`\`${this.handler.prefix(message)}\`\`\nUse \`${this.handler.prefix(message)}prefix [new prefix]\` to set a **new prefix**.`);
 	}
 }
 

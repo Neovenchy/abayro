@@ -33,7 +33,7 @@ class PROTCommand extends Command {
 		mhandler, margs
 	}) {
 		if (!mhandler) {
-			await message.channel.send(`${emojis.info}**| ${message.author.username}**, Current **protection settings** for **${message.guild.name}** is:`);
+			await message.channel.send(`${emojis.info}** | ${message.author.username}**, Current **protection settings** for **${message.guild.name}** is:`);
 			message.channel.send(
 				new RichEmbed()
 				 .setColor('#FB542B')
@@ -57,31 +57,31 @@ __**[Protection usage:](https://abayro.xyz/commands/media/usage)**__
 				 .setTimestamp()
 			);
 		} else if (mhandler === 'antibotjoin') {
-			if (!margs) return message.channel.send(`${emojis.no}**| ${message.author.username},** Please choose **on** or **off** to **set** the **status**.`);
+			if (!margs) return message.channel.send(`${emojis.no}** | ${message.author.username},** Please choose **on** or **off** to **set** the **status**.`);
 			if (margs === 'on') {
 				this.client.settings.set(message.guild.id, 'antibotj', 'on');
-				message.channel.send(`${emojis.yes}**| ${message.author.username},** **Antibotjoin** has been **activated**.`);
+				message.channel.send(`${emojis.yes}** | ${message.author.username},** **Antibotjoin** has been **activated**.`);
 			} else if (margs === 'off') {
 				this.client.settings.set(message.guild.id, 'antibotj', 'off');
-				message.channel.send(`${emojis.yes}**| ${message.author.username},** **Antibotjoin** has been **deactivated**.`);
+				message.channel.send(`${emojis.yes}** | ${message.author.username},** **Antibotjoin** has been **deactivated**.`);
 			}
 		} else if (mhandler === 'antiadv') {
-			if (!margs) return message.channel.send(`${emojis.no}**| ${message.author.username},** Please choose **on** or **off** to **set** the **status**.`);
+			if (!margs) return message.channel.send(`${emojis.no}** | ${message.author.username},** Please choose **on** or **off** to **set** the **status**.`);
 			if (margs === 'on') {
 				this.client.settings.set(message.guild.id, 'antiadv', 'on');
-				message.channel.send(`${emojis.yes}**| ${message.author.username},** **Antiadvertise** has been **activated**.`);
+				message.channel.send(`${emojis.yes}** | ${message.author.username},** **Antiadvertise** has been **activated**.`);
 			} else if (margs === 'off') {
 				this.client.settings.set(message.guild.id, 'antiadv', 'off');
-				message.channel.send(`${emojis.yes}**| ${message.author.username},** **Antiadvertise** has been **deactivated**.`);
+				message.channel.send(`${emojis.yes}** | ${message.author.username},** **Antiadvertise** has been **deactivated**.`);
 			}
 		} else if (mhandler === 'antispam') {
-			if (!margs) return message.channel.send(`${emojis.no}**| ${message.author.username},** Please choose **on** or **off** to **set** the **status**.`);
+			if (!margs) return message.channel.send(`${emojis.no}** | ${message.author.username},** Please choose **on** or **off** to **set** the **status**.`);
 			if (margs === 'on') {
 				this.client.settings.set(message.guild.id, 'antispam', 'on');
-				message.channel.send(`${emojis.yes}**| ${message.author.username},** **Antispam** has been **activated**.`);
+				message.channel.send(`${emojis.yes}** | ${message.author.username},** **Antispam** has been **activated**.`);
 			} else if (margs === 'off') {
 				this.client.settings.set(message.guild.id, 'antispam', 'off');
-				message.channel.send(`${emojis.yes}**| ${message.author.username},** **Antispam** has been **deactivated**.`);
+				message.channel.send(`${emojis.yes}** | ${message.author.username},** **Antispam** has been **deactivated**.`);
 			}
 		}
 	}

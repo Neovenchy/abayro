@@ -46,7 +46,7 @@ class TransferCommand extends Command {
 		transferamount = Math.floor(transferamount);
 		increase(user.id, 'credits', transferamount);
 		decrease(message.author.id, 'credits', transferamount);
-		return message.channel.send(`Transferred ${transferamount} to ${user} sucessfully :white_check_mark:`);
+		return message.channel.send(`${emojis.yes} | Transferred ${transferamount} to ${user} sucessfully.`);
 	}
 }
 

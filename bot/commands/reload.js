@@ -41,13 +41,13 @@ class ReloadCommand extends Command {
 	}) {
 		if (!mod) {
 			this.handler.reloadAll();
-			return message.channel.send(`${emojis.yes}**| ${message.author.username}**, Done, I **reloaded** all **commands**.`);
+			return message.channel.send(`${emojis.yes}** | ${message.author.username}**, Done, I **reloaded** all **commands**.`);
 		}
 		try {
 			mod.reload();
-			return message.channel.send(`${emojis.yes}**| ${message.author.username}**, I **reloaded**: \`${mod.id}\` **${type}**.`);
+			return message.channel.send(`${emojis.yes}** | ${message.author.username}**, I **reloaded**: \`${mod.id}\` **${type}**.`);
 		} catch (err) {
-			return message.channel.send(`${emojis.no}**| ${message.author.username}**, Failed to **reload**: ${type} \`${mod.id}\`.`);
+			return message.channel.send(`${emojis.no}** | ${message.author.username}**, Failed to **reload**: ${type} \`${mod.id}\`.`);
 		}
 	}
 }

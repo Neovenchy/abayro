@@ -32,13 +32,13 @@ class PcolorCommand extends Command {
 		if (!pcolour) {
 			// eslint-disable-next-line new-cap
 			const currentColor = await find(message.author.id, 'pcolor', 'black').then(c => HCI(c));
-			return message.channel.send(`${emojis.info}**| ${message.author.username}**, Your current **profile color** is: \`${currentColor.name}\``);
+			return message.channel.send(`${emojis.info}** | ${message.author.username}**, Your current **profile color** is: \`${currentColor.name}\``);
 		}
-		if (!color) return message.channel.send(`${emojis.no}**| ${message.author.username}**, The **color** you entered isn't a **vaild hex color**.`);
+		if (!color) return message.channel.send(`${emojis.no}** | ${message.author.username}**, The **color** you entered isn't a **vaild hex color**.`);
 		await update(message.author.id, 'pcolor', color);
 		// eslint-disable-next-line new-cap
 		const getColor = HCI(color);
-		return message.channel.send(`${emojis.yes}**| ${message.author.username}**, I **Updated** your profile **color** to **${getColor.name}**.`);
+		return message.channel.send(`${emojis.yes}** | ${message.author.username}**, I **Updated** your profile **color** to **${getColor.name}**.`);
 	}
 }
 

@@ -61,16 +61,16 @@ class BanCommand extends Command {
 		const bans = await find(message.author.id, 'bans', 0);
 		const time = cooldown - (Date.now() - blimit);
 		if (blimit !== null && time > 0) {
-			return message.channel.send(`${emojis.no}**| ${message.author.username}**, You have reached **max limit** of today's **bans**\n:white_small_square:You can ban again in: **${moment.duration(time).format('hh [hours] mm [minutes] ss [seconds]')}**.`);
+			return message.channel.send(`${emojis.no}** | ${message.author.username}**, You have reached **max limit** of today's **bans**\n:white_small_square:You can ban again in: **${moment.duration(time).format('hh [hours] mm [minutes] ss [seconds]')}**.`);
 		}
 		if (member === ' ') {
-			return message.channel.send(`${emojis.no}**| ${message.author.username}**, Correct **usage**:
+			return message.channel.send(`${emojis.no}** | ${message.author.username}**, Correct **usage**:
 \`${this.client.commandHandler.prefix(message)}ban [@user/userName/userID] [days (1-7)] [reason] [--soft for softban]\``);
 		}
-		if (!member) return message.channel.send(`${emojis.no}**| ${message.author.username}**, I can't find **${member}**.`);
-		if (member.id === message.author.id) return message.channel.send(`${emojis.no}**| ${message.author.username}**, You can't **ban** yourself.`);
-		if (member.id === this.client.user.id) return message.channel.send(`${emojis.no}**| ${message.author.username}**, You can't **ban** me by **me**!`);
-		if (!member.bannable) return message.channel.send(`${emojis.no}**| ${message.author.username}**, I can't **ban** ${member}.`);
+		if (!member) return message.channel.send(`${emojis.no}** | ${message.author.username}**, I can't find **${member}**.`);
+		if (member.id === message.author.id) return message.channel.send(`${emojis.no}** | ${message.author.username}**, You can't **ban** yourself.`);
+		if (member.id === this.client.user.id) return message.channel.send(`${emojis.no}** | ${message.author.username}**, You can't **ban** me by **me**!`);
+		if (!member.bannable) return message.channel.send(`${emojis.no}** | ${message.author.username}**, I can't **ban** ${member}.`);
 		await member.ban({ days, reason: breason });
 		if (soft) {
 			await member.ban({ days: 1, reason: breason });
@@ -79,13 +79,13 @@ class BanCommand extends Command {
 			if (bans >= this.client.settings.get(message.guild.id, 'banlimit')) {
 				await update(message.author.id, 'blimit', Date.now());
 			}
-			return message.channel.send(`${emojis.yes}**| ${message.author.username}**, I've **softbanned** ${member}.`);
+			return message.channel.send(`${emojis.yes}** | ${message.author.username}**, I've **softbanned** ${member}.`);
 		}
 		await increase(message.author.id, 'bans', 1);
 		if (bans >= this.client.settings.get(message.guild.id, 'banlimit')) {
 			await update(message.author.id, 'blimit', Date.now());
 		}
-		message.channel.send(`${emojis.yes}**| ${message.author.username}**, I've **banned** ${member}.`);
+		message.channel.send(`${emojis.yes}** | ${message.author.username}**, I've **banned** ${member}.`);
 	}
 }
 

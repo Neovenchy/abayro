@@ -58,9 +58,9 @@ class HelpCommand extends Command {
 		if (command === ' ') {
 			try {
 				await message.author.send(`**Abayro's Help:**\n**~~━~~~~━~~~~━~~~~━~~~~━~~~~━~~~~━~~~~━~~~~━~~~~━~~~~━~~~~━~~~~━~~~~━~~~~━~~~~━~~~~━~~~~━~~~~━~~~~━~~~~━~~**`);
-				message.channel.send(`${emojis.yes}**| ${message.author.username}**, I've sent you my **commands list**.`);
+				message.channel.send(`${emojis.yes} **| ${message.author.username}**, I've sent you my **commands list**.`);
 			} catch (error) {
-				return message.channel.send(`${emojis.no}**| ${message.author.username}**, You are blocking **direct messages**.`);
+				return message.channel.send(`${emojis.no} **| ${message.author.username}**, You are blocking **direct messages**.`);
 			}
 			const allhelplist = [];
 			this.handler.categories.filter(c => c.id !== 'default').forEach(category => {

@@ -30,7 +30,7 @@ class LimitsCommand extends Command {
 
 	async exec(message, { limit, limitnum }) {
 		if (!limit) {
-			await message.channel.send(`${emojis.info}**| ${message.author.username}**, Current **limits settings** for **${message.guild.name}** is:`);
+			await message.channel.send(`${emojis.info}** | ${message.author.username}**, Current **limits settings** for **${message.guild.name}** is:`);
 			message.channel.send(
 				new RichEmbed()
 				 .setColor('#FB542B')
@@ -54,25 +54,25 @@ __**[Limits usage:](https://abayro.xyz/commands/media/usage)**__
 				 .setTimestamp()
 			);
 		} else if (limit === 'banlimit') {
-			if (!limitnum) return message.channel.send(`${emojis.no}**| ${message.author.username}**, Please enter the **ban limit** to set.`);
-			if (limitnum > 20 || limitnum < 1) return message.channel.send(`${emojis.no}**| ${message.author.username}**, Please enter a **limit** between **\`1\` & \`20\`**.`);
-			if (isNaN(limitnum)) return message.channel.send(`${emojis.no}**| ${message.author.username}**, Please enter a **valid number**.`);
+			if (!limitnum) return message.channel.send(`${emojis.no}** | ${message.author.username}**, Please enter the **ban limit** to set.`);
+			if (limitnum > 20 || limitnum < 1) return message.channel.send(`${emojis.no}** | ${message.author.username}**, Please enter a **limit** between **\`1\` & \`20\`**.`);
+			if (isNaN(limitnum)) return message.channel.send(`${emojis.no}** | ${message.author.username}**, Please enter a **valid number**.`);
 			await this.client.settings.set(message.guild.id, 'banlimit', parseInt(limitnum, 10));
-			return message.channel.send(`${emojis.yes}**| ${message.author.username}**, The **ban limit** for **${message.guild.name}** has been set to \`${limitnum}\`.`);
+			return message.channel.send(`${emojis.yes}** | ${message.author.username}**, The **ban limit** for **${message.guild.name}** has been set to \`${limitnum}\`.`);
 		} else if (limit === 'kicklimit') {
-			if (!limitnum) return message.channel.send(`${emojis.no}**| ${message.author.username}**, Please enter the **kick limit** to set.`);
-			if (limitnum > 20 || limitnum < 1) return message.channel.send(`${emojis.no}**| ${message.author.username}**, Please enter a **limit** between **\`1\` & \`20\`**.`);
-			if (isNaN(limitnum)) return message.channel.send(`${emojis.no}**| ${message.author.username}**, Please enter a **valid number**.`);
+			if (!limitnum) return message.channel.send(`${emojis.no}** | ${message.author.username}**, Please enter the **kick limit** to set.`);
+			if (limitnum > 20 || limitnum < 1) return message.channel.send(`${emojis.no}** | ${message.author.username}**, Please enter a **limit** between **\`1\` & \`20\`**.`);
+			if (isNaN(limitnum)) return message.channel.send(`${emojis.no}** | ${message.author.username}**, Please enter a **valid number**.`);
 			await this.client.settings.set(message.guild.id, 'kicklimit', parseInt(limitnum, 10));
-			return message.channel.send(`${emojis.yes}**| ${message.author.username}**, The **kick limit** for **${message.guild.name}** has been set to \`${limitnum}\`.`);
+			return message.channel.send(`${emojis.yes}** | ${message.author.username}**, The **kick limit** for **${message.guild.name}** has been set to \`${limitnum}\`.`);
 		} else if (limit === 'mutelimit') {
-			if (!limitnum) return message.channel.send(`${emojis.no}**| ${message.author.username}**, Please enter the **mute limit** to set.`);
+			if (!limitnum) return message.channel.send(`${emojis.no}** | ${message.author.username}**, Please enter the **mute limit** to set.`);
 			if (limitnum > 20 || limitnum < 1) return message.channel.send(`${emojis.no}**| ${message.author.username}**, Please enter a **limit** between **\`1\` & \`20\`**.`);
-			if (isNaN(limitnum)) return message.channel.send(`${emojis.no}**| ${message.author.username}**, Please enter a **valid number**.`);
+			if (isNaN(limitnum)) return message.channel.send(`${emojis.no}** | ${message.author.username}**, Please enter a **valid number**.`);
 			await this.client.settings.set(message.guild.id, 'mutelimit', parseInt(limitnum, 10));
-			return message.channel.send(`${emojis.yes}**| ${message.author.username}**, The **mute limit** for **${message.guild.name}** has been set to \`${limitnum}\`.`);
+			return message.channel.send(`${emojis.yes}** | ${message.author.username}**, The **mute limit** for **${message.guild.name}** has been set to \`${limitnum}\`.`);
 		} else {
-			return message.channel.send(`${emojis.no}**| ${message.author.username}**, Invalid **usage**.`);
+			return message.channel.send(`${emojis.no}** | ${message.author.username}**, Invalid **usage**.`);
 		}
 	}
 }

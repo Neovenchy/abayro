@@ -36,7 +36,7 @@ class SinfoCommand extends Command {
 		} catch (e) {
 			throw new Error(e);
 		}
-		return message.channel.send(`${yes}| **Updated your profile info!**`);
+		return message.channel.send(`${yes} | **Updated your profile info!**`);
 	}
 }
 

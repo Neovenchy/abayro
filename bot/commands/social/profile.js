@@ -218,7 +218,7 @@ class ProfileCommand extends Command {
 			);
 
 
-			return message.channel.send(`:clipboard: | User profile card for **${user.username}**`, { files: [{ attachment: canvas.toBuffer(), name: 'profile.png' }] });
+			return message.channel.send(`📋 | User profile card for **${user.username}**`, { files: [{ attachment: canvas.toBuffer(), name: 'profile.png' }] });
 		});
 	}
 }

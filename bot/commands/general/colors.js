@@ -90,7 +90,7 @@ class ColorsCommand extends Command {
 
 			const hhexcolor = '#f1f1f1';
 			cc.sort((b1, b2) => b1.name - b2.name).forEach(role => {
-				if (!role) return message.channel.send(`${emojis.no}**|** No **color roles** was found\ntry \`=colors add [number]\` to add a **color**.`);
+				if (!role) return message.channel.send(`${emojis.no} **|** No **color roles** was found\ntry \`=colors add [number]\` to add a **color**.`);
 				if (taken[role.name]) {
 					return null;
 				}
@@ -159,37 +159,37 @@ class ColorsCommand extends Command {
 					attachment: canvas.toBuffer(),
 					name: 'colors.png'
 				}]
-			}).catch(() => message.channel.send(`${emojis.no}**|** No **color roles** was found\ntry \`${this.handler.prefix(message)}colors add [number]\` to add a **color**.`));
+			}).catch(() => message.channel.send(`${emojis.no} **|** No **color roles** was found\ntry \`${this.handler.prefix(message)}colors add [number]\` to add a **color**.`));
 		} else if (method === 'add') {
 			const [roleName, roleColor = 'RANDOM'] = name.trim().split(/ +/g);
-			if (!roleName) return message.channel.send(`${emojis.no}**|** Please enter a **role color number**.`);
-			if (isNaN(parseInt(roleName, 10))) return message.channel.send(`${emojis.no}**|** Please enter a **valid role color number**.`);
+			if (!roleName) return message.channel.send(`${emojis.no} **|** Please enter a **role color number**.`);
+			if (isNaN(parseInt(roleName, 10))) return message.channel.send(`${emojis.no} **|** Please enter a **valid role color number**.`);
 			message.guild.createRole({
 				name: parseInt(roleName, 10),
 				color: roleColor
 			});
-			message.channel.send(`${emojis.yes}**|** Color role \`${roleName}\` has been **created**.`);
+			message.channel.send(`${emojis.yes} **|** Color role \`${roleName}\` has been **created**.`);
 		} else if (method === 'remove') {
-			if (!name) return message.channel.send(`${emojis.no}**|** Please **enter** the **color role** name or ID.`);
+			if (!name) return message.channel.send(`${emojis.no} **|** Please **enter** the **color role** name or ID.`);
 			const irole = this.client.util.resolveRoles(name, message.guild.roles).first();
-			if (!irole || isNaN(irole.name)) return message.channel.send(`${emojis.no}**|** The role is either not a role or not a vaild **color role**.`);
+			if (!irole || isNaN(irole.name)) return message.channel.send(`${emojis.no} **|** The role is either not a role or not a vaild **color role**.`);
 			message.guild.roles.get(irole.id).delete();
-			message.channel.send(`${emojis.yes}**|** The **color role** \`${irole.name}\` has been **removed**.`);
+			message.channel.send(`${emojis.yes} **|** The **color role** \`${irole.name}\` has been **removed**.`);
 		} else if (method === 'create') {
-			return message.channel.send(`${emojis.no}**|** This **method** is disabled because of **rate limits**.`);
+			return message.channel.send(`${emojis.no} **|** This **method** is disabled because of **rate limits**.`);
 			// const args = message.content.split(' ').slice(1);
 			// if (!args[1]) return message.channel.send(`${emojis.no}**|** Please **enter** an **ammount** to create.`);
 			// if (!isNaN(args[1])) return message.channel.send(`${emojis.no}**|** Please **enter** valid **numbers**.`);
 			// if (args[1].length < 1 || args[1].length >= 50) return message.channel.send(`${emojis.no}**|** I can't **create** more than \`50\` or less than \`1\` **color role**.`);
 		} else if (method === 'removeAll') {
-			return message.channel.send(`${emojis.no}**|** This **method** is disabled because of **rate limits**.`);
+			return message.channel.send(`${emojis.no} **|** This **method** is disabled because of **rate limits**.`);
 		} else if (method === 'boxtitle' || method === 'title') {
 			if (!name) {
-				return message.channel.send(`${emojis.no}**|** Please **enter** a new **colors box title**.`);
+				return message.channel.send(`${emojis.no} **|** Please **enter** a new **colors box title**.`);
 			}
-			 if (name.length >= 15) return message.channel.send(`${emojis.no}**|** The **box title** can't be more than \`15\` characters`);
+			 if (name.length >= 15) return message.channel.send(`${emojis.no} **|** The **box title** can't be more than \`15\` characters`);
 			 this.client.settings.set(message.guild.id, 'btitle', name);
-			 return message.channel.send(`${emojis.yes}**|** The **colors box title** has been changed to **${name}**.`);
+			 return message.channel.send(`${emojis.yes} **|** The **colors box title** has been changed to **${name}**.`);
 		}
 	}
 }

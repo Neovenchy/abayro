@@ -32,7 +32,7 @@ class ConfigsCommand extends Command {
 		mhandler, margs
 	}) {
 		if (!mhandler) {
-			await message.channel.send(`${emojis.info}**| ${message.author.username}**, Current **config** for **${message.guild.name}** is:`);
+			await message.channel.send(`${emojis.info}** | ${message.author.username}**, Current **config** for **${message.guild.name}** is:`);
 			message.channel.send(
 				new RichEmbed()
 					.setColor('#FB542B')
@@ -50,16 +50,16 @@ __**[Config usage:](https://abayro.xyz/commands/serverlogs/usage)**__
 					.setTimestamp()
 			);
 		} else if (mhandler === 'enable') {
-			if (!margs) return message.channel.send(`${emojis.no}**| ${message.author.username},** Please type the config feature to enable.`);
+			if (!margs) return message.channel.send(`${emojis.no}** | ${message.author.username},** Please type the config feature to enable.`);
 			if (margs === 'lvlup-msg') {
 				this.client.settings.set(message.guild.id, 'lvlup-msg', 'enabled');
-				message.channel.send(`${emojis.yes}**| ${message.author.username},** **Level up messages** has been **enabled**.`);
+				message.channel.send(`${emojis.yes}** | ${message.author.username},** **Level up messages** has been **enabled**.`);
 			}
 		} else if (mhandler === 'disable') {
-			if (!margs) return message.channel.send(`${emojis.no}**| ${message.author.username},** Please type the config feature to disable.`);
+			if (!margs) return message.channel.send(`${emojis.no}** | ${message.author.username},** Please type the config feature to disable.`);
 			if (margs === 'lvlup-msg') {
 				this.client.settings.set(message.guild.id, 'lvlup-msg', 'disabled');
-				message.channel.send(`${emojis.yes}**| ${message.author.username},** **Level up messages** has been **disabled**.`);
+				message.channel.send(`${emojis.yes}** | ${message.author.username},** **Level up messages** has been **disabled**.`);
 			}
 		}
 	}

@@ -31,7 +31,7 @@ class DailyCommand extends Command {
 		const dailyAmount = randomDaily(100, 300);
 		await update(message.author.id, 'daily', Date.now());
 		await increase(message.author.id, 'credits', dailyAmount);
-		return message.channel.send(`${emojis.pound}**| ${message.author.username}**, You received your **${dailyAmount}** daily pounds!`);
+		return message.channel.send(`${emojis.pound} **| ${message.author.username}**, You received your **${dailyAmount}** daily pounds!`);
 	}
 }
 

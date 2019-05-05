@@ -24,9 +24,9 @@ class SModRoleCommand extends Command {
 	 exec(message, { role }) {
 		if (role) {
 			this.client.settings.set(message.guild.id, 'modrole', role.name);
-			return message.channel.send(`${emojis.yes}**| ${message.author.username}**, The **modrole** for **${message.guild.name}** has been set to: **\`\`${role.name}\`\`**.`);
+			return message.channel.send(`${emojis.yes}** | ${message.author.username}**, The **modrole** for **${message.guild.name}** has been set to: **\`\`${role.name}\`\`**.`);
 		}
-		return message.channel.send(`${emojis.info}**| ${message.author.username}**, The **modrole** for **${message.guild.name}** is: <&${this.client.settings.get(message.guild.id, 'modrole', 'No modrole was set')}>\nUse \`${this.handler.prefix(message)}modrole [roleName/roleMention/roleID]\` to set a **modrole**.`);
+		return message.channel.send(`${emojis.info}** | ${message.author.username}**, The **modrole** for **${message.guild.name}** is: <&${this.client.settings.get(message.guild.id, 'modrole', 'No modrole was set')}>\nUse \`${this.handler.prefix(message)}modrole [roleName/roleMention/roleID]\` to set a **modrole**.`);
 	}
 }
 

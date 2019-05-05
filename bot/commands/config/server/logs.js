@@ -33,7 +33,7 @@ class LogsCommand extends Command {
 		mhandler, margs
 	}) {
 		if (!mhandler) {
-			await message.channel.send(`${emojis.info}**| ${message.author.username}**, Current **logs settings** for **${message.guild.name}** is:`);
+			await message.channel.send(`${emojis.info}** | ${message.author.username}**, Current **logs settings** for **${message.guild.name}** is:`);
 			message.channel.send(
 				new RichEmbed()
 				 .setColor('#FB542B')
@@ -54,19 +54,19 @@ __**[ServerLogs usage:](https://abayro.xyz/commands/serverlogs/usage)**__
 				 .setTimestamp()
 			);
 		} else if (mhandler === 'turn') {
-			if (!margs) return message.channel.send(`${emojis.no}**| ${message.author.username},** Please choose **on** or **off** to **set** the **status**.`);
+			if (!margs) return message.channel.send(`${emojis.no}** | ${message.author.username},** Please choose **on** or **off** to **set** the **status**.`);
 			if (margs === 'on') {
 				this.client.settings.set(message.guild.id, 'logs', 'on');
-				message.channel.send(`${emojis.yes}**| ${message.author.username},** **Logs** has been **activated**.`);
+				message.channel.send(`${emojis.yes}** | ${message.author.username},** **Logs** has been **activated**.`);
 			} else if (margs === 'off') {
 				this.client.settings.set(message.guild.id, 'logs', 'on');
-				message.channel.send(`${emojis.yes}**| ${message.author.username},** **Logs** has been **activated**.`);
+				message.channel.send(`${emojis.yes}** | ${message.author.username},** **Logs** has been **activated**.`);
 			}
 		} else if (mhandler === 'channel') {
 			const channel = message.mentions.channels.first();
-			if (!channel) return message.channel.send(`${emojis.no}**| ${message.author.username},** Please **mention** a channel`);
+			if (!channel) return message.channel.send(`${emojis.no}** | ${message.author.username},** Please **mention** a channel`);
 			this.client.settings.set(message.guild.id, 'logschnl', channel.id);
-			message.channel.send(`${emojis.yes}**| ${message.author.username},** **Logs channel** has been set to **${channel}**.`);
+			message.channel.send(`${emojis.yes}** | ${message.author.username},** **Logs channel** has been set to **${channel}**.`);
 		}
 	}
 }

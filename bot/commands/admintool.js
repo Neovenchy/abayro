@@ -40,24 +40,24 @@ class AdminToolCommand extends Command {
 :white_small_square: ${prefix}admin update [credits/xp/etc] [user] [ammount]
 :white_small_square: ${prefix}admin zero [credits/xp/etc] [user]`);
 		} else if (method === 'increase') {
-			if (!typo) return message.channel.send(`${emojis.no}**| ${message.author.username}**, Please **include** the **type**.\n:white_small_square: **Available types**:\n- credits\n- textxp\n- voicexp\n- textlevel\n- voicelevel\n- rep.`);
-			if (!user) return message.channel.send(`${emojis.no}**| ${message.author.username}**, Please **include** the **user** to set the **type** you choosed.`);
-			if (!amount) return message.channel.send(`${emojis.no}**| ${message.author.username}**, Please **include** the **ammount** to set.`);
+			if (!typo) return message.channel.send(`${emojis.no}** | ${message.author.username}**, Please **include** the **type**.\n:white_small_square: **Available types**:\n- credits\n- textxp\n- voicexp\n- textlevel\n- voicelevel\n- rep.`);
+			if (!user) return message.channel.send(`${emojis.no}** | ${message.author.username}**, Please **include** the **user** to set the **type** you choosed.`);
+			if (!amount) return message.channel.send(`${emojis.no}** | ${message.author.username}**, Please **include** the **ammount** to set.`);
 			await increase(user.id, typo, amount);
-			message.channel.send(`${emojis.yes}**| ${message.author.username}**, I added/Increased \`${amount}\` **${typo}** to **${user.tag}**.`);
+			message.channel.send(`${emojis.yes}** | ${message.author.username}**, I added/Increased \`${amount}\` **${typo}** to **${user.tag}**.`);
 		} else if (method === 'update') {
-			if (!typo) return message.channel.send(`${emojis.no}**| ${message.author.username}**, Please **include** the **type**.\n:white_small_square: **Available types**:\n- credits\n- textxp\n- voicexp\n- textlevel\n- voicelevel\n- rep.`);
-			if (!user) return message.channel.send(`${emojis.no}**| ${message.author.username}**, Please **include** the **user** to set the **type** you choosed.`);
-			if (!amount) return message.channel.send(`${emojis.no}**| ${message.author.username}**, Please **include** the **ammount** to update.`);
+			if (!typo) return message.channel.send(`${emojis.no}** | ${message.author.username}**, Please **include** the **type**.\n:white_small_square: **Available types**:\n- credits\n- textxp\n- voicexp\n- textlevel\n- voicelevel\n- rep.`);
+			if (!user) return message.channel.send(`${emojis.no}** | ${message.author.username}**, Please **include** the **user** to set the **type** you choosed.`);
+			if (!amount) return message.channel.send(`${emojis.no}** | ${message.author.username}**, Please **include** the **ammount** to update.`);
 			await update(user.id, typo, amount);
-			message.channel.send(`${emojis.yes}**| ${message.author.username}**, I removed/updated \`${amount}\` **${typo}** to **${user.tag}**.`);
+			message.channel.send(`${emojis.yes}** | ${message.author.username}**, I removed/updated \`${amount}\` **${typo}** to **${user.tag}**.`);
 		} else if (method === 'zero') {
-			if (!typo) return message.channel.send(`${emojis.no}**| ${message.author.username}**, Please **include** the **type**.\n:white_small_square: **Available types**:\n- credits\n- textxp\n- voicexp\n- textlevel\n- voicelevel\n- rep.`);
-			if (!user) return message.channel.send(`${emojis.no}**| ${message.author.username}**, Please **include** the **user** to set the **type** you choosed.`);
+			if (!typo) return message.channel.send(`${emojis.no}** | ${message.author.username}**, Please **include** the **type**.\n:white_small_square: **Available types**:\n- credits\n- textxp\n- voicexp\n- textlevel\n- voicelevel\n- rep.`);
+			if (!user) return message.channel.send(`${emojis.no}** | ${message.author.username}**, Please **include** the **user** to set the **type** you choosed.`);
 			await update(user.id, typo, '0');
-			message.channel.send(`${emojis.yes}**| ${message.author.username}**, I zeroed **${typo}** from **${user.tag}**.`);
+			message.channel.send(`${emojis.yes}** | ${message.author.username}**, I zeroed **${typo}** from **${user.tag}**.`);
 		} else {
-			return message.channel.send(`${emojis.no}**| ${message.author.username}**, Invalid usage.`);
+			return message.channel.send(`${emojis.no}** | ${message.author.username}**, Invalid usage.`);
 		}
 	}
 }

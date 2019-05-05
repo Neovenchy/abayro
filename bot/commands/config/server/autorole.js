@@ -39,7 +39,7 @@ class AutoRoleCommand extends Command {
 		autor, margs, role
 	}) {
 		if (!autor) {
-			 await message.channel.send(`${emojis.info}**| ${message.author.username},** Current **autorole settings** for **${message.guild.name}** is:`);
+			 await message.channel.send(`${emojis.info}** | ${message.author.username},** Current **autorole settings** for **${message.guild.name}** is:`);
 			message.channel.send(
 				new RichEmbed()
 				 .setColor('#FB542B')
@@ -60,18 +60,18 @@ __**[Autorole usage:](https://abayro.xyz/commands/autorole/usage)**__
 				 .setTimestamp()
 			);
 		} else if (autor === 'turn') {
-			if (!margs) return message.channel.send(`${emojis.no}**| ${message.author.username},** Please choose **on** or **off** to **set** the **status**.`);
+			if (!margs) return message.channel.send(`${emojis.no}** | ${message.author.username},** Please choose **on** or **off** to **set** the **status**.`);
 			if (margs === 'on') {
 				this.client.settings.set(message.guild.id, 'autorole', 'on');
-				message.channel.send(`${emojis.yes}**| ${message.author.username},** **Autorole** has been **activated**.`);
+				message.channel.send(`${emojis.yes}** | ${message.author.username},** **Autorole** has been **activated**.`);
 			} else if (margs === 'off') {
 				this.client.settings.set(message.guild.id, 'autorole', 'off');
-				message.channel.send(`${emojis.yes}**| ${message.author.username},** **Autorole** has been **deactivated**.`);
+				message.channel.send(`${emojis.yes}** | ${message.author.username},** **Autorole** has been **deactivated**.`);
 			}
 		} else if (autor === 'setrole') {
-			if (!role) return message.channel.send(`${emojis.no}**| ${message.author.username},** Please **enter** a **role** name.`);
+			if (!role) return message.channel.send(`${emojis.no}** | ${message.author.username},** Please **enter** a **role** name.`);
 			this.client.settings.set(message.guild.id, 'autorolest', role.name);
-			message.channel.send(`${emojis.yes}**| ${message.author.username},** The **autorole** has been changed to **${role.name}**`);
+			message.channel.send(`${emojis.yes}** | ${message.author.username},** The **autorole** has been changed to **${role.name}**`);
 		}
 	}
 }

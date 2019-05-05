@@ -33,7 +33,7 @@ class MediaCommand extends Command {
 		autor, margs
 	}) {
 		if (!autor) {
-			await message.channel.send(`${emojis.info}**| ${message.author.username}**, Current **media settings** for **${message.guild.name}** is:`);
+			await message.channel.send(`${emojis.info}** | ${message.author.username}**, Current **media settings** for **${message.guild.name}** is:`);
 			message.channel.send(
 				new RichEmbed()
 				 .setColor('#FB542B')
@@ -54,19 +54,19 @@ __**[Media usage:](https://abayro.xyz/commands/media/usage)**__
 				 .setTimestamp()
 			);
 		} else if (autor === 'turn') {
-			if (!margs) return message.channel.send(`${emojis.no}**| ${message.author.username},** Please choose **on** or **off** to **set** the **status**.`);
+			if (!margs) return message.channel.send(`${emojis.no}** | ${message.author.username},** Please choose **on** or **off** to **set** the **status**.`);
 			if (margs === 'on') {
 				this.client.settings.set(message.guild.id, 'mediast', 'on');
-				message.channel.send(`${emojis.yes}**| ${message.author.username},** **Media** has been **activated**.`);
+				message.channel.send(`${emojis.yes}** | ${message.author.username},** **Media** has been **activated**.`);
 			} else if (margs === 'off') {
 				this.client.settings.set(message.guild.id, 'mediast', 'off');
-				message.channel.send(`${emojis.yes}**| ${message.author.username},** **Media** has been **deactivated**.`);
+				message.channel.send(`${emojis.yes}** | ${message.author.username},** **Media** has been **deactivated**.`);
 			}
 		} else if (autor === 'channel') {
 			const channel = message.mentions.channels.first();
-			if (!channel) return message.channel.send(`${emojis.no}**| ${message.author.username},** Please **mention** a channel`);
+			if (!channel) return message.channel.send(`${emojis.no}** | ${message.author.username},** Please **mention** a channel`);
 			this.client.settings.set(message.guild.id, 'mediachnl', channel.id);
-			message.channel.send(`${emojis.yes}**| ${message.author.username},** **Media channel** has been set to **${channel}**.`);
+			message.channel.send(`${emojis.yes}** | ${message.author.username},** **Media channel** has been set to **${channel}**.`);
 		}
 	}
 }

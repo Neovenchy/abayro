@@ -33,7 +33,7 @@ class CreditsCommand extends Command {
 	 * @param {import('discord.js').User} [user={user}]
 	 */
 	async exec(message, { user, transferamount }) {
-		if (user.bot) return message.channel.send(`${emojis.no}**| Bots** does not have **pounds**.`);
+		if (user.bot) return message.channel.send(`${emojis.no}** | Bots** does not have **pounds**.`);
 		if (transferamount) return this.handler.modules.get('transfer').exec(message, { user, transferamount }, false);
 		const credits = await find(user.id, 'credits', '0');
 		return message.channel.send(`${emojis.pound} **|** ${user.id === message.author.id ? `${message.author.username}, Your` : `${user.username}'s`} **pounds** balance is £${credits}`);

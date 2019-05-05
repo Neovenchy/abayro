@@ -32,7 +32,7 @@ class StatusCommand extends Command {
 		} else if (status === 'watching' && text) {
 			return this.client.user.setActivity(text, { type: 'WATCHING' });
 		}
-		return message.channel.send(`${emojis.no}| **Wrong** usage!`);
+		return message.channel.send(`${emojis.no} | **Wrong** usage!`);
 	}
 }
 
