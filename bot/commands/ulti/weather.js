@@ -8,7 +8,7 @@ class WeatherCommand extends Command {
 			aliases: ['weather', 'wt'],
 			cooldown: 2000,
 			ratelimit: 1,
-			category: 'ulti',
+			category: 'util',
 			channelRestriction: 'guild',
 			description: {
 				content: 'Shows you the weather of any city',

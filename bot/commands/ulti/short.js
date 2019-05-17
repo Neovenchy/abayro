@@ -8,7 +8,7 @@ class ShortCommand extends Command {
 			aliases: ['short'],
 			cooldown: 5000,
 			ratelimit: 1,
-			category: 'ulti',
+			category: 'util',
 			channelRestriction: 'guild',
 			description: {
 				content: 'Shorten the url provided',

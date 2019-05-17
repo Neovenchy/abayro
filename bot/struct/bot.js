@@ -26,8 +26,6 @@ exports.channels = {
 	logs: '552847960782929945'
 };
 
-// exports.prefix = process.env.PREFIX.split(',');
-
 exports.assets = path => resolve(__dirname, '..', 'assets', path);
 
 exports.tokens = {

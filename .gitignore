@@ -77,13 +77,9 @@ dist
 # Service worker
 sw.*
 
-# Assets & Database
-database/json
-database/sqlite
-
-# c9
-.c9/*
-
 #Digital Ocean
 v8-compile-cache-0
 build
+
+#Misc
+.env
