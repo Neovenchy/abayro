@@ -1,7 +1,7 @@
 const { Command } = require('discord-akairo');
 const { emojis: { no } } = require('../../struct/bot');
 const { users } = require('../../database/Users');
-const Embed = require('../../util/Embed');
+const Embed = require('../../../util/Embed');
 const Sequelize = require('sequelize');
 
 class TopCommand extends Command {

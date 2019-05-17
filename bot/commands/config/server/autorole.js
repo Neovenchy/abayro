@@ -1,6 +1,6 @@
 const { Command } = require('discord-akairo');
 const { emojis } = require('../../../struct/bot');
-const Embed = require('../../util/Embed');
+const Embed = require('../../../util/Embed');
 
 
 class AutoRoleCommand extends Command {
