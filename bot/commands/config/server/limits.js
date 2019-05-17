@@ -1,6 +1,6 @@
 const { Command } = require('discord-akairo');
 const { emojis } = require('../../../struct/bot');
-const { RichEmbed } = require('discord.js');
+const Embed = require('../../util/Embed');
 
 class LimitsCommand extends Command {
 	constructor() {
@@ -32,8 +32,7 @@ class LimitsCommand extends Command {
 		if (!limit) {
 			await message.channel.send(`${emojis.info}** | ${message.author.username}**, Current **limits settings** for **${message.guild.name}** is:`);
 			message.channel.send(
-				new RichEmbed()
-				 .setColor('#FB542B')
+				new Embed()
 				 .setAuthor(message.guild.name, message.guild.iconURL)
 				 .addField('Banslimit:', `**${this.client.settings.get(message.guild.id, 'banlimit', 20)}** bans per day`, true)
 				 .addField('Kickslimit:', `**${this.client.settings.get(message.guild.id, 'kicklimit', 20)}** kicks per day`, true)

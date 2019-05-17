@@ -1,6 +1,6 @@
 const { Command } = require('discord-akairo');
 const { emojis } = require('../../../struct/bot');
-const { RichEmbed } = require('discord.js');
+const Embed = require('../../util/Embed');
 
 class ConfigsCommand extends Command {
 	constructor() {
@@ -34,8 +34,7 @@ class ConfigsCommand extends Command {
 		if (!mhandler) {
 			await message.channel.send(`${emojis.info}** | ${message.author.username}**, Current **config** for **${message.guild.name}** is:`);
 			message.channel.send(
-				new RichEmbed()
-					.setColor('#FB542B')
+				new Embed()
 					.setAuthor(message.guild.name, message.guild.iconURL)
 					.addField('lvlup-msg:', `**${this.client.settings.get(message.guild.id, 'lvlup-msg', 'disabled')}**
 

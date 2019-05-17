@@ -20,7 +20,7 @@ class PingCommand extends Command {
      */
 	async exec(message) {
 		const msg = await message.channel.send(`Pinging...`);
-		return msg.edit(`:bell:**| Pong!**\n ● **Latency**: \`${(msg.editedTimestamp || msg.createdTimestamp) - (message.editedTimestamp || message.createdTimestamp).toString()}ms\`\n ● **API**: \`${this.client.ping.toFixed(0)}ms\``);
+		return msg.edit(`• **Latency**: \`${(msg.editedTimestamp || msg.createdTimestamp) - (message.editedTimestamp || message.createdTimestamp).toString()}ms\`\n • **API**: \`${this.client.ping.toFixed(0)}ms\``);
 	}
 }
 

@@ -1,5 +1,5 @@
 const { Command } = require('discord-akairo');
-const { RichEmbed } = require('discord.js');
+const Embed = require('../util/Embed');
 const { emojis } = require('../../struct/bot');
 class AvatarCommand extends Command {
 	constructor() {
@@ -24,7 +24,7 @@ class AvatarCommand extends Command {
 	exec(message, { user }) {
 		if (!user) return message.channel.send(`${emojis.no} | The **user** could not be **found**.`);
 
-		const embed = new RichEmbed()
+		const embed = new Embed()
 			.setTitle(`${user.username}'s Avatar`)
 			.setURL(user.displayAvatarURL)
 			.setColor('#307FFF')

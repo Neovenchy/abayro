@@ -1,6 +1,6 @@
 const { Command } = require('discord-akairo');
 const { emojis } = require('../../../struct/bot');
-const { RichEmbed } = require('discord.js');
+const Embed = require('../../util/Embed');
 
 class LogsCommand extends Command {
 	constructor() {
@@ -35,8 +35,7 @@ class LogsCommand extends Command {
 		if (!mhandler) {
 			await message.channel.send(`${emojis.info}** | ${message.author.username}**, Current **logs settings** for **${message.guild.name}** is:`);
 			message.channel.send(
-				new RichEmbed()
-				 .setColor('#FB542B')
+				new Embed()
 				 .setAuthor(message.guild.name, message.guild.iconURL)
 				 .addField('Status:', `**${this.client.settings.get(message.guild.id, 'logs', 'off').replace('off', 'OFF `(not active)`').replace('on', 'ON `(active)`')}**`, true)
 				 .addField('Logging channel:', `**<#${this.client.settings.get(message.guild.id, 'logschnl', '404')}>**

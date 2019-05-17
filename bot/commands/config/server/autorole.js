@@ -1,6 +1,6 @@
 const { Command } = require('discord-akairo');
 const { emojis } = require('../../../struct/bot');
-const { RichEmbed } = require('discord.js');
+const Embed = require('../../util/Embed');
 
 
 class AutoRoleCommand extends Command {
@@ -41,8 +41,7 @@ class AutoRoleCommand extends Command {
 		if (!autor) {
 			 await message.channel.send(`${emojis.info}** | ${message.author.username},** Current **autorole settings** for **${message.guild.name}** is:`);
 			message.channel.send(
-				new RichEmbed()
-				 .setColor('#FB542B')
+				new Embed()
 				 .setAuthor(message.guild.name, message.guild.iconURL)
 				 .addField('Status:', `**${this.client.settings.get(message.guild.id, 'autorole', 'off').replace('off', 'OFF `(not active)`').replace('on', 'ON `(active)`')}**`, true)
 				 .addField('Autorole:', `**${this.client.settings.get(message.guild.id, 'autorolest', 'No autorole set')}**

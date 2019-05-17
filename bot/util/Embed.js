@@ -3,7 +3,7 @@ const { RichEmbed } = require('discord.js');
 class Embed extends RichEmbed {
 	constructor() {
 		super();
-		this.setColor('#FB542B');
+		this.setColor('#6c63ff');
 	}
 	// modeartion(modUser, user) {
 	// 	this.setAuthor(`${user.tag} (${user.id})`);

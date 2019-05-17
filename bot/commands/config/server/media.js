@@ -1,6 +1,6 @@
 const { Command } = require('discord-akairo');
 const { emojis } = require('../../../struct/bot');
-const { RichEmbed } = require('discord.js');
+const Embed = require('../../util/Embed');
 
 class MediaCommand extends Command {
 	constructor() {
@@ -35,8 +35,7 @@ class MediaCommand extends Command {
 		if (!autor) {
 			await message.channel.send(`${emojis.info}** | ${message.author.username}**, Current **media settings** for **${message.guild.name}** is:`);
 			message.channel.send(
-				new RichEmbed()
-				 .setColor('#FB542B')
+				new Embed()
 				 .setAuthor(message.guild.name, message.guild.iconURL)
 				 .addField('Status:', `**${this.client.settings.get(message.guild.id, 'mediast', 'off').replace('off', 'OFF `(not active)`').replace('on', 'ON `(active)`')}**`, true)
 				 .addField('Media channel:', `**<#${this.client.settings.get(message.guild.id, 'mediachnl', '404')}>**

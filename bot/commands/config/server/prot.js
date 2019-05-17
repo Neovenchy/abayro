@@ -1,6 +1,6 @@
 const { Command } = require('discord-akairo');
 const { emojis } = require('../../../struct/bot');
-const { RichEmbed } = require('discord.js');
+const Embed = require('../../util/Embed');
 
 class PROTCommand extends Command {
 	constructor() {
@@ -35,8 +35,7 @@ class PROTCommand extends Command {
 		if (!mhandler) {
 			await message.channel.send(`${emojis.info}** | ${message.author.username}**, Current **protection settings** for **${message.guild.name}** is:`);
 			message.channel.send(
-				new RichEmbed()
-				 .setColor('#FB542B')
+				new Embed()
 				 .setAuthor(message.guild.name, message.guild.iconURL)
 				 .addField('Anti Bot join:', `**${this.client.settings.get(message.guild.id, 'antibotj', 'off').replace('off', 'OFF `(not active)`').replace('on', 'ON `(active)`')}**`, true)
 				 .addField('Anti advertise:', `**${this.client.settings.get(message.guild.id, 'antiadv', 'off').replace('off', 'OFF `(not active)`').replace('on', 'ON `(active)`')}**`, true)

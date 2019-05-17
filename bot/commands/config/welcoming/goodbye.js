@@ -1,6 +1,6 @@
 const { Command } = require('discord-akairo');
 const { emojis } = require('../../../struct/bot');
-const { RichEmbed } = require('discord.js');
+const Embed = require('../../util/Embed');
 
 class GoodbyeCommand extends Command {
 	constructor() {
@@ -39,8 +39,7 @@ class GoodbyeCommand extends Command {
 		const prefix = this.handler.prefix(message);
 		if (!goodbye) {
 			  await message.channel.send(`${emojis.info} **|** Current **goodbyer settings** for **${message.guild.name}** is:`);
-			  const embed = new RichEmbed()
-			 .setColor('#FB542B')
+			  const embed = new Embed()
 			 .setAuthor(message.guild.name, message.guild.iconURL)
 			 .addField('Status:', `**${this.client.settings.get(message.guild.id, 'gdbstatus', 'off').replace('off', 'OFF `(not active)`').replace('on', 'ON `(active)`')}**`, true)
 			 .addField('Channel:', `**<#${this.client.settings.get(message.guild.id, 'gdbchannel', 404)}>**`, true)
