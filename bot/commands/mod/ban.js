@@ -21,7 +21,7 @@ class BanCommand extends Command {
 				type: (arg, msg) => {
 					if (!arg) return ' ';
 					const member = this.client.util.resolveMembers(arg, msg.guild.members).first() || arg;
-					return member;
+					return member || null;
 				},
 				index: 0
 			},
@@ -64,8 +64,7 @@ class BanCommand extends Command {
 			return message.channel.send(`${emojis.no}** | ${message.author.username}**, You have reached **max limit** of today's **bans**\n:white_small_square:You can ban again in: **${moment.duration(time).format('hh [hours] mm [minutes] ss [seconds]')}**.`);
 		}
 		if (member === ' ') {
-			return message.channel.send(`${emojis.no}** | ${message.author.username}**, Correct **usage**:
-\`${this.client.commandHandler.prefix(message)}ban [@user/userName/userID] [days (1-7)] [reason] [--soft for softban]\``);
+			return message.channel.send(`${emojis.no}** | ${message.author.username}, Please type the member you want to ban.`);
 		}
 		if (!member) return message.channel.send(`${emojis.no}** | ${message.author.username}**, I can't find **${member}**.`);
 		if (member.id === message.author.id) return message.channel.send(`${emojis.no}** | ${message.author.username}**, You can't **ban** yourself.`);
