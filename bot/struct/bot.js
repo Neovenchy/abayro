@@ -22,8 +22,8 @@ exports.emojis = {
 };
 
 exports.channels = {
-	error: '552847958190718977',
-	logs: '552847960782929945'
+	error: '579400044814401576',
+	logs: '579400058416660500'
 };
 
 exports.assets = path => resolve(__dirname, '..', 'assets', path);
