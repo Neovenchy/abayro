@@ -11,7 +11,7 @@ class SModRoleCommand extends Command {
 			clientPermissions: ['MANAGE_GUILD'],
 			userPermissions: ['MANAGE_GUILD'],
 			description: {
-				content: 'Sets the server modrole'
+				content: 'Shows or sets the server modrole.'
 			},
 			args: [{
 				id: 'role',

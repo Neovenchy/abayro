@@ -13,13 +13,13 @@ class GoodbyeCommand extends Command {
 			clientPermissions: ['MANAGE_GUILD', 'EMBED_LINKS'],
 			userPermissions: ['MANAGE_GUILD'],
 			description: {
-				content: 'To edit and view leaving/goodbye settings',
+				content: 'Shows or edit and view leaving/goodbye settings.',
 				usage: 'turn | setchannel | type | setmsg',
-				examples: ['goodbye turn on","goodbye setchannel #welcome-goodbye', 'goodbye type embed', 'goodbye setmsg [member] left the server :(']
+				examples: ['turn on","setchannel #welcome-goodbye', 'type embed', 'setmsg [member] left the server :(']
 			},
 			args: [{
 				id: 'goodbye',
-				type: 'string'
+				type: ['turn', 'setchannel', 'type', 'setmsg']
 			},
 			{
 			    id: 'margs',
@@ -27,15 +27,19 @@ class GoodbyeCommand extends Command {
 			    index: 1
 			},
 			{
+				id: 'channel',
+				type: 'channelMention',
+				index: 1
+			},
+			{
 				id: 'gdbmsg',
-				match: 'rest'
+				match: 'rest',
+				index: 2
 			}]
 		});
 	}
 
-	async exec(message, {
-		goodbye, margs, gdbmsg
-	}) {
+	async exec(message, { goodbye, margs, gdbmsg, channel }) {
 		const prefix = this.handler.prefix(message);
 		if (!goodbye) {
 			  await message.channel.send(`${emojis.info} **|** Current **goodbyer settings** for **${message.guild.name}** is:`);
@@ -76,8 +80,6 @@ __**[Goodbyer usage:](https://abayro.xyz/commands/goodbyer/usage)**__
 				message.channel.send(`${emojis.yes} **|** **goodbye** has been **deactivated**.`);
 			}
 		} else if (goodbye === 'setchannel') {
-			const channel = message.mentions.channels.first();
-			if (!channel) return message.channel.send(`${emojis.no}**|** Please **mention** a channel`);
 			this.client.settings.set(message.guild.id, 'gdbchannel', channel.id);
 			message.channel.send(`${emojis.yes} **|** **goodbye channel** has been **set** to **${channel}**`);
 		} else if (goodbye === 'type') {

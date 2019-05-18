@@ -13,11 +13,11 @@ class LimitsCommand extends Command {
 			clientPermissions: ['MANAGE_GUILD'],
 			userPermissions: ['MANAGE_GUILD'],
 			description: {
-				content: 'To set ban/kick/mute command usage limit per day'
+				content: 'Show or set ban/kick/mute command usage limit per day.'
 			},
 			args: [{
 				id: 'limit',
-				type: 'string',
+				type: ['banlimit', 'kicklimit', 'mutelimit'],
 				index: 0
 			},
 			{
@@ -29,23 +29,24 @@ class LimitsCommand extends Command {
 	}
 
 	async exec(message, { limit, limitnum }) {
+		const prefix = this.handler.prefix(message);
 		if (!limit) {
 			await message.channel.send(`${emojis.info}** | ${message.author.username}**, Current **limits settings** for **${message.guild.name}** is:`);
 			message.channel.send(
 				new Embed()
 				 .setAuthor(message.guild.name, message.guild.iconURL)
-				 .addField('Banslimit:', `**${this.client.settings.get(message.guild.id, 'banlimit', 20)}** bans per day`, true)
-				 .addField('Kickslimit:', `**${this.client.settings.get(message.guild.id, 'kicklimit', 20)}** kicks per day`, true)
-				 .addField('Muteslimit:', `**${this.client.settings.get(message.guild.id, 'mutelimit', 20)}** mutes per day
+				 .addField('Bans limit:', `**${this.client.settings.get(message.guild.id, 'banlimit', 20)}** bans per day`, true)
+				 .addField('Kicks limit:', `**${this.client.settings.get(message.guild.id, 'kicklimit', 20)}** kicks per day`, true)
+				 .addField('Mutes limit:', `**${this.client.settings.get(message.guild.id, 'mutelimit', 20)}** mutes per day
 
 __**[Limits usage:](https://abayro.xyz/commands/media/usage)**__
 \`\`\`md
 > ━━━━━━━━━━━━━━━━━━━━━
-# Use ${this.client.commandHandler.prefix(message)}limits banlimit [1-20]
+# Use ${prefix}limits banlimit [1-20]
 * To set the bans limit per day
-# Use ${this.client.commandHandler.prefix(message)}limits kicklimit [1-20]
+# Use ${prefix}limits kicklimit [1-20]
 * To set the kicks limit per day
-# Use ${this.client.commandHandler.prefix(message)}limits mutelimit [1-20]
+# Use ${prefix}limits mutelimit [1-20]
 * To set the mutes limit per day
 > ━━━━━━━━━━━━━━━━━━━━━
 \`\`\``)

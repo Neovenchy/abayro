@@ -13,18 +13,23 @@ class WlcmCommand extends Command {
 			clientPermissions: ['MANAGE_GUILD', 'EMBED_LINKS'],
 			userPermissions: ['MANAGE_GUILD'],
 			description: {
-				content: 'To edit and view welcoming settings',
+				content: 'To edit and view welcoming settings.',
 				usage: 'turn | setchannel | type | setmsg',
-				examples: ['welcoming turn on","welcoming setchannel welcome', 'welcoming type embed', 'welcoming setmsg مرحبا بك في سيرفرنا']
+				examples: ['turn on', 'setchannel welcome', 'type embed', 'setmsg مرحبا بك في سيرفرنا']
 			},
 			args: [{
 				id: 'welcoming',
-				type: 'string'
+				type: ['turn', 'setchannel', 'type', 'setmsg']
 			},
 			{
 			    id: 'margs',
 			    match: 'word',
 			    index: 1
+			},
+			{
+				id: 'channel',
+				type: 'channelMention',
+				index: 1
 			},
 			{
 				id: 'wlcmsg',
@@ -33,7 +38,7 @@ class WlcmCommand extends Command {
 		});
 	}
 
-	async exec(message, { welcoming, margs, wlcmsg }) {
+	async exec(message, { welcoming, margs, wlcmsg, channel }) {
 		const prefix = this.handler.prefix(message);
 		if (!welcoming) {
 			await message.channel.send(`${emojis.info} **|** Current **welcomer settings** for **${message.guild.name}** is:`);
@@ -75,7 +80,6 @@ __**[Welcomer usage:](https://abayro.xyz/commands/welcoming/usage)**__
 				message.channel.send(`${emojis.yes} **|** **Welcoming** has been **deactivated**.`);
 			}
 		} else if (welcoming === 'setchannel') {
-			const channel = message.mentions.channels.first();
 			if (!channel) return message.channel.send(`${emojis.no} **|** Please **mention** a channel`);
 			this.client.settings.set(message.guild.id, 'wlcchannel', channel.id);
 			message.channel.send(`${emojis.yes} **|** **Welcoming channel** has been **set** to **${channel}**`);

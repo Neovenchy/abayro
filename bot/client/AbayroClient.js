@@ -1,8 +1,8 @@
 const { AkairoClient, CommandHandler, ListenerHandler, InhibitorHandler } = require('discord-akairo');
 const { staff, tokens } = require('../struct/bot.js');
 const { join } = require('path');
-const { createServer } = require('http');
-const { parse } = require('url');
+// const { createServer } = require('http');
+// const { parse } = require('url');
 const logger = require('../util/Logger');
 const database = require('../struct/Database');
 const SettingsProvider = require('../struct/SettingsProvider');
@@ -37,14 +37,14 @@ class AbayroClient extends AkairoClient {
 		this.inhibitorHandler = new InhibitorHandler(this, { inhibitorDirectory: join(__dirname, '..', 'inhibitors') });
 		this.listenerHandler = new ListenerHandler(this, { listenerDirectory: join(__dirname, '..', 'listeners') });
 
-		this.cmds = createServer((req, res) => {
-			if (parse(req.url).pathname === '/cmds') {
-				res.writeHead(200, { 'Content-Type': 'application/json' });
-				const cmds = this.commandHandler.modules.filter(cmd => cmd.category !== 'default').map(command => ({ command: command.id, desc: command.description, aliases: command.aliases, category: command.category.id }));
-				res.write(JSON.stringify(cmds));
-			}
-			res.end();
-		});
+		// this.cmds = createServer((req, res) => {
+		// 	if (parse(req.url).pathname === '/cmds') {
+		// 		res.writeHead(200, { 'Content-Type': 'application/json' });
+		// 		const cmds = this.commandHandler.modules.filter(cmd => cmd.category !== 'default').map(command => ({ command: command.id, desc: command.description, aliases: command.aliases, category: command.category.id }));
+		// 		res.write(JSON.stringify(cmds));
+		// 	}
+		// 	res.end();
+		// });
 	}
 
 	async _init() {

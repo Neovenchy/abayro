@@ -12,36 +12,35 @@ class ConfigsCommand extends Command {
 			clientPermissions: ['MANAGE_GUILD'],
 			userPermissions: ['MANAGE_GUILD'],
 			description: {
-				content: 'To enable/disable server config',
+				content: 'Show or enable/disable server config.',
 				usage: 'enable | disable',
-				examples: ['config enable lvlup-msg']
+				examples: ['enable lvlup-msg']
 			},
 			args: [{
 				id: 'mhandler',
-				type: 'string'
+				type: ['enable', 'disable']
 			},
 			{
 				id: 'margs',
-				match: 'word',
+				type: ['lvlup-msg'],
 				index: 1
 			}]
 		});
 	}
 
-	async exec(message, {
-		mhandler, margs
-	}) {
+	async exec(message, { mhandler, margs }) {
+		const prefix = this.handler.prefix(message);
 		if (!mhandler) {
 			await message.channel.send(`${emojis.info}** | ${message.author.username}**, Current **config** for **${message.guild.name}** is:`);
 			message.channel.send(
 				new Embed()
 					.setAuthor(message.guild.name, message.guild.iconURL)
-					.addField('lvlup-msg:', `**${this.client.settings.get(message.guild.id, 'lvlup-msg', 'disabled')}**
+					.addField('Level UP Message:', `**${this.client.settings.get(message.guild.id, 'lvlup-msg', 'disabled')}**
 
 __**[Config usage:](https://abayro.xyz/commands/serverlogs/usage)**__
 \`\`\`md
 > ━━━━━━━━━━━━━━━━━━━━━
-# Use ${this.client.commandHandler.prefix(message)}config [enable/disable] lvlup-msg
+# Use ${prefix}config [enable/disable] lvlup-msg
 * To disable/enable level-up-message
 > ━━━━━━━━━━━━━━━━━━━━━
 \`\`\``)

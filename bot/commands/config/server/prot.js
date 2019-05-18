@@ -13,25 +13,24 @@ class PROTCommand extends Command {
 			clientPermissions: ['MANAGE_GUILD'],
 			userPermissions: ['MANAGE_GUILD'],
 			description: {
-				content: 'to edit server-protection features',
+				content: 'Shows or edit server-protection features.',
 				usage: 'antibotjoin | antiadv | antispam || on/off',
-				examples: ['protection antibotjoin on', 'prot antiadv on', 'prot antispam on']
+				examples: ['antibotjoin on', 'antiadv on', 'antispam on']
 			},
 			args: [{
 				id: 'mhandler',
-				type: 'string'
+				type: ['antibotjoin', 'antiadv', 'antispam']
 			},
 			{
 			    id: 'margs',
-			    match: 'word',
+			    match: ['on', 'off'],
 			    index: 1
 			}]
 		});
 	}
 
-	async exec(message, {
-		mhandler, margs
-	}) {
+	async exec(message, { mhandler, margs }) {
+		const preifx = this.handler.prefix(message);
 		if (!mhandler) {
 			await message.channel.send(`${emojis.info}** | ${message.author.username}**, Current **protection settings** for **${message.guild.name}** is:`);
 			message.channel.send(
@@ -44,11 +43,11 @@ class PROTCommand extends Command {
 __**[Protection usage:](https://abayro.xyz/commands/media/usage)**__
 \`\`\`md
 > ━━━━━━━━━━━━━━━━━━━━━
-# Use ${this.client.commandHandler.prefix(message)}protection antibotjoin [on/off]
+# Use ${preifx}protection antibotjoin [on/off]
 * To turn on/off the antiBotJoin status
-# Use ${this.client.commandHandler.prefix(message)}protection antiadv [on/off]
+# Use ${preifx}protection antiadv [on/off]
 * To turn on/off the antiAdvertise status
-# Use ${this.client.commandHandler.prefix(message)}protection antispam [on/off]
+# Use ${preifx}protection antispam [on/off]
 * To turn on/off the antiSpam status
 > ━━━━━━━━━━━━━━━━━━━━━
 \`\`\``)

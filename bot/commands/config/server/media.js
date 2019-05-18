@@ -13,25 +13,29 @@ class MediaCommand extends Command {
 			clientPermissions: ['MANAGE_GUILD'],
 			userPermissions: ['MANAGE_GUILD'],
 			description: {
-				content: 'To set a channel for pictures & videos only',
+				content: 'Shows or set a channel for pictures & videos only.',
 				usage: 'turn | channel',
-				examples: ['media turn on', 'media channel #pics']
+				examples: ['turn on', 'channel #pics']
 			},
 			args: [{
 				id: 'autor',
-				type: 'string'
+				type: ['turn', 'channel']
 			},
 			{
 			    id: 'margs',
 			    match: 'word',
 			    index: 1
+			},
+			{
+				id: 'channel',
+				type: 'channelMention',
+				index: 1
 			}]
 		});
 	}
 
-	async exec(message, {
-		autor, margs
-	}) {
+	async exec(message, { autor, margs, channel }) {
+		const prefix = this.handler.prefix(message);
 		if (!autor) {
 			await message.channel.send(`${emojis.info}** | ${message.author.username}**, Current **media settings** for **${message.guild.name}** is:`);
 			message.channel.send(
@@ -43,9 +47,9 @@ class MediaCommand extends Command {
 __**[Media usage:](https://abayro.xyz/commands/media/usage)**__
 \`\`\`md
 > ━━━━━━━━━━━━━━━━━━━━━
-# Use ${this.client.commandHandler.prefix(message)}media turn [on/off]
+# Use ${prefix}media turn [on/off]
 * To turn on/off the media status
-# Use ${this.client.commandHandler.prefix(message)}media channel [#channel]
+# Use ${prefix}media channel [#channel]
 * To select the server media channel.
 > ━━━━━━━━━━━━━━━━━━━━━
 \`\`\``)
@@ -62,7 +66,6 @@ __**[Media usage:](https://abayro.xyz/commands/media/usage)**__
 				message.channel.send(`${emojis.yes}** | ${message.author.username},** **Media** has been **deactivated**.`);
 			}
 		} else if (autor === 'channel') {
-			const channel = message.mentions.channels.first();
 			if (!channel) return message.channel.send(`${emojis.no}** | ${message.author.username},** Please **mention** a channel`);
 			this.client.settings.set(message.guild.id, 'mediachnl', channel.id);
 			message.channel.send(`${emojis.yes}** | ${message.author.username},** **Media channel** has been set to **${channel}**.`);

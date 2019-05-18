@@ -14,17 +14,17 @@ class AutoRoleCommand extends Command {
 			clientPermissions: ['MANAGE_GUILD'],
 			userPermissions: ['MANAGE_GUILD'],
 			description: {
-				content: 'To turn/set server autorole',
+				content: 'Show, turn and set server autorole.',
 				usage: 'turn | set',
-				examples: ['autorole turn on', 'autorole setrole [role]']
+				examples: ['turn on', 'setrole [role]']
 			},
 			args: [{
 				id: 'autor',
-				type: 'string'
+				type: ['turn', 'setrole']
 			},
 			{
-			    id: 'margs',
-			    match: 'word',
+				id: 'margs',
+				match: 'word',
 			    index: 1
 			},
 			{
@@ -35,9 +35,8 @@ class AutoRoleCommand extends Command {
 		});
 	}
 
-	async exec(message, {
-		autor, margs, role
-	}) {
+	async exec(message, { autor, margs, role }) {
+		const prefix = this.handler.prefix(message);
 		if (!autor) {
 			 await message.channel.send(`${emojis.info}** | ${message.author.username},** Current **autorole settings** for **${message.guild.name}** is:`);
 			message.channel.send(
@@ -49,9 +48,9 @@ class AutoRoleCommand extends Command {
 __**[Autorole usage:](https://abayro.xyz/commands/autorole/usage)**__
 \`\`\`md
 > ━━━━━━━━━━━━━━━━━━━━━
-# Use ${this.client.commandHandler.prefix(message)}autorole turn [on/off]
+# Use ${prefix}autorole turn <on/off>
 * To turn on/off the autorole status
-# Use ${this.client.commandHandler.prefix(message)}autorole setrole [roleName/roleID/roleMention]
+# Use ${prefix}autorole setrole <role>
 * To select the autorole.
 > ━━━━━━━━━━━━━━━━━━━━━
 \`\`\``, true)

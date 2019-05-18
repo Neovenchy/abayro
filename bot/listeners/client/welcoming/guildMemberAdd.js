@@ -1,6 +1,7 @@
 const { Listener } = require('discord-akairo');
 const moment = require('moment');
 const { RichEmbed } = require('discord.js');
+
 class guildMemberAddEvent extends Listener {
 	constructor() {
 		super('guildMemberAdd', {
@@ -10,6 +11,7 @@ class guildMemberAddEvent extends Listener {
 		});
 	}
 
+	/** @param {import('discord.js').GuildMember} member */
 	exec(member) {
 		 if (this.client.settings.get(member.guild.id, 'autorole') === 'on') {
 		    const role = member.guild.roles.find(r => r.name === this.client.settings.get(member.guild.id, 'autorolest'));
@@ -18,7 +20,7 @@ class guildMemberAddEvent extends Listener {
 			}, 10000); // To avoid rate limits
 		}
 		 if (this.client.settings.get(member.guild.id, 'antibotj') === 'on') {
-		    if (member.user.bot) return member.kick();
+		    if (member.user.bot && member.kickable) member.kick('• Abayro Protection (AntiBot Join) •');
 		 }
 		if (this.client.settings.get(member.guild.id, 'wlcstatus') === 'off') return;
 		if (this.client.settings.get(member.guild.id, 'wlcstatus') === 'on') {

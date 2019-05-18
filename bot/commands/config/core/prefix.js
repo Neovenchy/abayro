@@ -11,7 +11,7 @@ class SprefixCommand extends Command {
 			clientPermissions: ['MANAGE_GUILD'],
 			userPermissions: ['MANAGE_GUILD'],
 			description: {
-				content: 'Sets the bot prefix in the guild.'
+				content: 'Shows or sets the bot prefix in the guild.'
 			},
 			args: [{
 				id: 'newPrefix',
