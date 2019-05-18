@@ -17,22 +17,11 @@ class ShortCommand extends Command {
 			},
 			args: [{
 				id: 'link',
-				type: 'url',
-				prompt: {
-					start: message => `:link: | **\`${message.author.username}\`, Please send the url.\nor type \`\`cancel\`\` to cancel**.`,
-					retry: message => `${emojis.no} | **\`${message.author.username}\`, Invaild URL! Please try again.\n\nor type \`\`cancel\`\` to cancel**.`,
-					retries: 1
-				}
+				type: 'url'
 			},
 			{
 				id: 'custom',
-				type: 'string',
-				prompt: {
-					start: message => `:link: | **\`${message.author.username}\`, Type the custom url\nor type \`\`cancel\`\` to cancel**.`,
-					retry: message => `${emojis.no} | **\`${message.author.username}\`, Invaild custom URL! Please try again.\nor type \`\`cancel\`\` to cancel`,
-					retries: 1,
-					optional: true
-				}
+				type: 'string'
 			}]
 		});
 	}
