@@ -1,8 +1,8 @@
 {
   "name": "abayro",
-  "version": "4.0.0",
+  "version": "4.0.0-beta",
   "description": "Multi Purpose Bot",
-  "main": "bot/abayro.js",
+  "main": "src/abayro.js",
   "private": false,
   "repository": {
     "type": "git",
@@ -48,7 +48,7 @@
   },
   "scripts": {
     "test": "yarn lint",
-    "lint": "eslint . --fix",
+    "lint": "eslint src --fix",
     "build": "sh ./deploy/start.sh",
     "start": "pm2 start pm2.json"
   }
