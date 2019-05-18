@@ -1,5 +1,5 @@
 require('dotenv').config();
-const { version } = require('../../package.json');
+const { version } = require('../../../package.json');
 const { version: djsVersion } = require('discord.js');
 const { resolve } = require('path');
 

@@ -1,5 +1,5 @@
 const { AkairoClient, CommandHandler, ListenerHandler, InhibitorHandler } = require('discord-akairo');
-const { staff, tokens } = require('../struct/bot.js');
+const { staff, tokens } = require('../struct/bot');
 const { join } = require('path');
 // const { createServer } = require('http');
 // const { parse } = require('url');
