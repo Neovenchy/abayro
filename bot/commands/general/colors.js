@@ -32,32 +32,14 @@ class ColorsCommand extends Command {
 		});
 	}
 
+	/**
+	 * @param {import('discord.js').Message} message
+	 */
 	async exec(message, { method, name }) {
 		if (!method || method === 'show') {
-			let ch;
 			const cc = message.guild.roles.filter(r => !isNaN(r.name));
+			const ch = 110 + ((cc.size ? cc.size : 0) * 4);
 
-			if (cc.size > 1 && cc.size <= 10) {
-				ch = 150;
-			} else if (cc.size >= 1 && cc.size <= 20) {
-				ch = 190;
-			} else if (cc.size >= 1 && cc.size <= 30) {
-				ch = 230;
-			} else if (cc.size >= 1 && cc.size <= 40) {
-				ch = 270;
-			} else if (cc.size >= 1 && cc.size <= 50) {
-				ch = 310;
-			} else if (cc.size >= 1 && cc.size <= 60) {
-				ch = 350;
-			} else if (cc.size >= 1 && cc.size <= 70) {
-				ch = 390;
-			} else if (cc.size >= 1 && cc.size <= 80) {
-				ch = 430;
-			} else if (cc.size >= 1 && cc.size <= 90) {
-				ch = 470;
-			} else if (cc.size >= 1 && cc.size <= 100) {
-				ch = 510;
-			}
 			const { Image } = Canvas;
 			const canvas = Canvas.createCanvas(500, ch);
 			const ctx = canvas.getContext('2d');
