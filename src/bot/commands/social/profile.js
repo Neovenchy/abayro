@@ -6,7 +6,7 @@ const { read, MIME_PNG } = require('jimp');
 const { wrapText, trimString } = require('../../util/Util');
 const { createCanvas, registerFont, Image } = require('canvas');
 // TODO: use tsubaki (https://www.npmjs.com/package/tsubaki) on fs
-const fs = require('fs');
+const { readFile } = require('fs');
 
 
 class ProfileCommand extends Command {
@@ -63,7 +63,7 @@ class ProfileCommand extends Command {
 		const username = trimString(user.username, 15);
 		const avatarURL = user.displayAvatarURL.endsWith('.webp') ? `${user.displayAvatarURL.slice(5, -20)}.png` : user.displayAvatarURL;
 
-		fs.readFile(assets('images/profile.png'), (err, Background) => {
+		readFile(assets('images/profile.png'), (err, Background) => {
 			if (err) throw new Error(`[FS: READING PROIFLE] ${err}`);
 			 const base = new Image();
 			 base.src = Background;
@@ -131,8 +131,8 @@ class ProfileCommand extends Command {
 
 					/* XP BAR*/
 					ctx.fillStyle = pcolor;
-					ctx.fillRect(0, 593, textxp, 8);
-
+					ctx.fillRect(0, 593, (593 / 100) * textxp / Math.ceil((textlevel / 0.115) ** 2) * 100, 8);
+					this.client.logger.info(textxp / Math.ceil((textlevel / 0.115) ** 2) * 100);
 
 					/* === BADGES CANVAS === */
 
