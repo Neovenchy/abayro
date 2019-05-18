@@ -69,7 +69,6 @@ class HelpCommand extends Command {
 				};
 				return allhelplist.push(`**${categoryEmoji.emoji} ${category.id.replace(/(\b\w)/gi, lc => lc.toUpperCase())} Commands**:\n\n**${category.filter(cmd => cmd.aliases.length).map(cmd => `❯ \`${this.handler.prefix(message)}${cmd.aliases[0]}\` → ${cmd.description.content}`).join('\n')}\n**\n**~~━~~~~━~~~~━~~~~━~~~~━~~~~━~~~~━~~~~━~~~~━~~~~━~~~~━~~~~━~~~~━~~~~━~~~~━~~~~━~~~~━~~~~━~~~~━~~~~━~~~~━~~**\n`);
 			});
-			// TODO: if you want less message sents just do sort() in allhelplist.
 			allhelplist.sort((a, b) => a.length - b.length);
 			const store = [];
 			allhelplist.forEach(categroy => {
@@ -80,22 +79,6 @@ class HelpCommand extends Command {
 				}
 			});
 			return message.author.send(store.join('').toString());
-		}
-		if (command.id === 'welcoming') {
-			return message.channel.send(`\`\`\`md
-# Use ${prefix}welcoming turn [on/off]
-To turn on/off the welcoming status
-# Use ${prefix}welcoming setchannel [#channel]
-To change the welcoming channel
-# Use ${prefix}welcoming type [text/embed/image]
-To change the welcoming type
-# Use ${prefix}welcoming setmsg [message]
-To set the welcoming message.
-> Welcoming message placeholders:
-+ [member] → Mentions the joined member
-+ [membername] → Sends the joined member username
-+ [guild] → Sends the name of the guild
-\`\`\``);
 		}
 		if (!command.aliases) return message.channel.send(`${emojis.no} | No command with the name **${command}** was found.`);
 		const embed = new Embed()
