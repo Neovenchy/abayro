@@ -1,5 +1,5 @@
 const { Command } = require('discord-akairo');
-const { RichEmbed } = require('discord.js');
+const Embed = require('../../util/Embed');
 const moment = require('moment');
 
 class ServerInfoCommand extends Command {
@@ -43,7 +43,7 @@ class ServerInfoCommand extends Command {
 			emojis = message.channel.guild.emojis.map(e => e).join(' ');
 		}
 
-		const embed = new RichEmbed()
+		const embed = new Embed()
 			.setThumbnail(message.guild.iconURL)
 			.setAuthor(message.guild.name, message.guild.iconURL)
 			.setTitle('Server info:')
@@ -66,7 +66,7 @@ class ServerInfoCommand extends Command {
 			.setTimestamp()
 			.setColor('#307FFF');
 		await message.channel.send(embed);
-		message.channel.send(new RichEmbed().setDescription(`• **Emojis** : ${emojis}`));
+		message.channel.send(new Embed().setDescription(`• **Emojis** : ${emojis}`));
 	}
 }
 

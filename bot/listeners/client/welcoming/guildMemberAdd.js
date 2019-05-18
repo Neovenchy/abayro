@@ -1,6 +1,6 @@
 const { Listener } = require('discord-akairo');
 const moment = require('moment');
-const { RichEmbed } = require('discord.js');
+const Embed = require('../../../util/Embed');
 
 class guildMemberAddEvent extends Listener {
 	constructor() {
@@ -33,7 +33,7 @@ class guildMemberAddEvent extends Listener {
 				wlcmChannel.send(msg.replace('[member]', member).replace('[membername]', member.user.username).replace('[server]', member.guild.name));
 			} else if (this.client.settings.get(member.guild.id, 'wlctype') === 'embed') {
 				wlcmChannel.send(msg.replace('[member]', member).replace('[membername]', member.user.username).replace('[server]', member.guild.name));
-				const embed = new RichEmbed()
+				const embed = new Embed()
 					.setAuthor('New member joined !', member.guild.iconURL)
 					.addField('**❯** Creation date:', `\`${moment(member.user.createdAt).format('D/M/YYYY h:mm a')}\`\n**Created ${moment(member.user.createdAt).fromNow()}**`, true)
 					.addField('**❯** Member ID:', member.id, true)

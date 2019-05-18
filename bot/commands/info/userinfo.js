@@ -1,6 +1,6 @@
 const { Command } = require('discord-akairo');
 const moment = require('moment');
-const { RichEmbed } = require('discord.js');
+const Embed = require('../../util/Embed');
 const { emojis } = require('../../struct/bot');
 
 class UserInfoCommand extends Command {
@@ -53,7 +53,7 @@ class UserInfoCommand extends Command {
 
 		if (member.user.bot) return message.channel.send(`${emojis.no} | **This is \`userInfo\` command, no bots please**.`);
 
-		const embed = new RichEmbed()
+		const embed = new Embed()
 			.setColor('#307FFF')
 			.setAuthor(member.user.tag, member.user.displayAvatarURL)
 			.setThumbnail(member.user.displayAvatarURL)

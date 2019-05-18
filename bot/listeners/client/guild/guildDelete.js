@@ -1,6 +1,6 @@
 const { Listener } = require('discord-akairo');
 const { channels } = require('../../../struct/bot');
-const Discord = require('discord.js');
+const Embed = require('../../util/Embed');
 
 class guildCreateAddEvent extends Listener {
 	constructor() {
@@ -12,7 +12,7 @@ class guildCreateAddEvent extends Listener {
 	}
 
 	exec(guild) {
-		const embed = new Discord.RichEmbed()
+		const embed = new Embed()
 			.setColor('RED')
 			.setTitle('Abayro left a server.')
 			.setDescription(`

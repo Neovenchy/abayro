@@ -1,6 +1,6 @@
 const { Listener } = require('discord-akairo');
 const { channels } = require('../../../struct/bot');
-const { RichEmbed } = require('discord.js');
+const Embed = require('../../util/Embed');
 
 class guildCreateAddEvent extends Listener {
 	constructor() {
@@ -16,7 +16,7 @@ class guildCreateAddEvent extends Listener {
      * @param {import('discord.js').Guild} guild
      */
 	exec(guild) {
-		const embed = new RichEmbed()
+		const embed = new Embed()
 			.setColor('GREEN')
 			.setTitle('Abayro joined a new server!')
 			.setDescription(`

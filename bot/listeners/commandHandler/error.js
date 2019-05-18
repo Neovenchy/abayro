@@ -1,6 +1,6 @@
 const { Listener } = require('discord-akairo');
 const { channels } = require('../../struct/bot');
-const { RichEmbed } = require('discord.js');
+const Embed = require('../../util/Embed');
 
 class ErrorListner extends Listener {
 	constructor() {
@@ -17,7 +17,7 @@ class ErrorListner extends Listener {
             const errorMessage = error.message.replace(/[\u001b\u009b][[()#;?]*(?:[0-9]{1,4}(?:;[0-9]{0,4})*)?[0-9A-ORZcf-nqry=><]/g, ''); //eslint-disable-line
 			const id = command.id + errorMessage.length + command.id.length;
 			this.client.logger.error(error);
-			message.client.channels.get(channels.error).send(new RichEmbed()
+			message.client.channels.get(channels.error).send(new Embed()
 				.setTitle(`**Error ${command.id.replace(/(\b\w)/gi, lc => lc.toUpperCase())}** \`\`${id}\`\``)
 				.setURL('https://abayro.xyz/command-error/')
 				.setDescription(`\`\`\`js\n${errorMessage}\`\`\``)
