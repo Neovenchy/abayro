@@ -85,7 +85,7 @@ class HelpCommand extends Command {
 			.setAuthor(`${command.aliases[0].replace(/(\b\w)/gi, lc => lc.toUpperCase())} Command Help`, 'https://cdn.discordapp.com/emojis/520644584632745994.png?v=1')
 			.addField('• Description:', command.description.content || '\u200b');
 		if (command.aliases.length > 1) embed.addField('• Aliases:', `\`${command.aliases.join('` `')}\``, true);
-		if (command.description.examples && command.description.examples.length) embed.addField('• Examples:', `\`${prefix}${command.aliases[0]} ${command.description.examples.join(`\`\n\`${command.aliases[0]} `)}\``, true);
+		if (command.description.examples && command.description.examples.length) embed.addField('• Examples:', `\`${command.aliases[0]} ${command.description.examples.join(`\`\n\`${command.aliases[0]} `)}\``, true);
 		if (command.description.usage) embed.addField('• Usage:', `\`${prefix}${command.aliases[0]} ${command.description.usage}\``, true);
 		if (command.userPermissions && command.userPermissions > 1) embed.addField(`• Required Permission`, command.userPermissions.join(' ,'));
 
