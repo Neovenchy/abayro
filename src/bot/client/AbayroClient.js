@@ -10,12 +10,22 @@ const SettingsProvider = require('../struct/SettingsProvider');
 class AbayroClient extends AkairoClient {
 	constructor() {
 		super({
-			ownerID: staff,
+			ownerID: staff
+		}, {
 			messageCacheMaxSize: 1000,
 			disableEveryone: true,
-			disableEvents: ['TYPING_START']
-		}, {
-			disableEveryone: true
+			disabledEvents: [
+				'TYPING_START',
+				'GUILD_SYNC',
+				'USER_NOTE_UPDATE',
+				'RELATIONSHIP_ADD',
+				'RELATIONSHIP_REMOVE',
+				'CHANNEL_PINS_UPDATE',
+				'VOICE_STATE_UPDATE',
+				'VOICE_SERVER_UPDATE',
+				'PRESENCE_UPDATE',
+				'USER_SETTINGS_UPDATE'
+			]
 		});
 
 		this.logger = logger;
