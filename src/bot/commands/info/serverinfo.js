@@ -49,17 +49,17 @@ class ServerInfoCommand extends Command {
 			.setTitle('Server info:')
 			.setDescription(`
 • **Server name** : \`${message.guild.name}\`
-• **CreatedAt** : \`${moment(message.guild.createdAt).format('D/M/YYYY h:mm a')}\`
-• **You joinedAt** : \`${moment(message.member.joinedAt).format('D/M/YYYY h:mm a')}\`
+• **Created at** : \`${moment(message.guild.createdAt).format('D/M/YYYY h:mm a')}\`
+• **Joined at** : \`${moment(message.member.joinedAt).format('D/M/YYYY h:mm a')}\`
 • **Total members** : \`${message.guild.memberCount}\`
 • **Last member **: ${Array.from(message.channel.guild.members.values()).sort((a, b) => b.joinedAt - a.joinedAt).map(m => `<@!${m.id}>`)
 		.splice(0, 1)}
 • **Server Owner** : \`${message.guild.owner.user.username}\`
 • **Rooms** : \`${message.guild.channels.filter(m => m.type === 'text').size} Text | ${message.guild.channels.filter(m => m.type === 'voice').size} Voice\`
-• **Categorys** : \`${message.guild.channels.filter(m => m.type === 'category').size}\`
+• **Categories** : \`${message.guild.channels.filter(m => m.type === 'category').size}\`
 • **Roles** : \`${message.guild.roles.size}\`
 • **Region** : ${region[message.guild.region]}
-• **guildID** : \`${message.guild.id}\`
+• **Guild ID** : \`${message.guild.id}\`
 • **Verification Level** : \`${verifLevels[message.guild.verificationLevel]}\`
 `)
 			.setFooter(message.author.username, message.author.avatarURL)

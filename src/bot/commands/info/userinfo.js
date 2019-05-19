@@ -66,7 +66,7 @@ class UserInfoCommand extends Command {
 • **Discrim** : \`#${member.user.discriminator}\`
 • **Playing status** : \`${game}\`
 • **Status** : ${status}
-• **CreatedAt** : \`${moment(member.createdAt).format('D/M/YYYY h:mm a')}\`
+• **Created at** : \`${moment(member.createdAt).format('D/M/YYYY h:mm a')}\`
 • **Roles** : ${roles}
 `)
 			.setFooter(message.author.username, message.author.avatarURL)

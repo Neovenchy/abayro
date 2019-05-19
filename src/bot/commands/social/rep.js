@@ -40,7 +40,7 @@ class RepCommand extends Command {
 		const time = cooldown - (Date.now() - daily);
 
 		if (daily !== null && time > 0) {
-			return message.channel.send(`${emojis.info} **|** You can give another **rep points** in **${moment.duration(time).format('hh [hours] mm [minutes] ss [seconds]')}**.`);
+			return message.channel.send(`${emojis.info} **|** You can give another **reputation point** in **${moment.duration(time).format('hh [hours] mm [minutes] ss [seconds]')}**.`);
 		}
 
 		await update(message.author.id, 'repdaily', Date.now());
