@@ -16,9 +16,9 @@ class CreditsCommand extends Command {
 				usage: ['[user]']
 			},
 			args: [{
-				'id': 'user',
-				'type': 'user',
-				'default': message => message.author
+				'id': 'member',
+				'type': 'member',
+				'default': message => message.member
 			},
 			{
 				id: 'transferamount',
@@ -30,13 +30,12 @@ class CreditsCommand extends Command {
 	/**
 	 *
 	 * @param {import('discord.js').Message} message
-	 * @param {import('discord.js').User} [user={user}]
 	 */
-	async exec(message, { user, transferamount }) {
-		if (user.bot) return message.channel.send(`${emojis.no}** | Bots** does not have **pounds**.`);
-		if (transferamount) return this.handler.modules.get('transfer').exec(message, { user, transferamount }, false);
-		const credits = await find(user.id, 'credits', '0');
-		return message.channel.send(`${emojis.pound} **|** ${user.id === message.author.id ? `${message.author.username}, Your` : `${user.username}'s`} **pounds** balance is £${credits}`);
+	async exec(message, { member, transferamount }) {
+		if (member.user.bot) return message.channel.send(`${emojis.no}** | Bots** do not have **pounds**.`);
+		if (transferamount) return this.handler.modules.get('transfer').exec(message, { member, transferamount }, false);
+		const credits = await find(member.id, 'credits', '0');
+		return message.channel.send(`${emojis.pound} **|** ${member.id === message.author.id ? `${message.author.username}, Your` : `${member.nickname}'s`} **pounds** balance is £${credits}`);
 	}
 }
 

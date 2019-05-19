@@ -27,9 +27,13 @@ class guildCreateAddEvent extends Listener {
 **- Abayro is now in** : \`${this.client.guilds.size}\` Servers`)
 			.setFooter('Abayro', this.client.user.avatarURL);
 		this.client.channels.get(channels.logs).send(embed);
-		const defChannel = guild.defaultChannel;
-		if (!defChannel) return;
-		defChannel.send(`Hello! I'am **${this.client.user.username}**.\n▫ Start using me by typing: **${this.client.user.tag} help**\n▫ My website is: ** https://abayro.xyz **\n▫ Support, Feedback, bugs and changelog goes here: https://discord.gg/USrsqKG`);
+		if (guild.defaultChannel) {
+			try {
+				guild.defChannel.send(`Hello! I'am **${this.client.user.username}**.\n▫ Start using me by typing: **${this.client.user.tag} help**\n▫ My website is: ** https://abayro.xyz **\n▫ Support, feedback, bugs and changelog goes here: https://discord.gg/USrsqKG`);
+			} catch (e) {
+				throw new Error(e);
+			}
+		}
 	}
 }
 

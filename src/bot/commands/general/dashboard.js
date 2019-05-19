@@ -21,7 +21,7 @@ class DashboardCommand extends Command {
  * @param {import('discord.js').Message} message
  */
 	exec(message) {
-		return message.channel.send(`${emojis.info} **|** You can **control** ${message.guild.name} from this **link**:\nhttps://abayro.xyz/guilds/${guild.id}/manage`);
+		return message.channel.send(`${emojis.info} **|** You can **control** ${message.guild.name} from this **link**:\nhttps://abayro.xyz/guilds/${message.guild.id}/manage`);
 	}
 }
 module.exports = DashboardCommand;
