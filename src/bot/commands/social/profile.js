@@ -38,8 +38,6 @@ class ProfileCommand extends Command {
 	 */
 	async exec(message, { user }) {
 		if (user.bot) return message.channel.send(`${emojis.no} | **Bots** doesn't have a **profile card**`);
-		// if(user instanceof User) return message.channel.send(`${emojis.no} | Not a vaild user`)
-
 
 		/*  Getting User Data  */
 		const _user = await find(user.id, '', false); // this will search for all things if there's no user this will return false

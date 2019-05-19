@@ -19,19 +19,19 @@ class TransferCommand extends Command {
 				{
 					id: 'user',
 					type: 'user',
-					prompt: {
-						start: 'Who should I transfer to?',
-						retry: `${emojis.no} | **That's not a member**`
-					},
+					// prompt: {
+					// 	start: 'Who should I transfer to?',
+					// 	retry: `${emojis.no} | **That's not a member**`
+					// },
 					index: 0
 				},
 				{
 					id: 'transferamount',
 					type: 'number',
-					prompt: {
-						start: 'Type the credits you want to transfer',
-						retry: `${emojis.no} | **That's not a correct amount**`
-					},
+					// prompt: {
+					// 	start: 'Type the credits you want to transfer',
+					// 	retry: `${emojis.no} | **That's not a correct amount**`
+					// },
 					index: 1
 				}
 			]

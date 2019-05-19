@@ -14,14 +14,16 @@ class TopCommand extends Command {
 			channelRestriction: 'guild',
 			clientPermissions: ['EMBED_LINKS'],
 			description: {
-				content: 'Shows top 10 text & voice leaders in your server!',
-				examples: ['', 'text', 'voice'],
-				usage: ['[text/voice]']
+				content: 'Shows leaders in the server you are in.',
+				examples: ['', 'text 5', 'voice 1'],
+				usage: ['<text/voice> [page]']
 			},
 			args: [{
 				'id': 'method',
-				'type': ['text', 'voice'],
-				'default': 'text'
+				'type': 'lowercase',
+				'match': 'word',
+				'default': 'text',
+				'index': 0
 			}, {
 				'id': 'page',
 				'type': 'integer',
@@ -44,7 +46,7 @@ class TopCommand extends Command {
 				}
 			}
 		});
-		if (leader.length < 1) return message.channel.send(`${no} | Seems that **${message.guild.name}** doesn't have a ${method} leaderboard yet!`);
+		if (leader.length < 1) return message.channel.send(`${no} | ${page === 1 ? `Seems that **${message.guild.name}** doesn't have a ${method} leaderboard yet!` : 'Page doesn\'t exist.'}`);
 		const embed = new Embed()
 			.setAuthor(`global ${method} leaderboard`.toUpperCase(), message.guild.iconURL)
 			.setDescription(`\`\`\`md\n* ━━━━━━━
