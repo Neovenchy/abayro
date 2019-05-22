@@ -21,7 +21,9 @@
   },
   "homepage": "https://github.com/Abady321x123/abayro#README",
   "dependencies": {
+    "@abayro/ms": "^2.2.1",
     "canvas": "^2.5.0",
+    "common-tags": "^1.8.0",
     "dblapi.js": "^2.2.0",
     "discord-akairo": "^7.5.6",
     "discord.js": "^11.5.0",
@@ -29,14 +31,14 @@
     "hex-colors-info": "^1.0.2",
     "isgd": "^1.1.3",
     "jimp": "^0.6.4",
+    "lyricist": "^2.2.2",
     "moment": "^2.24.0",
     "moment-duration-format": "^2.2.2",
     "pg": "^7.11.0",
     "sequelize": "^5.8.6",
     "url": "^0.11.0",
     "weather-js": "^2.0.0",
-    "winston": "^3.1.0",
-    "lyricist": "^2.2.2"
+    "winston": "^3.1.0"
   },
   "devDependencies": {
     "eslint": "^5.16.0",
