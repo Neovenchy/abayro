@@ -35,14 +35,14 @@ class ConfigsCommand extends Command {
 			message.channel.send(
 				new Embed()
 					.setAuthor(message.guild.name, message.guild.iconURL)
-					.addField('Level UP Message:', `**${this.client.settings.get(message.guild.id, 'lvlup-msg', 'disabled')}**
+					.addField('LevelUP Message:', `**${this.client.settings.get(message.guild.id, 'lvlup-msg', 'disabled')}**
 
 __**[Config usage:](https://abayro.xyz/commands/serverlogs/usage)**__
 \`\`\`md
-> ━━━━━━━━━━━━━━━━━━━━━
-# Use ${prefix}config [enable/disable] lvlup-msg
+> ━━━━━━
+# Use ${prefix}config <enable/disable> lvlup-msg
 * To disable/enable level-up-message
-> ━━━━━━━━━━━━━━━━━━━━━
+> ━━━━━━
 \`\`\``)
 					.setFooter(`Requested by ${message.author.username}`, message.author.avatarURL)
 					.setTimestamp()

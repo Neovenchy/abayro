@@ -20,7 +20,7 @@ class guildMemberAddEvent extends Listener {
 			}, 10000); // To avoid rate limits
 		}
 		 if (this.client.settings.get(member.guild.id, 'antibotj') === 'on') {
-		    if (member.user.bot && member.kickable) member.kick('• Abayro Protection (AntiBot Join) •');
+		    if (member.user.bot && member.kickable) member.kick('Abayro protection: Anti-bot joining');
 		 }
 		if (this.client.settings.get(member.guild.id, 'wlcstatus') === 'off') return;
 		if (this.client.settings.get(member.guild.id, 'wlcstatus') === 'on') {
