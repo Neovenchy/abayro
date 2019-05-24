@@ -1,5 +1,5 @@
 const { Command } = require('discord-akairo');
-const Embed = require('../../../util/Embed');
+const Embed = require('../../util/Embed');
 
 class mutelistCommand extends Command {
 	constructor() {
