@@ -25,7 +25,9 @@ class AddRoleCommand extends Command {
 				}
 			],
 			clientPermissions: ['MANAGE_ROLES', 'MANAGE_GUILD'],
-			userPermissions: ['MANAGE_ROLES']
+			userPermissions(message) {
+				if (message.member.roles.some(role => this.client.settings.get(message.guild.id, 'modrole') === role.name) || message.member.hasPermission('MANAGE_ROLES')) return true;
+		   }
 		});
 	}
 

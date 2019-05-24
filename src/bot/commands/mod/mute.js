@@ -33,8 +33,8 @@ class MuteCommand extends Command {
 			}],
 			clientPermissions: ['MANAGE_ROLES'],
 			userPermissions(message) {
-				if (message.member.roles.exists(role => role.name === this.client.settings.get(message.guild.id, 'modrole')) || message.member.hasPermission('MANAGE_ROLES')) return true;
-		 }
+				if (message.member.roles.some(role => this.client.settings.get(message.guild.id, 'modrole') === role.name) || message.member.hasPermission('MANAGE_ROLES')) return true;
+		   }
 		});
 	}
 
@@ -51,7 +51,7 @@ class MuteCommand extends Command {
 			return message.channel.send(`${emojis.no}** | ${message.author.username}**, You have reached **max limit** of today's **mutes**\n:white_small_square:You can ban again in: **${moment.duration(time).format('hh [hours] mm [minutes] ss [seconds]')}**.`);
 		}
 		if (member === ' ') {
-			return message.channel.send(`${emojis.no}** | ${message.author.username}, Please type the member you want to mute.`);
+			return message.channel.send(`${emojis.no}** | ${message.author.username}, Please enter the member **ID**/**USERNAME**/**MENTION** you want to mute.`);
 		}
 		if (!member) return message.channel.send(`${emojis.no}** | ${message.author.username}**, I can't find **${member}**.`);
 		if (member.id === message.author.id) return message.channel.send(`${emojis.no}** | ${message.author.username}**, You can't **mute** yourself.`);
@@ -62,15 +62,16 @@ class MuteCommand extends Command {
 				name: 'Muted',
 				color: 'BLACK'
 			});
+		} else if (muteRole) {
+			await member.addRole(muteRole.id).catch(error => {
+				message.channel.send(`:x: | **Failed** to **mute** ${member}.\n**Error:** ${error}`);
+			});
+			await increase(message.author.id, 'mutes', 1);
+			if (mutes >= this.client.settings.get(message.guild.id, 'mutelimit')) {
+				await update(message.author.id, 'mlimit', Date.now());
+			}
+			message.channel.send(`${emojis.yes}** | ${message.author.username}**, I've **muted** ${member}.`);
 		}
-		await member.addRole(muteRole.id).catch(error => {
-			message.channel.send(`:x: | **Failed** to **mute** ${member}.\n**Error:** ${error}`);
-		});
-		await increase(message.author.id, 'mutes', 1);
-		if (mutes >= this.client.settings.get(message.guild.id, 'mutelimit')) {
-			await update(message.author.id, 'mlimit', Date.now());
-		}
-		message.channel.send(`${emojis.yes}** | ${message.author.username}**, I've **muted** ${member}.`);
 	}
 }
 

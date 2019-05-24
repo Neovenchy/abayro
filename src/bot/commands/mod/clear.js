@@ -20,8 +20,8 @@ class ClearCommand extends Command {
 			}],
 			clientPermissions: ['MANAGE_MESSAGES'],
 			userPermissions(message) {
-				if (message.member.roles.exists(role => role.name === this.client.settings.get(message.guild.id, 'modrole')) || message.member.hasPermission('MANAGE_MESSAGES')) return true;
-		 }
+				if (message.member.roles.some(role => this.client.settings.get(message.guild.id, 'modrole') === role.name) || message.member.hasPermission('MANAGE_MESSAGES')) return true;
+		   }
 		});
 	}
 

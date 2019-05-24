@@ -1,45 +1,34 @@
-// const { Command } = require('discord-akairo');
-// const { emojis } = require('../../struct/bot');
-// class mutecCommand extends Command {
-// 	constructor() {
-// 		super('mutec', {
-// 			aliases: ['mutec'],
-// 			cooldown: 5000,
-// 			ratelimit: 1,
-// 			category: 'moderation',
-// 			channelRestriction: 'guild',
-// 			description: {
-// 				content: 'Lock the message channel'
+const { Command } = require('discord-akairo');
+const { emojis: { yes, no } } = require('../../struct/bot');
+class mutecCommand extends Command {
+	constructor() {
+		super('mutec', {
+			aliases: ['mutec'],
+			cooldown: 5000,
+			ratelimit: 1,
+			category: 'moderation',
+			channelRestriction: 'guild',
+			description: {
+				content: 'Lock the message channel'
 
-// 			},
-// 			clientPermissions: ['MANAGE_CHANNELS'],
-// 			userPermissions: ['MANAGE_CHANNELS']
-// 		});
-// 	}
+			},
+			clientPermissions: ['MANAGE_CHANNELS'],
+			userPermissions(message) {
+				if (message.member.roles.some(role => this.client.settings.get(message.guild.id, 'modrole') === role.name) || message.member.hasPermission('MANAGE_CHANNELS')) return true;
+		   }
+		});
+	}
 
-// 	exec(message) {
-// 		const language = this.client.settings.get(message.guild.id, 'language');
-
-// 		let lockMsg;
-// 		if (language === 'arabic') {
-// 			lockMsg = `${emojis.yes} | **تــم قفل القناة**.`;
-// 		} else if (language === 'english') {
-// 			lockMsg = `${emojis.yes} | **Channel has been locked**.`;
-// 		} else if (language === 'french') {
-// 			lockMsg = `${emojis.yes} | **Channel a été verrouillé**.`;
-// 		} else if (language === 'german') {
-// 			lockMsg = `${emojis.yes} | **Kanal wurde gesperrt**.`;
-// 		} else if (language === 'turkish') {
-// 			lockMsg = `${emojis.yes} | **Kanal kilitlendi**.`;
-// 		}
-// 		message.channel.overwritePermissions(message.guild.id, {
-// 			SEND_MESSAGES: false
-
-// 		}).then(() => {
-// 			message.channel.send(lockMsg);
-// 		});
-// 	}
-// }
+	exec(message) {
+		message.channel.overwritePermissions(message.guild.id, {
+			SEND_MESSAGES: false
+		}).then(() => {
+			message.channel.send(`${yes} | Channel **locked**`);
+		}).catch(error => {
+			message.channel.send(`${no} | **Failed** to lock the channel.\n**Error:**${error}`);
+		});
+	}
+}
 
 
-// module.exports = mutecCommand;
+module.exports = mutecCommand;

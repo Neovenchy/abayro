@@ -46,7 +46,7 @@ class BanCommand extends Command {
 			}],
 			clientPermissions: ['BAN_MEMBERS'],
 			userPermissions(message) {
-				if (message.member.roles.exists(role => role.name === this.client.settings.get(message.guild.id, 'modrole')) || message.member.hasPermission('BAN_MEMBERS')) return true;
+				if (message.member.roles.some(role => this.client.settings.get(message.guild.id, 'modrole') === role.name) || message.member.hasPermission('BAN_MEMBERS')) return true;
 		 }
 		});
 	}
@@ -64,7 +64,7 @@ class BanCommand extends Command {
 			return message.channel.send(`${emojis.no}** | ${message.author.username}**, You have reached **max limit** of today's **bans**\n:white_small_square:You can ban again in: **${moment.duration(time).format('hh [hours] mm [minutes] ss [seconds]')}**.`);
 		}
 		if (member === ' ') {
-			return message.channel.send(`${emojis.no}** | ${message.author.username}, Please type the member you want to ban.`);
+			return message.channel.send(`${emojis.no}** | ${message.author.username}, Please enter the member **ID**/**USERNAME**/**MENTION** you want to ban.`);
 		}
 		if (!member) return message.channel.send(`${emojis.no}** | ${message.author.username}**, I can't find **${member}**.`);
 		if (member.id === message.author.id) return message.channel.send(`${emojis.no}** | ${message.author.username}**, You can't **ban** yourself.`);

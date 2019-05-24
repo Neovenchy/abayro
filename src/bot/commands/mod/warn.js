@@ -33,7 +33,7 @@ class WarnCommand extends Command {
  * @param {import('discord.js').Message} message
  */
 	exec(message, { member }) {
-		if (member === ' ') return message.channel.send(`${emojis.no} | Please type a member to ban.`);
+		if (member === ' ') return message.channel.send(`${emojis.no} | Please enter a member **ID**/**USERNAME**/**MENTION** to warn.`);
 		if (!member) return message.channel.send(`${emojis.no} | I couldn't find that member.`);
 	}
 }

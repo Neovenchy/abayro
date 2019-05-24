@@ -18,12 +18,12 @@ class mutelistCommand extends Command {
 	}
 
 	exec(message) {
-		const role = message.guild.roles.find('name', 'Muted') || message.guild.roles.find('name', 'muted');
+		const role = message.guild.roles.find(r => r.name === 'Muted') || message.guild.roles.find(r => r.name === 'muted');
 		let i = 0;
 		let mutelist;
 		message.guild.members.filter(m => m.roles.has(role.id)).forEach(member => {
 			i++;
-			mutelist += `**#${i}** \`-\` <@${member.id}>\n`;
+			mutelist += `**#${i}** - <@${member.id}>\n`;
 		});
 
 		if (!mutelist || mutelist === '') {

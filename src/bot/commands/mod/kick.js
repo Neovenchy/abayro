@@ -33,8 +33,8 @@ class KickCommand extends Command {
 			}],
 			clientPermissions: ['KICK_MEMBERS'],
 			userPermissions(message) {
-				if (message.member.roles.exists(role => role.name === this.client.settings.get(message.guild.id, 'modrole')) || message.member.hasPermission('KICK_MEMBERS')) return true;
-		 }
+				if (message.member.roles.some(role => this.client.settings.get(message.guild.id, 'modrole') === role.name) || message.member.hasPermission('KICK_MEMBERS')) return true;
+		   }
 		});
 	}
 
