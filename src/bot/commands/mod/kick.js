@@ -1,65 +1,85 @@
 const { Command } = require('discord-akairo');
-const { emojis } = require('../../struct/bot');
-const { find, update, increase } = require('../../database/Users');
-const moment = require('moment');
+const { stripIndents } = require('discord.js');
+const { mod: { CONSTANTS: { ACTIONS, COLORS }, logEmbed } } = require('../../util/Util');
 
 class KickCommand extends Command {
 	constructor() {
 		super('kick', {
 			aliases: ['kick'],
-			cooldown: 5000,
-			ratelimit: 5,
-			category: 'moderation',
-			channelRestriction: 'guild',
+			category: 'mod',
 			description: {
-				content: 'kicks a member',
-				usage: '@user',
-				examples: ['@noureldien', '171259176029257728']
+				content: 'Kicks a member, duh.',
+				usage: '<member> <...reason>',
+				examples: ['kick @Crawl', 'kick @Crawl']
 			},
-			args: [{
-				id: 'member',
-				type: (arg, msg) => {
-					if (!arg) return ' ';
-					const member = this.client.util.resolveMembers(arg, msg.guild.members).first() || arg;
-					return member;
+			channel: 'guild',
+			clientPermissions: ['MANAGE_ROLES'],
+			userPermissions: ['KICK_MEMBERS'],
+			ratelimit: 2,
+			args: [
+				{
+					id: 'member',
+					type: 'member'
 				},
-				index: 0
-			},
-		    {
-				'id': 'kreason',
-				'type': 'string',
-				'default': 'No reason provided',
-				'index': 1
-			}],
-			clientPermissions: ['KICK_MEMBERS'],
-			userPermissions(message) {
-				if (message.member.roles.exists(role => role.name === this.client.settings.get(message.guild.id, 'modrole')) || message.member.hasPermission('KICK_MEMBERS')) return true;
-		 }
+				{
+					'id': 'reason',
+					'match': 'rest',
+					'type': 'string',
+					'default': ''
+				}
+			]
 		});
 	}
 
-	async exec(message, { member, kreason }) {
-		const cooldown = 8.64e+7;
-		const klimit = await find(message.author.id, 'klimit', null);
-		const kicks = await find(message.author.id, 'kicks', 0);
-		const time = cooldown - (Date.now() - klimit);
-		if (klimit !== null && time > 0) {
-			return message.channel.send(`${emojis.no}** | ${message.author.username}**, You have reached **max limit** of today's **kicks**\n:white_small_square:You can kick again in: **${moment.duration(time).format('hh [hours] mm [minutes] ss [seconds]')}**.`);
+	async exec(message, { member, reason }) {
+		if (!member) return message.channel.send(`${emojis.no} | Please type a member to ban.`);
+		if (member.id === message.author.id) {
+			return message.channel.send(`${emojis.no} | You seem to be funny, which I don't like.`);
 		}
-		if (member === ' ') {
-			return message.channel.send(`${emojis.no}** | ${message.author.username}**, Correct **usage**:
-\`${this.client.commandHandler.prefix(message)}kick [@user/userName/userID] [reason]\``);
+
+		const totalCases = this.client.settings.get(message.guild, 'caseTotal', 0) + 1;
+
+		let sentMessage;
+		try {
+			sentMessage = await message.channel.send(`Kicking **${member.user.tag}**...`);
+			try {
+				await member.send(stripIndents`
+					**You have been kicked from ${message.guild.name}**
+					${reason ? `\n**Reason:** ${reason}\n` : ''}
+					You may rejoin whenever.
+				`);
+			} catch {}
+			await member.kick(`Kicked by ${message.author.tag} | Case #${totalCases}`);
+		} catch (error) {
+			return message.reply('there is no mute role configured on this server.');
 		}
-		if (!member) return message.channel.send(`${emojis.no}** | ${message.author.username}**, I can't find **${member}**.`);
-		if (member.id === message.author.id) return message.channel.send(`${emojis.no}** | ${message.author.username}**, You can't **kick** yourself.`);
-		if (member.id === this.client.user.id) return message.channel.send(`${emojis.no}** | ${message.author.username}**, You can't **kick** me by **me**!`);
-		if (!member.kickable) return message.channel.send(`${emojis.no}** | ${message.author.username}**, I can't **kick** ${member}.`);
-		await member.kick({ reason: kreason });
-		await increase(message.author.id, 'kicks', 1);
-		if (kicks >= this.client.settings.get(message.guild.id, 'kicklimit')) {
-			await update(message.author.id, 'klimit', Date.now());
+
+		this.client.settings.set(message.guild, 'caseTotal', totalCases);
+
+		if (!reason) {
+			const prefix = this.handler.prefix(message);
+			reason = `Use \`${prefix}reason ${totalCases} <...reason>\` to set a reason for this case`;
 		}
-		message.channel.send(`${emojis.yes}** | ${message.author.username}**, I've **kicked** ${member}.`);
+
+		const modLogChannel = this.client.settings.get(message.guild, 'logschnl');
+		let modMessage;
+		if (modLogChannel) {
+			const embed = logEmbed({ message, member, action: 'Kick', caseNum: totalCases, reason }).setColor(COLORS.KICK);
+			modMessage = await this.client.channels.get(modLogChannel).send(embed);
+		}
+		await this.client.db.models.cases.create({
+			guild: message.guild.id,
+			message: modMessage ? modMessage.id : null,
+			case_id: totalCases,
+			target_id: member.id,
+			target_tag: member.user.tag,
+			mod_id: message.author.id,
+			mod_tag: message.author.tag,
+			action: ACTIONS.KICK,
+			reason
+		});
+
+		return sentMessage.edit(`Successfully kicked **${member.user.tag}**`);
 	}
 }
 
