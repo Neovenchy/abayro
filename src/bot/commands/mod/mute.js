@@ -1,6 +1,6 @@
 const { Command } = require('discord-akairo');
-const { CONSTANTS: { ACTIONS, COLORS }, logEmbed } = require('../../util');
-const ms = require('@naval-base/ms');
+const { mod: { CONSTANTS: { ACTIONS, COLORS }, logEmbed } } = require('../../util');
+const ms = require('@abayro/ms');
 
 class MuteCommand extends Command {
 	constructor() {
@@ -10,10 +10,11 @@ class MuteCommand extends Command {
 			description: {
 				content: 'Mutes a member, duh.',
 				usage: '<member> <duration> <...reason>',
-				examples: ['mute @Crawl']
+				examples: ['mute @Abady']
 			},
 			channel: 'guild',
 			clientPermissions: ['MANAGE_ROLES'],
+			userPermissions: ['MUTE_MEMBERS'],
 			ratelimit: 2,
 			args: [
 				{
@@ -47,32 +48,16 @@ class MuteCommand extends Command {
 	}
 
 	async exec(message, { member, duration, reason }) {
-		if (!this.client.settings.get(message.guild, 'moderation')) {
-			return message.reply('moderation commands are disabled on this server.');
-		}
-		const staffRole = this.client.settings.get(message.guild, 'modRole');
-		const hasStaffRole = message.member.roles.has(staffRole);
-		if (!hasStaffRole) return message.reply('you know, I know, we should just leave it at that.');
 		if (member.id === message.author.id) return;
-		if (member.roles.has(staffRole)) {
-			return message.reply('nuh-uh! You know you can\'t do this.');
-		}
 
 		const muteRole = this.client.settings.get(message.guild, 'muteRole');
 		if (!muteRole) return message.reply('there is no mute role configured on this server.');
-
-		const key = `${message.guild.id}:${member.id}:MUTE`;
-		if (this.client._cachedCases.has(key)) {
-			return message.reply('that user is currently being moderated by someone else.');
-		}
-		this.client._cachedCases.add(key);
 
 		const totalCases = this.client.settings.get(message.guild, 'caseTotal', 0) + 1;
 
 		try {
 			await member.roles.add(muteRole, `Muted by ${message.author.tag} | Case #${totalCases}`);
 		} catch (error) {
-			this.client._cachedCases.delete(key);
 			return message.reply(`there was an error muting this member: \`${error}\``);
 		}
 
