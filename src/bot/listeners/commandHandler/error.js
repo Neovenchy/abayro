@@ -30,7 +30,7 @@ class ErrorListner extends Listener {
 				.setThumbnail('https://image.flaticon.com/icons/png/512/559/559347.png')
 				.setColor('RED'));
 		}
-		this.client.logger.error(error);
+		this.client.logger.error(error, error.stack);
 	}
 }
 module.exports = ErrorListner;

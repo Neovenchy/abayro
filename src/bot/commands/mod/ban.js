@@ -1,90 +1,115 @@
 const { Command } = require('discord-akairo');
+const { stripIndents } = require('common-tags');
 const { emojis } = require('../../struct/bot');
-const { find, update, increase } = require('../../database/Users');
-const moment = require('moment');
+const {  mod: { CONSTANTS: { ACTIONS, COLORS }, logEmbed, historyEmbed } } = require('../../util/Util');
 
 class BanCommand extends Command {
 	constructor() {
 		super('ban', {
 			aliases: ['ban'],
-			cooldown: 5000,
-			ratelimit: 5,
-			category: 'moderation',
-			channelRestriction: 'guild',
+			category: 'mod',
 			description: {
-				content: 'Bans a member',
-				usage: '@user',
-				examples: ['@noureldien', '171259176029257728']
+				content: 'Bans a member, duh?!',
+				usage: '<member> [--days=] [...reason]',
+				examples: ['@Abady', 'Abady --d=5 not good!', '171259176029257728 --d=10']
 			},
-			args: [{
-				id: 'member',
-				type: (arg, msg) => {
-					if (!arg) return ' ';
-					const member = this.client.util.resolveMembers(arg, msg.guild.members).first() || arg;
-					return member || null;
+			channel: 'guild',
+			clientPermissions: ['MANAGE_ROLES', 'BAN_MEMBERS'],
+			userPermissions: ['BAN_MEMBERS'],
+			ratelimit: 2,
+			args: [
+				{
+					id: 'member',
+					type: 'member'
 				},
-				index: 0
-			},
-			{
-				'id': 'days',
-				'type': 'integer',
-				'default': 7,
-				'index': 1
-			},
-		  {
-				'id': 'breason',
-				'match': 'rest',
-				'type': 'string',
-				'default': 'No reason provided',
-				'index': 2
-			},
-		  {
-				id: 'soft',
-				type: 'string',
-				flag: ['--soft', '--s'],
-				index: [1, 2, 3]
-			}],
-			clientPermissions: ['BAN_MEMBERS'],
-			userPermissions(message) {
-				if (message.member.roles.exists(role => role.name === this.client.settings.get(message.guild.id, 'modrole')) || message.member.hasPermission('BAN_MEMBERS')) return true;
-		 }
+				{
+                    id: 'days',
+					match: 'prefix',
+					type: 'integer',
+                    prefix: ['-d=','--days='],
+                    default: '0'
+				},
+				{
+					id: 'reason',
+					match: 'rest',
+					type: 'string',
+					default: ''
+				}
+			]
 		});
 	}
-
-	/**
- *
- * @param {import('discord.js').Message} message
+/**
+ * 
+ * @param {import('discord.js').Message} message 
+ * @param {object} args 
+ * @param {import('discord.js').GuildMember} args.member 
  */
-	async exec(message, { member, days, breason, soft }) {
-		const cooldown = 8.64e+7;
-		const blimit = await find(message.author.id, 'blimit', null);
-		const bans = await find(message.author.id, 'bans', 0);
-		const time = cooldown - (Date.now() - blimit);
-		if (blimit !== null && time > 0) {
-			return message.channel.send(`${emojis.no}** | ${message.author.username}**, You have reached **max limit** of today's **bans**\n:white_small_square:You can ban again in: **${moment.duration(time).format('hh [hours] mm [minutes] ss [seconds]')}**.`);
+	async exec(message, { member, days, reason }) {
+		if (!member) return message.channel.send(`${emojis.no} | Please type a member to ban.`);
+		if (member.id === message.author.id) {
+			return message.channel.send(`${emojis.no} | You seem to be funny, which I don't like.`);
 		}
-		if (member === ' ') {
-			return message.channel.send(`${emojis.no}** | ${message.author.username}, Please type the member you want to ban.`);
+
+		const dbCases = await this.client.db.models.cases.findAll({ where: { target_id: member.id } });
+		const embed = historyEmbed(member, dbCases);
+		await message.channel.send('You sure you want me to ban this person?', { embed });
+		const responses = await message.channel.awaitMessages(msg => msg.author.id === message.author.id, {
+			max: 1,
+			time: 10000
+		});
+
+		if (!responses || responses.size !== 1) {
+			return message.reply('timed out. Cancelled ban.');
 		}
-		if (!member) return message.channel.send(`${emojis.no}** | ${message.author.username}**, I can't find **${member}**.`);
-		if (member.id === message.author.id) return message.channel.send(`${emojis.no}** | ${message.author.username}**, You can't **ban** yourself.`);
-		if (member.id === this.client.user.id) return message.channel.send(`${emojis.no}** | ${message.author.username}**, You can't **ban** me by **me**!`);
-		if (!member.bannable) return message.channel.send(`${emojis.no}** | ${message.author.username}**, I can't **ban** ${member}.`);
-		await member.ban({ days, reason: breason });
-		if (soft) {
-			await member.ban({ days: 1, reason: breason });
-			await message.guild.unban(member);
-			await increase(message.author.id, 'bans', 1);
-			if (bans >= this.client.settings.get(message.guild.id, 'banlimit')) {
-				await update(message.author.id, 'blimit', Date.now());
-			}
-			return message.channel.send(`${emojis.yes}** | ${message.author.username}**, I've **softbanned** ${member}.`);
+		const response = responses.first();
+
+		let sentMessage;
+		if (/^y(?:e(?:a|s)?)?$/i.test(response.content)) {
+			sentMessage = await message.channel.send(`Banning **${member.user.tag}**...`);
+		} else {
+			return message.reply('cancelled ban.');
 		}
-		await increase(message.author.id, 'bans', 1);
-		if (bans >= this.client.settings.get(message.guild.id, 'banlimit')) {
-			await update(message.author.id, 'blimit', Date.now());
+
+		const totalCases = this.client.settings.get(message.guild, 'caseTotal', 0) + 1;
+
+		try {
+			try {
+				await member.send(stripIndents`
+					**You have been banned from ${message.guild.name}**
+					${reason ? `\n**Reason:** ${reason}\n` : ''}
+				`);
+			} catch {} // eslint-disable-line
+			await member.ban({ days, reason: `Banned by ${message.author.tag} | Case #${totalCases}` });
+		} catch (error) {
+			return message.reply(`there was an error banning this member: \`${error}\``);
 		}
-		message.channel.send(`${emojis.yes}** | ${message.author.username}**, I've **banned** ${member}.`);
+
+		this.client.settings.set(message.guild, 'caseTotal', totalCases);
+
+		if (!reason) {
+			const prefix = this.handler.prefix(message);
+			reason = `Use \`${prefix}reason ${totalCases} <...reason>\` to set a reason for this case`;
+		}
+
+		const modLogChannel = this.client.settings.get(message.guild, 'logschnl');
+		let modMessage;
+		if (modLogChannel) {
+			const embed = logEmbed({ message, member, action: 'Ban', caseNum: totalCases, reason }).setColor(COLORS.BAN);
+			modMessage = await this.client.channels.get(modLogChannel).send(embed);
+		}
+		await this.client.db.models.cases.create({
+			guild: message.guild.id,
+			message: modMessage ? modMessage.id : null,
+			case_id: totalCases,
+			target_id: member.id,
+			target_tag: member.user.tag,
+			mod_id: message.author.id,
+			mod_tag: message.author.tag,
+			action: ACTIONS.BAN,
+			reason
+		});
+
+		return sentMessage.edit(`Successfully banned **${member.user.tag}**`);
 	}
 }
 

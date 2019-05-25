@@ -47,27 +47,6 @@ module.exports = (sequelize, DataTypes) =>
 		pcolor: {
 			type: DataTypes.TEXT(),
 			defaultValue: '#007fff'
-		},
-		blimit: {
-			type: DataTypes.REAL()
-		},
-		klimit: {
-			type: DataTypes.REAL()
-		},
-		mlimit: {
-			type: DataTypes.REAL()
-		},
-		bans: {
-			type: DataTypes.INTEGER(),
-			defaultValue: 0
-		},
-		kicks: {
-			type: DataTypes.INTEGER(),
-			defaultValue: 0
-		},
-		mutes: {
-			type: DataTypes.INTEGER(),
-			defaultValue: 0
 		}
 	}, {
 		timestamps: false,
