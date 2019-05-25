@@ -1,77 +1,109 @@
 const { Command } = require('discord-akairo');
-const { emojis } = require('../../struct/bot');
-const { find, update, increase } = require('../../database/Users');
-const moment = require('moment');
+const { CONSTANTS: { ACTIONS, COLORS }, logEmbed } = require('../../util');
+const ms = require('@naval-base/ms');
 
 class MuteCommand extends Command {
 	constructor() {
 		super('mute', {
 			aliases: ['mute'],
-			ratelimit: 5,
-			category: 'moderation',
-			channelRestriction: 'guild',
+			category: 'mod',
 			description: {
-				content: 'Mutes a member',
-				usage: '@user/user/40440404044040',
-				examples: ['@nouridio badmember', '171259176029257728 badmember']
+				content: 'Mutes a member, duh.',
+				usage: '<member> <duration> <...reason>',
+				examples: ['mute @Crawl']
 			},
-			args: [{
-				id: 'member',
-				type: (arg, msg) => {
-					if (!arg) return ' ';
-					const member = this.client.util.resolveMembers(arg, msg.guild.members).first() || arg;
-					return member || null;
-				},
-				index: 0
-			},
-		  {
-				'id': 'mreason',
-				'match': 'rest',
-				'type': 'string',
-				'default': 'No reason',
-				'index': 1
-			}],
+			channel: 'guild',
 			clientPermissions: ['MANAGE_ROLES'],
-			userPermissions(message) {
-				if (message.member.roles.some(role => this.client.settings.get(message.guild.id, 'modrole') === role.name) || message.member.hasPermission('MANAGE_ROLES')) return true;
-		   }
+			ratelimit: 2,
+			args: [
+				{
+					id: 'member',
+					type: 'member',
+					prompt: {
+						start: message => `${message.author}, what member do you want to mute?`,
+						retry: message => `${message.author}, please mention a member.`
+					}
+				},
+				{
+					id: 'duration',
+					type: str => {
+						const duration = ms(str);
+						if (duration && duration >= 300000) return duration;
+						return null;
+					},
+					prompt: {
+						start: message => `${message.author}, for how long do you want the mute to last?`,
+						retry: message => `${message.author}, please use a proper time format.`
+					}
+				},
+				{
+					'id': 'reason',
+					'match': 'rest',
+					'type': 'string',
+					'default': ''
+				}
+			]
 		});
 	}
 
-	/**
- *
- * @param {import('discord.js').Message} message
- */
-	async exec(message, { member }) {
-		const cooldown = 8.64e+7;
-		const mlimit = await find(message.author.id, 'mlimit', null);
-		const mutes = await find(message.author.id, 'mutes', 0);
-		const time = cooldown - (Date.now() - mlimit);
-		if (mlimit !== null && time > 0) {
-			return message.channel.send(`${emojis.no}** | ${message.author.username}**, You have reached **max limit** of today's **mutes**\n:white_small_square:You can ban again in: **${moment.duration(time).format('hh [hours] mm [minutes] ss [seconds]')}**.`);
+	async exec(message, { member, duration, reason }) {
+		if (!this.client.settings.get(message.guild, 'moderation')) {
+			return message.reply('moderation commands are disabled on this server.');
 		}
-		if (member === ' ') {
-			return message.channel.send(`${emojis.no}** | ${message.author.username}, Please enter the member **ID**/**USERNAME**/**MENTION** you want to mute.`);
+		const staffRole = this.client.settings.get(message.guild, 'modRole');
+		const hasStaffRole = message.member.roles.has(staffRole);
+		if (!hasStaffRole) return message.reply('you know, I know, we should just leave it at that.');
+		if (member.id === message.author.id) return;
+		if (member.roles.has(staffRole)) {
+			return message.reply('nuh-uh! You know you can\'t do this.');
 		}
-		if (!member) return message.channel.send(`${emojis.no}** | ${message.author.username}**, I can't find **${member}**.`);
-		if (member.id === message.author.id) return message.channel.send(`${emojis.no}** | ${message.author.username}**, You can't **mute** yourself.`);
-		if (member.id === this.client.user.id) return message.channel.send(`${emojis.no}** | ${message.author.username}**, You can't **mute** me by **me**!`);
-		const muteRole = message.guild.roles.find(r => r.name === 'Muted');
-		if (!muteRole) {
-			await message.guild.createRole({
-				name: 'Muted',
-				color: 'BLACK'
-			});
-		} else if (muteRole) {
-			await member.addRole(muteRole.id).catch(error => {
-				message.channel.send(`:x: | **Failed** to **mute** ${member}.\n**Error:** ${error}`);
-			});
-			await increase(message.author.id, 'mutes', 1);
-			if (mutes >= this.client.settings.get(message.guild.id, 'mutelimit')) {
-				await update(message.author.id, 'mlimit', Date.now());
-			}
-			message.channel.send(`${emojis.yes}** | ${message.author.username}**, I've **muted** ${member}.`);
+
+		const muteRole = this.client.settings.get(message.guild, 'muteRole');
+		if (!muteRole) return message.reply('there is no mute role configured on this server.');
+
+		const key = `${message.guild.id}:${member.id}:MUTE`;
+		if (this.client._cachedCases.has(key)) {
+			return message.reply('that user is currently being moderated by someone else.');
 		}
+		this.client._cachedCases.add(key);
+
+		const totalCases = this.client.settings.get(message.guild, 'caseTotal', 0) + 1;
+
+		try {
+			await member.roles.add(muteRole, `Muted by ${message.author.tag} | Case #${totalCases}`);
+		} catch (error) {
+			this.client._cachedCases.delete(key);
+			return message.reply(`there was an error muting this member: \`${error}\``);
+		}
+
+		this.client.settings.set(message.guild, 'caseTotal', totalCases);
+
+		if (!reason) {
+			const prefix = this.handler.prefix(message);
+			reason = `Use \`${prefix}reason ${totalCases} <...reason>\` to set a reason for this case`;
+		}
+
+		const modLogChannel = this.client.settings.get(message.guild, 'logschnl');
+		let modMessage;
+		if (modLogChannel) {
+			const embed = logEmbed({ message, member, action: 'Mute', duration, caseNum: totalCases, reason }).setColor(COLORS.MUTE);
+			modMessage = await this.client.channels.get(modLogChannel).send(embed);
+		}
+		await this.client.muteScheduler.addMute({
+			guild: message.guild.id,
+			message: modMessage ? modMessage.id : null,
+			case_id: totalCases,
+			target_id: member.id,
+			target_tag: member.user.tag,
+			mod_id: message.author.id,
+			mod_tag: message.author.tag,
+			action: ACTIONS.MUTE,
+			action_duration: new Date(Date.now() + duration),
+			action_processed: false,
+			reason
+		});
+
+		return message.util.send(`Successfully muted **${member.user.tag}**`);
 	}
 }
 
