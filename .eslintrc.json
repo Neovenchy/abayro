@@ -4,10 +4,6 @@
         "node": true
     },
     "extends": "aqua/node",
-    "parserOptions": {
-        "ecmaVersion": 2017,
-        "sourceType": "module"
-    },
     "rules": {
         "valid-jsdoc": "off",
         "no-undefined": "off"

@@ -29,7 +29,7 @@ class KickCommand extends Command {
 				}
 			],
 			userPermissions(message) {
-				return message.member.roles.has(this.client.settings.get(message.guild, 'modrole')) || message.member.hasPermission('KICK_MEMBERS')
+				return message.member.roles.has(this.client.settings.get(message.guild, 'modrole')) || message.member.hasPermission('KICK_MEMBERS');
 		   }
 		});
 	}

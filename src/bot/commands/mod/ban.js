@@ -1,7 +1,7 @@
 const { Command } = require('discord-akairo');
 const { stripIndents } = require('common-tags');
 const { emojis } = require('../../struct/bot');
-const {  mod: { CONSTANTS: { ACTIONS, COLORS }, logEmbed, historyEmbed } } = require('../../util/Util');
+const { mod: { CONSTANTS: { ACTIONS, COLORS }, logEmbed, historyEmbed } } = require('../../util/Util');
 
 class BanCommand extends Command {
 	constructor() {
@@ -22,29 +22,30 @@ class BanCommand extends Command {
 					type: 'member'
 				},
 				{
-                    id: 'days',
-					match: 'prefix',
-					type: 'integer',
-                    prefix: ['-d=','--days='],
-                    default: '0'
+					'id': 'days',
+					'match': 'prefix',
+					'type': 'integer',
+					'prefix': ['-d=', '--days='],
+					'default': '0'
 				},
 				{
-					id: 'reason',
-					match: 'rest',
-					type: 'string',
-					default: ''
+					'id': 'reason',
+					'match': 'rest',
+					'type': 'string',
+					'default': ''
 				}
 			],
 			userPermissions(message) {
-				return message.member.roles.has(this.client.settings.get(message.guild, 'modrole')) || message.member.hasPermission('BAN_MEMBERS')
+				return message.member.roles.has(this.client.settings.get(message.guild, 'modrole')) || message.member.hasPermission('BAN_MEMBERS');
 		   }
 		});
 	}
-/**
- * 
- * @param {import('discord.js').Message} message 
- * @param {object} args 
- * @param {import('discord.js').GuildMember} args.member 
+
+	/**
+ *
+ * @param {import('discord.js').Message} message
+ * @param {object} args
+ * @param {import('discord.js').GuildMember} args.member
  */
 	async exec(message, { member, days, reason }) {
 		if (!member) return message.channel.send(`${emojis.no} | Please type a member to ban.`);
