@@ -1,5 +1,6 @@
 const { Command } = require('discord-akairo');
-const { mod: { CONSTANTS: { ACTIONS, COLORS }, logEmbed } } = require('../../util');
+const { mod: { CONSTANTS: { ACTIONS, COLORS }, logEmbed } } = require('../../util/Util');
+const { emojis } = require('../../struct/bot');
 const ms = require('@abayro/ms');
 
 class MuteCommand extends Command {
@@ -14,27 +15,19 @@ class MuteCommand extends Command {
 			},
 			channel: 'guild',
 			clientPermissions: ['MANAGE_ROLES'],
-			userPermissions: ['MUTE_MEMBERS'],
 			ratelimit: 2,
 			args: [
 				{
 					id: 'member',
-					type: 'member',
-					prompt: {
-						start: message => `${message.author}, what member do you want to mute?`,
-						retry: message => `${message.author}, please mention a member.`
-					}
+					type: 'member'
 				},
 				{
 					id: 'duration',
 					type: str => {
+						if (!str) return null;
 						const duration = ms(str);
 						if (duration && duration >= 300000) return duration;
 						return null;
-					},
-					prompt: {
-						start: message => `${message.author}, for how long do you want the mute to last?`,
-						retry: message => `${message.author}, please use a proper time format.`
 					}
 				},
 				{
@@ -43,20 +36,32 @@ class MuteCommand extends Command {
 					'type': 'string',
 					'default': ''
 				}
-			]
+			],
+			userPermissions(message) {
+				return message.member.roles.has(this.client.settings.get(message.guild, 'modrole')) || message.member.hasPermission('MANAGE_MESSAGES');
+		   }
 		});
 	}
 
+	/**
+  *
+  * @param {import('discord.js').Message} message
+  * @param {object} args
+  * @param {import('discord.js').GuildMember} args.member
+  */
 	async exec(message, { member, duration, reason }) {
+		if (!member) return message.channel.send(`${emojis.no} | Please enter a member to mute.`);
+		if (!duration) return message.channel.send(`${emojis.no} | Please enter a duration that are greater than 5 mineuts.`);
+
 		if (member.id === message.author.id) return;
 
-		const muteRole = this.client.settings.get(message.guild, 'muteRole');
-		if (!muteRole) return message.reply('there is no mute role configured on this server.');
+		const muteRole = this.client.settings.get(message.guild, 'muterole');
+		if (!muteRole) return message.channel.send(`${emojis.no} | there is no mute role configured on this server.`);
 
 		const totalCases = this.client.settings.get(message.guild, 'caseTotal', 0) + 1;
 
 		try {
-			await member.roles.add(muteRole, `Muted by ${message.author.tag} | Case #${totalCases}`);
+			await member.addRole(muteRole, `Muted by ${message.author.tag} | Case #${totalCases}`);
 		} catch (error) {
 			return message.reply(`there was an error muting this member: \`${error}\``);
 		}
@@ -70,7 +75,7 @@ class MuteCommand extends Command {
 
 		const modLogChannel = this.client.settings.get(message.guild, 'logschnl');
 		let modMessage;
-		if (modLogChannel) {
+		if (modLogChannel && this.client.settings.get(message.guild, 'logs')) {
 			const embed = logEmbed({ message, member, action: 'Mute', duration, caseNum: totalCases, reason }).setColor(COLORS.MUTE);
 			modMessage = await this.client.channels.get(modLogChannel).send(embed);
 		}
@@ -88,7 +93,7 @@ class MuteCommand extends Command {
 			reason
 		});
 
-		return message.util.send(`Successfully muted **${member.user.tag}**`);
+		return message.channel.send(`${emojis.yes} Successfully muted **${member.user.tag}**`);
 	}
 }
 

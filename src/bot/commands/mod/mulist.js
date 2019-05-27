@@ -17,25 +17,20 @@ class mutelistCommand extends Command {
 		});
 	}
 
+	/**
+ *
+ * @param {import('discord.js').Message} message
+ */
 	exec(message) {
-		const role = message.guild.roles.find(r => r.name === 'Muted') || message.guild.roles.find(r => r.name === 'muted');
-		let i = 0;
-		let mutelist;
-		message.guild.members.filter(m => m.roles.has(role.id)).forEach(member => {
-			i++;
-			mutelist += `**#${i}** - <@${member.id}>\n`;
-		});
+		const muteRole = this.client.settings.get(message.guild, 'muterole');
+		const muteList = message.guild.roles.get(muteRole).members.map(member => `• ${member}`).join('\n');
+		const embed = new Embed()
+			.setAuthor(message.guild.name, message.guild.iconURL)
+			.setDescription(muteList ? muteList : 'There\'s No muted members.')
+			.setFooter(message.author.username, message.author.avatarURL)
+			.setTimestamp();
 
-		if (!mutelist || mutelist === '') {
-			[mutelist] = `No muted members in ${message.guild.name}`;
-		}
-		message.channel.send(
-			 new Embed()
-				.setAuthor(message.guild.name, message.guild.iconURL)
-				.setDescription(mutelist)
-				.setFooter(message.author.username, message.author.avatarURL)
-				.setTimestamp()
-		);
+		return message.channel.send(embed);
 	}
 }
 

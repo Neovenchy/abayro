@@ -20,7 +20,7 @@ class ClearCommand extends Command {
 			}],
 			clientPermissions: ['MANAGE_MESSAGES'],
 			userPermissions(message) {
-				if (message.member.roles.some(role => this.client.settings.get(message.guild.id, 'modrole') === role.name) || message.member.hasPermission('MANAGE_MESSAGES')) return true;
+				return message.member.roles.has(this.client.settings.get(message.guild, 'modrole')) || message.member.hasPermission('MANAGE_MESSAGES');
 		   }
 		});
 	}

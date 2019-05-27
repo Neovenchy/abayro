@@ -37,7 +37,7 @@ exports.wrapText = (ctx, text, maxWidth) => new Promise(resolve => {
 	return resolve(lines);
 });
 
-module.exports.trimString = (string, maxSize) => {
+exports.trimString = (string, maxSize) => {
 	if (string.length > maxSize) {
 		const len = string.slice(0, maxSize - 1);
 		return `${len}...`;
@@ -45,7 +45,7 @@ module.exports.trimString = (string, maxSize) => {
 	return string;
 };
 
-module.exports.splitMessage = (text, { maxLength = 2000, char = '\n', prepend = '', append = '' } = {}) => {
+exports.splitMessage = (text, { maxLength = 2000, char = '\n', prepend = '', append = '' } = {}) => {
 	if (text.length <= maxLength) return text;
 	const splitText = text.split(char);
 	if (splitText.some(chunk => chunk.length > maxLength)) throw new RangeError('SPLIT_MAX_LEN');
@@ -65,7 +65,7 @@ module.exports.splitMessage = (text, { maxLength = 2000, char = '\n', prepend = 
  * @param max the max amount
  * @param min the min amount
  */
-module.exports.randomNumber = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
+exports.randomNumber = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
 
 const { RichEmbed, User } = require('discord.js');
 const { stripIndents, oneLine } = require('common-tags');
@@ -83,7 +83,7 @@ const ACTIONS = {
 	9: 'warn'
 };
 
-module.exports.mod = {
+exports.mod = {
 	CONSTANTS: {
 		ACTIONS: {
 			BAN: 1,
@@ -99,26 +99,22 @@ module.exports.mod = {
 		COLORS: {
 			BAN: 16718080,
 			UNBAN: 8450847,
-			SOFTBAN: 16745216,
 			KICK: 16745216,
 			MUTE: 16763904,
-			EMBED: 16776960,
-			EMOJI: 16776960,
-			REACTION: 16776960,
 			WARN: 16776960
 		}
 	},
 	logEmbed: ({ message = null, member, action, duration = null, caseNum, reason, ref = null }) => {
 		const embed = new RichEmbed();
 		if (message) {
-			embed.setAuthor(`${message.author.tag} (${message.author.id})`, message.author.avatarURL);
+			embed.setAuthor(`${member instanceof User ? member.tag : member.user.tag} (${member.id})`, member instanceof User ? member.avatarURL : member.user.avatarURL);
 		}
 		embed.setDescription(stripIndents`
-				**Member:** ${member instanceof User ? member.tag : member.user.tag} (${member.id})
 				**Action:** ${action}${action === 'Mute' && duration ? `\n**Length:** ${ms(duration, { 'long': true })}` : ''}
 				**Reason:** ${reason}${ref ? `\n**Ref case:** ${ref}` : ''}
+				**Case:** ${caseNum}
 			`)
-			.setFooter(`Case ${caseNum}`)
+			.setFooter(message.author.tag, message.author.avatarURL)
 			.setTimestamp(new Date());
 
 		return embed;

@@ -1,5 +1,6 @@
 const { Command } = require('discord-akairo');
 const { mod: { CONSTANTS: { ACTIONS, COLORS }, logEmbed } } = require('../../util/Util');
+const { emojis } = require('../../struct/bot');
 
 class UnbanCommand extends Command {
 	constructor() {
@@ -17,14 +18,7 @@ class UnbanCommand extends Command {
 			args: [
 				{
 					id: 'user',
-					type: async id => {
-						const user = await this.client.users.fetch(id);
-						return user;
-					},
-					prompt: {
-						start: message => `${message.author}, what member do you want to unban?`,
-						retry: message => `${message.author}, please mention a member.`
-					}
+					type: 'user'
 				},
 				{
 					'id': 'reason',
@@ -32,7 +26,10 @@ class UnbanCommand extends Command {
 					'type': 'string',
 					'default': ''
 				}
-			]
+			],
+			userPermissions(message) {
+				return message.member.roles.has(this.client.settings.get(message.guild, 'modrole')) || message.member.hasPermission('BAN_MEMBERS');
+			}
 		});
 	}
 
@@ -54,7 +51,7 @@ class UnbanCommand extends Command {
 
 		const modLogChannel = this.client.settings.get(message.guild, 'logschnl');
 		let modMessage;
-		if (modLogChannel) {
+		if (modLogChannel && this.client.settings.get(message.guild, 'logs')) {
 			const embed = logEmbed({ message, member: user, action: 'Unban', caseNum: totalCases, reason }).setColor(COLORS.UNBAN);
 			modMessage = await this.client.channels.get(modLogChannel).send(embed);
 		}
@@ -70,7 +67,7 @@ class UnbanCommand extends Command {
 			reason
 		});
 
-		return message.util.send(`Successfully unbanned **${user.tag}**`);
+		return message.channel.send(`${emojis.yes} Successfully unbanned **${user.tag}**`);
 	}
 }
 

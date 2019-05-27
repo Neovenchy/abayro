@@ -15,7 +15,6 @@ class BanCommand extends Command {
 			},
 			channel: 'guild',
 			clientPermissions: ['MANAGE_ROLES', 'BAN_MEMBERS'],
-			userPermissions: ['BAN_MEMBERS'],
 			ratelimit: 2,
 			args: [
 				{
@@ -35,7 +34,10 @@ class BanCommand extends Command {
 					type: 'string',
 					default: ''
 				}
-			]
+			],
+			userPermissions(message) {
+				return message.member.roles.has(this.client.settings.get(message.guild, 'modrole')) || message.member.hasPermission('BAN_MEMBERS')
+		   }
 		});
 	}
 /**
@@ -93,7 +95,7 @@ class BanCommand extends Command {
 
 		const modLogChannel = this.client.settings.get(message.guild, 'logschnl');
 		let modMessage;
-		if (modLogChannel) {
+		if (modLogChannel && this.client.settings.get(message.guild, 'logs')) {
 			const embed = logEmbed({ message, member, action: 'Ban', caseNum: totalCases, reason }).setColor(COLORS.BAN);
 			modMessage = await this.client.channels.get(modLogChannel).send(embed);
 		}
@@ -109,7 +111,7 @@ class BanCommand extends Command {
 			reason
 		});
 
-		return sentMessage.edit(`Successfully banned **${member.user.tag}**`);
+		return sentMessage.edit(`${emojis.yes} Successfully banned **${member.user.tag}**`);
 	}
 }
 

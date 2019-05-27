@@ -9,12 +9,12 @@ class mutecCommand extends Command {
 			category: 'moderation',
 			channelRestriction: 'guild',
 			description: {
-				content: 'Lock the message channel'
+				content: 'Lock the message channel.'
 
 			},
 			clientPermissions: ['MANAGE_CHANNELS'],
 			userPermissions(message) {
-				if (message.member.roles.some(role => this.client.settings.get(message.guild.id, 'modrole') === role.name) || message.member.hasPermission('MANAGE_CHANNELS')) return true;
+				return message.member.roles.has(this.client.settings.get(message.guild, 'modrole')) || message.member.hasPermission('MANAGE_CHANNELS');
 		   }
 		});
 	}

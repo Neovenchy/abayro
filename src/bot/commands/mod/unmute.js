@@ -1,56 +1,88 @@
-// const { Command } = require('discord-akairo');
-// const { emojis } = require('../../struct/bot');
-// class UnMuteCommand extends Command {
-// 	constructor() {
-// 		super('unmute', {
-// 			aliases: ['unmute'],
-// 			cooldown: 5000,
-// 			ratelimit: 1,
-// 			category: 'moderation',
-// 			channelRestriction: 'guild',
-// 			description: {
-// 				content: 'Unmutes a member',
-// 				usage: '@user',
-// 				examples: [`unmute @Abady`, `unmute 171259176029257728`, 'unmute Abady']
-// 			},
-// 			args: [{
-// 				id: 'member',
-// 				type: (arg, msg) => {
-// 					if (!arg) return ' ';
-// 					const member = this.client.util.resolveMembers(arg, msg.guild.members).first() || arg;
-// 					return member;
-// 				}
-// 			}],
-// 			clientPermissions: ['MANAGE_ROLES'],
-// 			userPermissions: ['MANAGE_ROLES']
-// 		});
-// 	}
+const { Command } = require('discord-akairo');
+const { mod: { CONSTANTS: { ACTIONS, COLORS }, logEmbed } } = require('../../util/Util');
+const { emojis } = require('../../struct/bot');
 
-// 	exec(message, { member }) {
-// 		const language = this.client.settings.get(message.guild.id, 'language');
+class MuteCommand extends Command {
+	constructor() {
+		super('mute', {
+			aliases: ['unmute'],
+			category: 'mod',
+			description: {
+				content: 'Unmutes a member, duh.',
+				usage: '<member> <duration> <...reason>',
+				examples: ['unmute @Abady']
+			},
+			channel: 'guild',
+			clientPermissions: ['MANAGE_ROLES'],
+			ratelimit: 2,
+			args: [
+				{
+					id: 'member',
+					type: 'member'
+				},
+				{
+					'id': 'reason',
+					'match': 'rest',
+					'type': 'string',
+					'default': ''
+				}
+			],
+			userPermissions(message) {
+				return message.member.roles.has(this.client.settings.get(message.guild, 'modrole')) || message.member.hasPermission('MANAGE_MESSAGES');
+		   }
+		});
+	}
 
-// 		const muteRole = message.guild.roles.find(r => r.name === 'Muted');
-// 		let msgS;
-// 		if (language === 'arabic') {
-// 			msgS = [`${emojis.no} | **الأستخدام الصحيح للأمر**:\n\`=unmute [@user/user/userID]\``, 'هذا الشخص ليس لديه كتم كتابي', `**تم فك الكتم الكتابي من**.`];
-// 		} else if (language === 'english') {
-// 			msgS = [`${emojis.no} | **Correct usage**:\n\`=unmute [@user/user/userID]\``, 'This user is already unmuted', `**Has been unmuted**.`];
-// 		} else if (language === 'french') {
-// 			msgS = [`${emojis.no} | **Utilisation correcte**:\n\`=unmute [@user/user/userID]\``, 'Cet utilisateur est déjà sans sourdine', `**a été sans sourdine**.`];
-// 		} else if (language === 'german') {
-// 			msgS = [`${emojis.no} | **Richtige Nutzung**:\n\`=unmute [@user/user/userID]\``, 'Dieser Benutzer ist bereits unmutbar', `**ist entmutigt**.`];
-// 		} else if (language === 'turkish') {
-// 			msgS = [`${emojis.no} | **Doğru kullanım**:\n\`=unmute [@user/user/userID]\``, 'Bu Kullanıcı zaten Unmuted', `**Unmuted oldu**.`];
-// 		}
-// 		if (member === ' ') return message.channel.send(msgS[0]);
-// 		if (!message.guild.member(member).roles.has(muteRole.id)) return message.channel.send(`${emojis.no} | **${msgS[1]}**.`);
-// 		message.guild.member(member).removeRole(muteRole);
-// 		if (language === 'arabic') {
-// 			message.channel.send(`:hushed: | ${msgS[2]} \`${member.user.username}\``);
-// 		} else {
-// 			message.channel.send(`:hushed: | \`${member.user.username}\` ${msgS[2]}`);
-// 		}
-// 	}
-// }
+	/**
+  *
+  * @param {import('discord.js').Message} message
+  * @param {object} args
+  * @param {import('discord.js').GuildMember} args.member
+  */
+	async exec(message, { member, duration, reason }) {
+		if (!member) return message.channel.send(`${emojis.no} | Please enter a member to unmute.`);
 
-// module.exports = UnMuteCommand;
+		if (member.id === message.author.id) return;
+
+		const muteRole = this.client.settings.get(message.guild, 'muterole');
+		if (!muteRole) return message.channel.send(`${emojis.no} | there is no mute role configured on this server.`);
+
+		const totalCases = this.client.settings.get(message.guild, 'caseTotal', 0) + 1;
+
+		try {
+			await member.remove(muteRole, `Unmuted by ${message.author.tag} | Case #${totalCases}`);
+		} catch (error) {
+			return message.channel.send(`${emojis.no} | There was an error muting this member: \`${error}\``);
+		}
+
+		this.client.settings.set(message.guild, 'caseTotal', totalCases);
+
+		if (!reason) {
+			const prefix = this.handler.prefix(message);
+			reason = `Use \`${prefix}reason ${totalCases} <...reason>\` to set a reason for this case`;
+		}
+
+		const modLogChannel = this.client.settings.get(message.guild, 'logschnl');
+		let modMessage;
+		if (modLogChannel && this.client.settings.get(message.guild, 'logs')) {
+			const embed = logEmbed({ message, member, action: 'Mute', duration, caseNum: totalCases, reason }).setColor(COLORS.MUTE);
+			modMessage = await this.client.channels.get(modLogChannel).send(embed);
+		}
+
+		await this.client.db.models.cases.create({
+			guild: message.guild.id,
+			message: modMessage ? modMessage.id : null,
+			case_id: totalCases,
+			target_id: member.id,
+			target_tag: member.user.tag,
+			mod_id: message.author.id,
+			mod_tag: message.author.tag,
+			action: ACTIONS.UNMUTE,
+			reason
+		});
+
+		return message.channel.send(`${emojis.yes} Successfully unmuted **${member.user.tag}**`);
+	}
+}
+
+module.exports = MuteCommand;

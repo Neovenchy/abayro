@@ -1,6 +1,7 @@
 const { Command } = require('discord-akairo');
 const { stripIndents } = require('discord.js');
 const { mod: { CONSTANTS: { ACTIONS, COLORS }, logEmbed } } = require('../../util/Util');
+const { emojis } = require('../../struct/bot');
 
 class KickCommand extends Command {
 	constructor() {
@@ -14,7 +15,6 @@ class KickCommand extends Command {
 			},
 			channel: 'guild',
 			clientPermissions: ['MANAGE_ROLES'],
-			userPermissions: ['KICK_MEMBERS'],
 			ratelimit: 2,
 			args: [
 				{
@@ -27,7 +27,10 @@ class KickCommand extends Command {
 					'type': 'string',
 					'default': ''
 				}
-			]
+			],
+			userPermissions(message) {
+				return message.member.roles.has(this.client.settings.get(message.guild, 'modrole')) || message.member.hasPermission('KICK_MEMBERS')
+		   }
 		});
 	}
 
@@ -63,7 +66,7 @@ class KickCommand extends Command {
 
 		const modLogChannel = this.client.settings.get(message.guild, 'logschnl');
 		let modMessage;
-		if (modLogChannel) {
+		if (modLogChannel && this.client.settings.get(message.guild, 'logs')) {
 			const embed = logEmbed({ message, member, action: 'Kick', caseNum: totalCases, reason }).setColor(COLORS.KICK);
 			modMessage = await this.client.channels.get(modLogChannel).send(embed);
 		}
@@ -79,7 +82,7 @@ class KickCommand extends Command {
 			reason
 		});
 
-		return sentMessage.edit(`Successfully kicked **${member.user.tag}**`);
+		return sentMessage.edit(`${emojis.yes} Successfully kicked **${member.user.tag}**`);
 	}
 }
 
