@@ -1,77 +1,74 @@
-// const { Command } = require('discord-akairo');
-// const { emojis } = require('../../struct/bot');
+const { Command } = require('discord-akairo');
+const { mod: { CONSTANTS: { ACTIONS, COLORS }, logEmbed } } = require('../../util/Util');
+const { emojis } = require('../../struct/bot');
 
-// class unbanCommand extends Command {
-// 	constructor() {
-// 		super('unban', {
-// 			aliases: ['unban'],
-// 			cooldown: 5000,
-// 			ratelimit: 1,
-// 			category: 'moderation',
-// 			channelRestriction: 'guild',
-// 			description: {
-// 				content: 'Unban member by id'
+class UnbanCommand extends Command {
+	constructor() {
+		super('unban', {
+			aliases: ['unban'],
+			category: 'mod',
+			description: {
+				content: 'Unbans a user, duh.',
+				usage: '<member> <...reason>',
+				examples: ['unban @Crawl']
+			},
+			channel: 'guild',
+			clientPermissions: ['MANAGE_ROLES'],
+			ratelimit: 2,
+			args: [
+				{
+					id: 'user',
+					type: 'user'
+				},
+				{
+					'id': 'reason',
+					'match': 'rest',
+					'type': 'string',
+					'default': ''
+				}
+			],
+			userPermissions(message) {
+				return message.member.roles.has(this.client.settings.get(message.guild, 'modrole')) || message.member.hasPermission('BAN_MEMBERS');
+			}
+		});
+	}
 
-// 			},
-// 			clientPermissions: ['BAN_MEMBERS'],
-// 			userPermissions: ['BAN_MEMBERS']
-// 		});
-// 	}
+	async exec(message, { user, reason }) {
+		const totalCases = this.client.settings.get(message.guild, 'caseTotal', 0) + 1;
 
-// 	exec(message) {
-// 		const language = this.client.settings.get(message.guild.id, 'language');
+		try {
+			await message.guild.members.unban(user, `Unbanned by ${message.author.tag} | Case #${totalCases}`);
+		} catch (error) {
+			return message.reply(`there was an error unbanning this user: \`${error}\``);
+		}
 
-// 		const args = message.content.split(' ').slice(1);
-// 		const id = args.join(' ');
-// 		this.client.fetchUser(id).then(user => {
-// 			message.guild.unban(user.id)
-// 				.then(() => {
-// 					let Msg1;
-// 					if (language === 'arabic') {
-// 						Msg1 = `${emojis.yes} | **تـمت ازالــة الحظر من ${user}**.`;
-// 					} else if (language === 'english') {
-// 						Msg1 = `${emojis.yes} | ${user} **Has been unbanned**.`;
-// 					} else if (language === 'french') {
-// 						Msg1 = `${emojis.yes} | ${user} **a été non banni**.`;
-// 					} else if (language === 'german') {
-// 						Msg1 = `${emojis.yes} | ${user} **wurde nicht verboten**.`;
-// 					} else if (language === 'turkish') {
-// 						Msg1 = `${emojis.yes} | ${user} **unbanned olmuştur**.`;
-// 					}
-// 					message.channel.send(Msg1);
-// 				}).catch(err => {
-// 					let Msg2;
-// 					if (language === 'arabic') {
-// 						Msg2 = `${emojis.no} | **لــم استـطع ازالـة الحظر من ${user}**.`;
-// 					} else if (language === 'english') {
-// 						Msg2 = `${emojis.no} | **Failed to unban ${user}**.`;
-// 					} else if (language === 'french') {
-// 						Msg2 = `${emojis.no} | **Impossible de débannir ${user}**.`;
-// 					} else if (language === 'german') {
-// 						Msg2 = `${emojis.no} | **${user} nicht zu entsperren**.`;
-// 					} else if (language === 'turkish') {
-// 						Msg2 = `${emojis.no} | **Unban ${user} için başarısız**.`;
-// 					}
-// 					message.channel.send(Msg2);
-// 					this.client.logger.error(err);
-// 				});
-// 		}).catch(() => {
-// 			let Msg3;
-// 			if (language === 'arabic') {
-// 				Msg3 = ':mag_right: | **لـم استـطع ايجاد هذا المستخدم**.';
-// 			} else if (language === 'english') {
-// 				Msg3 = ':mag_right: | **Cannot find this user**.';
-// 			} else if (language === 'french') {
-// 				Msg3 = ':mag_right: | **Impossible de trouver cet utilisateur**.';
-// 			} else if (language === 'german') {
-// 				Msg3 = ':mag_right: | **Kann diesen Nutzer nicht finden**.';
-// 			} else if (language === 'turkish') {
-// 				Msg3 = ':mag_right: | **Bu Kullanıcı bulunamıyor**.';
-// 			}
-// 			message.channel.send(Msg3);
-// 		});
-// 	}
-// }
+		this.client.settings.set(message.guild, 'caseTotal', totalCases);
 
+		if (!reason) {
+			const prefix = this.handler.prefix(message);
+			reason = `Use \`${prefix}reason ${totalCases} <...reason>\` to set a reason for this case`;
+		}
 
-// module.exports = unbanCommand;
+		const modLogChannel = this.client.settings.get(message.guild, 'logschnl');
+		let modMessage;
+		if (modLogChannel && this.client.settings.get(message.guild, 'logs')) {
+			const embed = logEmbed({ message, member: user, action: 'Unban', caseNum: totalCases, reason }).setColor(COLORS.UNBAN);
+			modMessage = await this.client.channels.get(modLogChannel).send(embed);
+		}
+		await this.client.db.models.cases.create({
+			guild: message.guild.id,
+			message: modMessage ? modMessage.id : null,
+			case_id: totalCases,
+			target_id: user.id,
+			target_tag: user.tag,
+			mod_id: message.author.id,
+			mod_tag: message.author.tag,
+			action: ACTIONS.UNBAN,
+			reason
+		});
+
+		return message.channel.send(`${emojis.yes} Successfully unbanned **${user.tag}**`);
+	}
+}
+
+module.exports = UnbanCommand;

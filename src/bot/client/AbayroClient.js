@@ -3,6 +3,7 @@ const { staff, tokens } = require('../struct/bot');
 const { join } = require('path');
 // const { createServer } = require('http');
 // const { parse } = require('url');
+const MuteScheduler = require('../struct/MuteScheduler');
 const logger = require('../util/Logger');
 const database = require('../struct/Database');
 const SettingsProvider = require('../struct/SettingsProvider');
@@ -46,6 +47,7 @@ class AbayroClient extends AkairoClient {
 
 		this.inhibitorHandler = new InhibitorHandler(this, { inhibitorDirectory: join(__dirname, '..', 'inhibitors') });
 		this.listenerHandler = new ListenerHandler(this, { listenerDirectory: join(__dirname, '..', 'listeners') });
+		this.muteScheduler = new MuteScheduler(this, this.db.models.cases);
 
 		// this.cmds = createServer((req, res) => {
 		// 	if (parse(req.url).pathname === '/cmds') {
@@ -62,6 +64,7 @@ class AbayroClient extends AkairoClient {
 		await this.logger.info(`[DATABASE] Syncing modules to database...`);
 		await this.settings.init();
 		this.logger.info('[DATABASE] Synced modules!');
+		await this.muteScheduler.init();
 	}
 
 	async start() {
