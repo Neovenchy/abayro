@@ -1,5 +1,5 @@
 const { Listener } = require('discord-akairo');
-const { mod: { CONSTANTS: { ACTIONS, COLORS }, logEmbed } } = require('../../../util/Util');
+const { mod: { CONSTANTS: { COLORS }, logEmbed } } = require('../../../util/Util');
 
 class GuildBanRemoveListener extends Listener {
 	constructor() {

@@ -6,6 +6,7 @@
     "extends": "aqua/node",
     "rules": {
         "valid-jsdoc": "off",
-        "no-undefined": "off"
+        "no-undefined": "off",
+        "no-shadow": "off"
     }
 }
