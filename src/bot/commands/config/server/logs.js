@@ -1,5 +1,5 @@
 const { Command } = require('discord-akairo');
-const { emojis } = require('../../../struct/bot');
+const { emojis } = require('../../../util/Constants');
 const Embed = require('../../../util/Embed');
 
 class LogsCommand extends Command {

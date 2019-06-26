@@ -1,5 +1,5 @@
 const { Listener } = require('discord-akairo');
-const { emojis } = require('../../struct/bot');
+const { emojis } = require('../../util/Constants');
 
 class Cooldown extends Listener {
 	constructor() {

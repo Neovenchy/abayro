@@ -1,6 +1,6 @@
 const { Command } = require('discord-akairo');
 const Embed = require('../util/Embed');
-const { emojis } = require('../struct/bot');
+const { emojis } = require('../util/Constants');
 const categoriesEmojis = [{
 	id: 'moderation',
 	emoji: '🔧'

@@ -1,5 +1,5 @@
 const { Command } = require('discord-akairo');
-const { emojis, assets } = require('../../struct/bot');
+const { emojis, assets } = require('../../util/Constants');
 const { find, rank } = require('../../database/Users');
 // TODO: use request-promise instead of jimp! (https://www.npmjs.com/package/request-promise)
 const { read, MIME_PNG } = require('jimp');

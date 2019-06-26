@@ -1,5 +1,5 @@
 const { Command } = require('discord-akairo');
-const { emojis: { no } } = require('../../struct/bot');
+const { emojis: { no } } = require('../../util/Constants');
 
 class AddRoleCommand extends Command {
 	constructor() {

@@ -1,6 +1,6 @@
 const { Listener } = require('discord-akairo');
 const moment = require('moment');
-const Embed = require('../../../util/Embed');
+const Embed = require('../../util/Embed');
 
 class guildMemberRemoveEvent extends Listener {
 	constructor() {

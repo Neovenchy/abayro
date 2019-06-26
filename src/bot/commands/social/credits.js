@@ -1,5 +1,5 @@
 const { Command } = require('discord-akairo');
-const { emojis } = require('../../struct/bot');
+const { emojis } = require('../../util/Constants');
 const { find } = require('../../database/Users');
 
 class CreditsCommand extends Command {

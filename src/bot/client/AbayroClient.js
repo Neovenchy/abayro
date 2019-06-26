@@ -1,12 +1,12 @@
 const { AkairoClient, CommandHandler, ListenerHandler, InhibitorHandler } = require('discord-akairo');
-const { staff, tokens } = require('../struct/bot');
+const { staff, tokens } = require('../util/Constants');
 const { join } = require('path');
 // const { createServer } = require('http');
 // const { parse } = require('url');
-const MuteScheduler = require('../struct/MuteScheduler');
+const MuteScheduler = require('../structures/MuteScheduler');
 const logger = require('../util/Logger');
-const database = require('../struct/Database');
-const SettingsProvider = require('../struct/SettingsProvider');
+const database = require('../structures/Database');
+const SettingsProvider = require('../structures/SettingsProvider');
 
 class AbayroClient extends AkairoClient {
 	constructor() {

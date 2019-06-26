@@ -1,5 +1,5 @@
 const { Command } = require('discord-akairo');
-const { emojis } = require('../../struct/bot');
+const { emojis } = require('../../util/Constants');
 const { increase, decrease, find } = require('../../database/Users');
 
 class TransferCommand extends Command {

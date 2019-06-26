@@ -1,7 +1,7 @@
 const { Command } = require('discord-akairo');
 const { stripIndents } = require('discord.js');
 const { mod: { CONSTANTS: { ACTIONS, COLORS }, logEmbed } } = require('../../util/Util');
-const { emojis } = require('../../struct/bot');
+const { emojis } = require('../../util/Constants');
 
 class KickCommand extends Command {
 	constructor() {

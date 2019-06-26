@@ -1,6 +1,6 @@
 const { Command } = require('discord-akairo');
 const Embed = require('../../util/Embed');
-const { library: { version: botversion, node: nodeversion } } = require('../../struct/bot');
+const { library: { version: botversion, node: nodeversion } } = require('../../util/Constants');
 const moment = require('moment');
 require('moment-duration-format');
 

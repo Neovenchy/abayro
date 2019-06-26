@@ -1,6 +1,6 @@
 const { Listener } = require('discord-akairo');
-const { channels } = require('../../../struct/bot');
-const Embed = require('../../../util/Embed');
+const { channels } = require('../../util/Constants');
+const Embed = require('../../util/Embed');
 
 class guildCreateAddEvent extends Listener {
 	constructor() {

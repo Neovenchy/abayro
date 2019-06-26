@@ -1,6 +1,6 @@
 const { Command } = require('discord-akairo');
 const short = require('isgd');
-const { emojis } = require('../../struct/bot');
+const { emojis } = require('../../util/Constants');
 
 class ShortCommand extends Command {
 	constructor() {

@@ -1,6 +1,6 @@
 const { Command } = require('discord-akairo');
 const { mod: { CONSTANTS: { ACTIONS, COLORS }, logEmbed } } = require('../../util/Util');
-const { emojis } = require('../../struct/bot');
+const { emojis } = require('../../util/Constants');
 const ms = require('@abayro/ms');
 
 class MuteCommand extends Command {

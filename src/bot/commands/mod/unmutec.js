@@ -1,5 +1,5 @@
 const { Command } = require('discord-akairo');
-const { emojis: { yes, no } } = require('../../struct/bot');
+const { emojis: { yes, no } } = require('../../util/Constants');
 class unmutecCommand extends Command {
 	constructor() {
 		super('unmutec', {

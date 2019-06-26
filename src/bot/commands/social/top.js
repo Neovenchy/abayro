@@ -1,5 +1,5 @@
 const { Command } = require('discord-akairo');
-const { emojis: { no } } = require('../../struct/bot');
+const { emojis: { no } } = require('../../util/Constants');
 const { users } = require('../../database/Users');
 const Embed = require('../../util/Embed');
 const Sequelize = require('sequelize');

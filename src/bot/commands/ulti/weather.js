@@ -1,5 +1,5 @@
 const { Command } = require('discord-akairo');
-const { emojis } = require('../../struct/bot');
+const { emojis } = require('../../util/Constants');
 const weather = require('weather-js');
 
 class WeatherCommand extends Command {

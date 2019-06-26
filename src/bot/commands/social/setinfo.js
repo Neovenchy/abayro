@@ -1,5 +1,5 @@
 const { Command } = require('discord-akairo');
-const { emojis: { no, yes } } = require('../../struct/bot');
+const { emojis: { no, yes } } = require('../../util/Constants');
 const { update } = require('../../database/Users');
 
 class SinfoCommand extends Command {

@@ -1,6 +1,6 @@
 const { Command } = require('discord-akairo');
 const {Message} = require('discord.js'); //eslint-disable-line
-const { emojis } = require('../struct/bot');
+const { emojis } = require('../util/Constants');
 
 class StatusCommand extends Command {
 	constructor() {

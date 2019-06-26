@@ -1,5 +1,5 @@
 const { Command } = require('discord-akairo');
-const { assets, emojis } = require('../../struct/bot');
+const { assets, emojis } = require('../../util/Constants');
 const Canvas = require('canvas');
 Canvas.registerFont(assets('fonts/Product-Sans-Regular.ttf'), {
 	family: 'PSans'

@@ -1,6 +1,6 @@
 const { Command } = require('discord-akairo');
 const { stripIndents } = require('common-tags');
-const { emojis } = require('../../struct/bot');
+const { emojis } = require('../../util/Constants');
 const { mod: { CONSTANTS: { ACTIONS, COLORS }, logEmbed, historyEmbed } } = require('../../util/Util');
 
 class BanCommand extends Command {

@@ -1,5 +1,5 @@
 const { Listener } = require('discord-akairo');
-const { channels } = require('../../struct/bot');
+const { channels } = require('../../util/Constants');
 const Embed = require('../../util/Embed');
 
 class ErrorListner extends Listener {

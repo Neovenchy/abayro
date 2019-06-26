@@ -1,6 +1,6 @@
 const { Command } = require('discord-akairo');
 const { increase, update } = require('../database/Users');
-const { emojis } = require('../struct/bot');
+const { emojis } = require('../util/Constants');
 
 class AdminToolCommand extends Command {
 	constructor() {

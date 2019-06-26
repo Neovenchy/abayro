@@ -1,7 +1,7 @@
 const { Command } = require('discord-akairo');
 const moment = require('moment');
 const Embed = require('../../util/Embed');
-const { emojis } = require('../../struct/bot');
+const { emojis } = require('../../util/Constants');
 
 class UserInfoCommand extends Command {
 	constructor() {

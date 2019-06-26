@@ -1,5 +1,5 @@
 const { Command } = require('discord-akairo');
-const { emojis } = require('../../struct/bot');
+const { emojis } = require('../../util/Constants');
 const { find, update } = require('../../database/Users');
 const HCI = require('hex-colors-info');
 

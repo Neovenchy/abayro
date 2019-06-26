@@ -1,10 +1,10 @@
 const { Command } = require('discord-akairo');
 const { mod: { CONSTANTS: { ACTIONS, COLORS }, logEmbed } } = require('../../util/Util');
-const { emojis } = require('../../struct/bot');
+const { emojis } = require('../../util/Constants');
 
 class MuteCommand extends Command {
 	constructor() {
-		super('mute', {
+		super('unmute', {
 			aliases: ['unmute'],
 			category: 'mod',
 			description: {
@@ -45,12 +45,14 @@ class MuteCommand extends Command {
 		if (member.id === message.author.id) return;
 
 		const muteRole = this.client.settings.get(message.guild, 'muterole');
-		if (!muteRole) return message.channel.send(`${emojis.no} | there is no mute role configured on this server.`);
+		if (!muteRole) return message.channel.send(`${emojis.no} | There is no mute role configured on this server.`);
+
+		if (!member.roles.has(muteRole)) return message.channel.send(`${emojis.no} | Member is not muted.`);
 
 		const totalCases = this.client.settings.get(message.guild, 'caseTotal', 0) + 1;
 
 		try {
-			await member.remove(muteRole, `Unmuted by ${message.author.tag} | Case #${totalCases}`);
+			await member.removeRole(muteRole, `Unmuted by ${message.author.tag} | Case #${totalCases}`);
 		} catch (error) {
 			return message.channel.send(`${emojis.no} | There was an error muting this member: \`${error}\``);
 		}
