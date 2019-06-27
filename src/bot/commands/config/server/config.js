@@ -35,7 +35,7 @@ class ConfigsCommand extends Command {
 			message.channel.send(
 				new Embed()
 					.setAuthor(message.guild.name, message.guild.iconURL)
-					.addField('LevelUP Message:', `**${this.client.settings.get(message.guild.id, 'lvlup-msg', 'disabled')}**
+					.addField('Level UP Message:', `**${this.client.settings.get(message.guild.id, 'lvlup-msg', 'disabled')}**
 
 __**[Config usage:](https://abayro.xyz/commands/serverlogs/usage)**__
 \`\`\`md
@@ -56,7 +56,7 @@ __**[Config usage:](https://abayro.xyz/commands/serverlogs/usage)**__
 		} else if (mhandler === 'disable') {
 			if (!margs) return message.channel.send(`${emojis.no}** | ${message.author.username},** Please enter the config feature name to disable.`);
 			if (margs === 'lvlup-msg') {
-				this.client.settings.set(message.guild.id, 'lvlup-msg', 'disabled');
+				this.client.settings.set(message.guild.id, 'lvlup-msg', '');
 				message.channel.send(`${emojis.yes}** | ${message.author.username},** **Level up messages** has been **disabled**.`);
 			}
 		}

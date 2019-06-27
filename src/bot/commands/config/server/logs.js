@@ -42,9 +42,9 @@ class LogsCommand extends Command {
 				new Embed()
 				 .setAuthor(message.guild.name, message.guild.iconURL)
 				 .addField('Status:', `**${this.client.settings.get(message.guild.id, 'logs', 'off').replace('off', 'OFF `(not active)`').replace('on', 'ON `(active)`')}**`, true)
-				 .addField('Logging channel:', `**<#${this.client.settings.get(message.guild.id, 'logschnl', '404')}>**
+				 .addField('Logging channel:', `**<#${this.client.settings.get(message.guild.id, 'logsChannel', '*No channel set.*')}>**
 
-__**[ServerLogs usage:](https://abayro.xyz/commands/serverlogs/usage)**__
+__**[Logs usage:](https://abayro.xyz/commands/serverlogs/usage)**__
 \`\`\`md
 > ━━━━━━━━━━━━━━━━━━━━━
 # Use ${prefix}logs turn [on/off]
@@ -67,7 +67,7 @@ __**[ServerLogs usage:](https://abayro.xyz/commands/serverlogs/usage)**__
 			}
 		} else if (mhandler === 'channel') {
 			if (!channel) return message.channel.send(`${emojis.no}** | ${message.author.username},** Please **mention** a channel`);
-			this.client.settings.set(message.guild.id, 'logschnl', channel.id);
+			this.client.settings.set(message.guild.id, 'logsChannel', channel.id);
 			message.channel.send(`${emojis.yes}** | ${message.author.username},** **Logs channel** has been set to **${channel}**.`);
 		}
 	}

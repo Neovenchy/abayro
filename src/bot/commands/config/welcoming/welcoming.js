@@ -15,7 +15,7 @@ class WlcmCommand extends Command {
 			description: {
 				content: 'To edit and view welcoming settings.',
 				usage: 'turn | setchannel | type | setmsg',
-				examples: ['turn on', 'setchannel welcome', 'type embed', 'setmsg مرحبا بك في سيرفرنا']
+				examples: ['turn on', 'setchannel welcome', 'type embed', 'setmsg **Welcome to our server (:**']
 			},
 			args: [{
 				id: 'welcoming',
@@ -45,10 +45,10 @@ class WlcmCommand extends Command {
 			const embed = new Embed()
 			 .setColor('#FB542B')
 			 .setAuthor(message.guild.name, message.guild.iconURL)
-			 .addField('Status:', `**${this.client.settings.get(message.guild.id, 'wlcstatus', 'off').replace('off', 'OFF `(not active)`').replace('on', 'ON `(active)`')}**`, true)
-			 .addField('Channel:', `**<#${this.client.settings.get(message.guild.id, 'wlcchannel', 404)}>**`, true)
-			 .addField('Type:', `**${this.client.settings.get(message.guild.id, 'wlctype', 'text')}**`, true)
-			 .addField('Message:', `\`\`\`${this.client.settings.get(message.guild.id, 'wlcmsg', '[member] Joined the server')}\`\`\`
+			 .addField('Status:', `**${this.client.settings.get(message.guild.id, 'wlc', 'off').replace('off', 'OFF `(not active)`').replace('on', 'ON `(active)`')}**`, true)
+			 .addField('Channel:', `**<#${this.client.settings.get(message.guild.id, 'wlcChannel', 'No channel set.')}>**`, true)
+			 .addField('Type:', `**${this.client.settings.get(message.guild.id, 'wlcType', 'text')}**`, true)
+			 .addField('Message:', `\`\`\`${this.client.settings.get(message.guild.id, 'wlcMsg', '[member] Joined the server')}\`\`\`
 __**[Welcomer usage:](https://abayro.xyz/commands/welcoming/usage)**__
 \`\`\`md
 > ━━━━━━━━━━━━━━━━━━━━━
@@ -73,26 +73,26 @@ __**[Welcomer usage:](https://abayro.xyz/commands/welcoming/usage)**__
 		} else if (welcoming === 'turn') {
 			if (!margs) return message.channel.send(`${emojis.no} **|** Please choose **on** or **off** to **set** the **status**.`);
 			if (margs === 'on') {
-				this.client.settings.set(message.guild.id, 'wlcstatus', 'on');
+				this.client.settings.set(message.guild.id, 'wlc', 'on');
 				message.channel.send(`${emojis.yes} **|** **Welcoming** has been **activated**.`);
 			} else if (margs === 'off') {
-				this.client.settings.set(message.guild.id, 'wlcstatus', 'off');
+				this.client.settings.set(message.guild.id, 'wlc', '');
 				message.channel.send(`${emojis.yes} **|** **Welcoming** has been **deactivated**.`);
 			}
 		} else if (welcoming === 'setchannel') {
 			if (!channel) return message.channel.send(`${emojis.no} **|** Please **mention** a channel`);
-			this.client.settings.set(message.guild.id, 'wlcchannel', channel.id);
+			this.client.settings.set(message.guild.id, 'wlcChannel', channel.id);
 			message.channel.send(`${emojis.yes} **|** **Welcoming channel** has been **set** to **${channel}**`);
 		} else if (welcoming === 'type') {
 			if (!margs) return message.channel.send(`${emojis.no} **|** Please enter a **welcoming type**.`);
 			if (margs === 'text') {
-				this.client.settings.set(message.guild.id, 'wlctype', 'text');
+				this.client.settings.set(message.guild.id, 'wlcType', 'text');
 				message.channel.send(`${emojis.yes} **| Welcoming type** has been **set** to **TEXT**.`);
 			} else if (margs === 'embed') {
-				this.client.settings.set(message.guild.id, 'wlctype', 'embed');
+				this.client.settings.set(message.guild.id, 'wlcType', 'embed');
 				message.channel.send(`${emojis.yes} **| Welcoming type** has been **set** to **EMBED**.`);
 			} else if (margs === 'image') {
-				this.client.settings.set(message.guild.id, 'wlctype', 'image');
+				this.client.settings.set(message.guild.id, 'wlcType', 'image');
 				message.channel.send(`${emojis.yes} **| Welcoming type** has been **set** to **IMAGE**.`);
 			}
 		} else if (welcoming === 'setmsg') {
@@ -100,7 +100,7 @@ __**[Welcomer usage:](https://abayro.xyz/commands/welcoming/usage)**__
 				message.channel.send(`${emojis.no} **|** Please enter a **welcoming message**.`);
 			} else if (wlcmsg) {
 				if (wlcmsg.length >= 1500) return message.channel.send(`${emojis.no}**| Welcoming message** cannot be more than \`1500\` **characters**.`);
-				this.client.settings.set(message.guild.id, 'wlcmsg', wlcmsg);
+				this.client.settings.set(message.guild.id, 'wlcMsg', wlcmsg);
 				message.channel.send(`${emojis.yes} **| Welcoming message** has been **set** to:\n\`\`\`text\n${wlcmsg}\`\`\``);
 			}
 		}

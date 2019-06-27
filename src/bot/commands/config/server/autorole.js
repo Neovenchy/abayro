@@ -43,7 +43,7 @@ class AutoRoleCommand extends Command {
 				new Embed()
 				 .setAuthor(message.guild.name, message.guild.iconURL)
 				 .addField('Status:', `**${this.client.settings.get(message.guild.id, 'autorole', 'off').replace('off', 'OFF `(not active)`').replace('on', 'ON `(active)`')}**`, true)
-				 .addField('Autorole:', `**${this.client.settings.get(message.guild.id, 'autorolest', 'No autorole set')}**
+				 .addField('Autorole:', `**${this.client.settings.get(message.guild.id, 'autoroleRole', '*No role set.*')}**
 
 __**[Autorole usage:](https://abayro.xyz/commands/autorole/usage)**__
 \`\`\`md
@@ -68,7 +68,7 @@ __**[Autorole usage:](https://abayro.xyz/commands/autorole/usage)**__
 			}
 		} else if (autor === 'setrole') {
 			if (!role) return message.channel.send(`${emojis.no}** | ${message.author.username},** Please **enter** a **role** name.`);
-			this.client.settings.set(message.guild.id, 'autorolest', role.name);
+			this.client.settings.set(message.guild.id, 'autoroleRole', role.id);
 			message.channel.send(`${emojis.yes}** | ${message.author.username},** The **autorole** has been changed to **${role.name}**`);
 		}
 	}

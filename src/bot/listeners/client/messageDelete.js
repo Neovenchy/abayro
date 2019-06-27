@@ -15,20 +15,25 @@ class messageDeleteListener extends Listener {
 	exec(message) {
 		if (message.author.bot) return;
 		if (!message.content) return;
-		const channel = this.client.settings.get(message.guild, 'logs', undefined) && `${this.client.settings.get(message.guild, 'logschnl', undefined)}`;
+		const logschannel = this.client.settings.get(message.guild, 'logs', undefined) && `${this.client.settings.get(message.guild, 'logsChannel', undefined)}`;
+
+		if (!logschannel) return;
+
+		const channel = message.guild.channels.get(logschannel);
+
 		if (!channel) return;
 
 		const embed = new Embed()
 			.setColor(0xDC143C)
 			.setAuthor('Message Delete', 'https://i.imgur.com/EUGvQJJ.png')
 			.setThumbnail(message.author.displayAvatarURL)
-			.addField('❯ User', `${message.author.tag} (${message.author.id})`, true)
+			.addField('❯ User', `${message.author.tag} (${message.author.id}) `, true)
 			.addField('❯ Channel', message.channel, true)
 			.addField('❯ Message', `**${message.content.substring(0, 1020)}**`)
 			.setFooter(message.guild.name, message.guild.iconURL)
 			.setTimestamp();
 
-		return message.guild.channels.get(channel).send(embed);
+		return channel.send(embed);
 	}
 }
 

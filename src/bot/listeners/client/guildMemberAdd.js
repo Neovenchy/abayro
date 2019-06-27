@@ -13,40 +13,67 @@ class guildMemberAddEvent extends Listener {
 
 	/** @param {import('discord.js').GuildMember} member */
 	exec(member) {
-		 if (this.client.settings.get(member.guild.id, 'autorole') === 'on') {
-		    const role = member.guild.roles.find(r => r.name === this.client.settings.get(member.guild.id, 'autorolest'));
-			setTimeout(() => {
-				member.addRole(role);
-			}, 10000); // To avoid rate limits
+		const logs = this.client.settings.get(member.guild, 'logs', undefined) && `${this.client.settings.get(member.guild, 'logsChannel', undefined)}`;
+		const autorole = this.client.settings.get(member.guild, 'autorole', undefined) && `${this.client.settings.get(member.guild, 'autoroleRole', undefined)}`;
+		const welcome = this.client.settings.get(member.guild, 'wlc') && {
+			channel: this.client.settings.get(member.guild, 'wlcChannel', undefined),
+			type: this.client.settings.get(member.guild, 'wlcType', 'text'),
+			message: this.client.settings.get(member.guild, 'wlcType', '[member] Joined the server')
+		};
+
+		/** @LOGS */
+		if (logs) {
+			const logschannel = member.guild.channels.get(logs);
+			if (!logschannel) return;
+			const embed = new Embed()
+				.setColor(0x00FF00)
+				.setAuthor('Member Join', 'https://i.imgur.com/BFzLaJV.png')
+				.setThumbnail(member.user.displayAvatarURL)
+				.setDescription(`**${member.user.tag}** (${member.id}) has **__joined__** the server.`)
+				.addField('❯ Bot', `**${member.user.bot ? 'Yes' : 'No'}**`, true)
+				.addField('❯ Member Number', `**${member.guild.memberCount}**`, true)
+				.setFooter(member.user.tag, member.user.displayAvatarURL)
+				.setTimestamp();
+			return logschannel.send(embed);
 		}
-		 if (this.client.settings.get(member.guild.id, 'antibotj') === 'on') {
-		    if (member.user.bot && member.kickable) member.kick('Abayro protection: Anti-bot joining');
-		 }
-		if (this.client.settings.get(member.guild.id, 'wlcstatus') === 'off') return;
-		if (this.client.settings.get(member.guild.id, 'wlcstatus') === 'on') {
-			const msg = this.client.settings.get(member.guild.id, 'wlcmsg', '[member] Joined the server');
-			if (!msg || msg === null) return;
-			const wlcmc = this.client.settings.get(member.guild.id, 'wlcchannel');
-			const wlcmChannel = member.guild.channels.get(wlcmc);
-			if (!wlcmChannel) return;
-			if (this.client.settings.get(member.guild.id, 'wlctype') === 'text') {
-				wlcmChannel.send(msg.replace('[member]', member).replace('[membername]', member.user.username).replace('[server]', member.guild.name));
-			} else if (this.client.settings.get(member.guild.id, 'wlctype') === 'embed') {
-				wlcmChannel.send(msg.replace('[member]', member).replace('[membername]', member.user.username).replace('[server]', member.guild.name));
+
+		/** @AUTROLE */
+		if (autorole) {
+			const role = member.guild.roles.get(autorole);
+			if (role) {
+				setTimeout(() => {
+					try {
+						member.addRole(role);
+					} catch {}
+				}, 10000); // To avoid rate limits
+			}
+		}
+		//  if (this.client.settings.get(member.guild.id, 'antibotj') === 'on') {
+		//     if (member.user.bot && member.kickable) member.kick('Abayro protection: Anti-bot joining');
+		//  }
+
+		/** @WELCOME_MESSAGE */
+		if (!welcome) return;
+		const wlcchannel = member.guild.channels.get(welcome.message);
+		if (wlcchannel) {
+			if (welcome.type === 'text') {
+				wlcchannel.send(welcome.message.replace('[member]', member).replace('[membername]', member.user.username).replace('[server]', member.guild.name));
+			} else if (welcome.type === 'embed') {
+				wlcchannel.send(welcome.message.replace('[member]', member).replace('[membername]', member.user.username).replace('[server]', member.guild.name));
 				const embed = new Embed()
-					.setAuthor('New member joined !', member.guild.iconURL)
-					.addField('**❯** Creation date:', `\`${moment(member.user.createdAt).format('D/M/YYYY h:mm a')}\`\n**Created ${moment(member.user.createdAt).fromNow()}**`, true)
-					.addField('**❯** Member ID:', member.id, true)
-					.addField('**❯** Member number:', member.guild.memberCount, true)
-					.addField('**❯** Member status:', member.presence.status, true)
+					.setAuthor('New member joined', member.guild.iconURL)
+					.addField('❯ Creation date', `\`${moment(member.user.createdAt).format('D/M/YYYY h:mm a')}\`\n**Created ${moment(member.user.createdAt).fromNow()}**`, true)
+					.addField('❯ Member ID', member.id, true)
+					.addField('❯ Member number', member.guild.memberCount, true)
+					.addField('❯ Member status', member.presence.status, true)
 					.setFooter(member.user.tag, member.user.displayAvatarURL)
 					.setThumbnail(member.user.displayAvatarURL)
-					.setColor('#2ecc71')
+					.setColor(0x00FF00)
 					.setTimestamp();
-				wlcmChannel.send(embed);
-			} else if (this.client.settings.get(member.guild.id, 'wlctype') === 'image') {
-				// TODO: add canvas welcoming & Captcha system
-				wlcmChannel.send(msg.replace('[member]', member).replace('[membername]', member.user.username).replace('[server]', member.guild.name));
+				wlcchannel.send(embed);
+			} else if (welcome.type === 'image') {
+			// TODO: add canvas welcoming & Captcha system
+				wlcchannel.send(welcome.message.replace('[member]', member).replace('[membername]', member.user.username).replace('[server]', member.guild.name));
 			}
 		}
 	}

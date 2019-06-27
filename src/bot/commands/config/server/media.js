@@ -41,8 +41,8 @@ class MediaCommand extends Command {
 			message.channel.send(
 				new Embed()
 				 .setAuthor(message.guild.name, message.guild.iconURL)
-				 .addField('Status:', `**${this.client.settings.get(message.guild.id, 'mediast', 'off').replace('off', 'OFF `(not active)`').replace('on', 'ON `(active)`')}**`, true)
-				 .addField('Media channel:', `**<#${this.client.settings.get(message.guild.id, 'mediachnl', '404')}>**
+				 .addField('Status:', `**${this.client.settings.get(message.guild.id, 'media', 'off').replace('off', 'OFF `(not active)`').replace('on', 'ON `(active)`')}**`, true)
+				 .addField('Media channel:', `**<#${this.client.settings.get(message.guild.id, 'mediaChannel', '*No channel set.*')}>**
 
 __**[Media usage:](https://abayro.xyz/commands/media/usage)**__
 \`\`\`md
@@ -59,15 +59,15 @@ __**[Media usage:](https://abayro.xyz/commands/media/usage)**__
 		} else if (autor === 'turn') {
 			if (!margs) return message.channel.send(`${emojis.no}** | ${message.author.username},** Please choose **on** or **off** to **set** the **status**.`);
 			if (margs === 'on') {
-				this.client.settings.set(message.guild.id, 'mediast', 'on');
+				this.client.settings.set(message.guild.id, 'media', 'on');
 				message.channel.send(`${emojis.yes}** | ${message.author.username},** **Media** has been **activated**.`);
 			} else if (margs === 'off') {
-				this.client.settings.set(message.guild.id, 'mediast', 'off');
+				this.client.settings.set(message.guild.id, 'media', '');
 				message.channel.send(`${emojis.yes}** | ${message.author.username},** **Media** has been **deactivated**.`);
 			}
 		} else if (autor === 'channel') {
 			if (!channel) return message.channel.send(`${emojis.no}** | ${message.author.username},** Please **mention** a channel`);
-			this.client.settings.set(message.guild.id, 'mediachnl', channel.id);
+			this.client.settings.set(message.guild.id, 'mediaChannel', channel.id);
 			message.channel.send(`${emojis.yes}** | ${message.author.username},** **Media channel** has been set to **${channel}**.`);
 		}
 	}
