@@ -130,7 +130,6 @@ class ProfileCommand extends Command {
 					/* XP BAR*/
 					ctx.fillStyle = pcolor;
 					ctx.fillRect(0, 593, (593 / 100) * textxp / Math.ceil((textlevel / 0.115) ** 2) * 100, 8);
-					this.client.logger.info(textxp / Math.ceil((textlevel / 0.115) ** 2) * 100);
 
 					/* === BADGES CANVAS === */
 

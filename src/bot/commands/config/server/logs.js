@@ -62,8 +62,8 @@ __**[ServerLogs usage:](https://abayro.xyz/commands/serverlogs/usage)**__
 				this.client.settings.set(message.guild.id, 'logs', 'on');
 				message.channel.send(`${emojis.yes}** | ${message.author.username},** **Logs** has been **activated**.`);
 			} else if (margs === 'off') {
-				this.client.settings.set(message.guild.id, 'logs', 'on');
-				message.channel.send(`${emojis.yes}** | ${message.author.username},** **Logs** has been **activated**.`);
+				this.client.settings.set(message.guild.id, 'logs', '');
+				message.channel.send(`${emojis.yes}** | ${message.author.username},** **Logs** has been **deactivated**.`);
 			}
 		} else if (mhandler === 'channel') {
 			if (!channel) return message.channel.send(`${emojis.no}** | ${message.author.username},** Please **mention** a channel`);
