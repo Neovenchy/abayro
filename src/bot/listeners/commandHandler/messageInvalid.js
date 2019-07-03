@@ -23,7 +23,7 @@ class MessageInvaildListener extends Listener {
 		if (!message.guild || message.author.bot) return;
 
 		if (this.client.settings.get(message.guild.id, 'antinsfw', 'on')) {
-			const model = await nsfwjs.load();
+			const model = await nsfw.load();
 			if (message.attachment.size > 0 && message.attachment.width > 1) {
 				const predictions = await model.classify(message.attachment);
 				message.channel.send(predictions)
