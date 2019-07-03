@@ -23,7 +23,6 @@ class PROTCommand extends Command {
 			},
 			{
 			    id: 'margs',
-			    match: ['on', 'off'],
 			    index: 1
 			}]
 		});
