@@ -22,13 +22,13 @@ class MessageInvaildListener extends Listener {
 	async exec(message) {
 		if (!message.guild || message.author.bot) return;
 
-		if (this.client.settings.get(message.guild.id, 'antinsfw', 'on')) {
+		/* if (this.client.settings.get(message.guild.id, 'antinsfw', 'on')) {
 			const model = await nsfw.load();
 			if (message.attachment.width) {
 				const predictions = await model.classify(message.attachment);
 				message.channel.send(predictions)
 			}
-		}
+		} */
 		const userExp = await find(message.author.id, 'textxp', 0);
 		const userLvl = await find(message.author.id, 'textlevel', 0);
 		const userExpLvl = Math.floor(0.115 * Math.sqrt(userExp)) + 1;
