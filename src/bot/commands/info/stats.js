@@ -22,21 +22,21 @@ class StatsCommand extends Command {
 		const embed = new Embed()
 			.setColor('#307FFF')
 			.setAuthor(`${this.client.user.username} Statistics`, this.client.user.avatarURL)
-			.addField('Uptime:', `• ${moment.duration(this.client.uptime).format('d[d ]h[h ]m[m ]s[s]')}`, true)
-			.addField('Memory Usage:', `• **${Math.round(process.memoryUsage().heapUsed / 1024 / 1024)}**MB`, true)
-			.addField(`General Stats:`, `• **Guilds**: \`${this.client.guilds.size}\`\n• **Channels**: \`${this.client.channels.size}\`\n• **Users**: \`${this.client.users.size}\``, true)
+			.addField('Uptime', `• ${moment.duration(this.client.uptime).format('d[d ]h[h ]m[m ]s[s]')}`, true)
+			.addField('Memory Usage', `• ${Math.round(process.memoryUsage().heapUsed / 1024 / 1024)}**MB**`, true)
+			.addField(`General Stats`, `• **Guilds**: ${this.client.guilds.size}\n• **Channels**: ${this.client.channels.size}\n• **Users**: ${this.client.users.size}`, true)
 			.addField(
-				`Versions:`,
-				`• **Abayro**: \`v${botversion}\`\n• **Node**: \`${nodeversion}\``,
+				`Versions`,
+				`• **Abayro**: v${botversion}\n• **Node**: ${nodeversion}`,
 				true
 			)
 			.addField(
-				'Libs:',
+				'Libs',
 				`• **[discord.js](https://www.npmjs.com/package/discord.js)**\n• **[discord-akairo](https://www.npmjs.com/package/discord-akairo)**`,
 				true
 			)
 			.addField(
-				'Developers:',
+				'Developers',
 				`${this.client.ownerID.map(m => `• **${this.client.users.get(m).tag}**`).join('\n')}`,
 				true
 			)
