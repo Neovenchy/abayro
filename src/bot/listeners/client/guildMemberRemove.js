@@ -26,13 +26,13 @@ class guildMemberRemoveEvent extends Listener {
 				goodbyeChannel.send(goodbye.message.replace('[member]', member).replace('[membername]', member.user.username).replace('[server]', member.guild.name));
 				const embed = new Embed()
 					.setAuthor('Member left !', member.guild.iconURL)
-					.addField('❯ Join/Creation date:', `\`${moment(member.user.createdAt).format('D/M/YYYY h:mm a')}\`\n**Created ${moment(member.user.createdAt).fromNow()}**\n\`${moment(member.user.joinedAt).format('D/M/YYYY h:mm a')}\`\n**Joined ${moment(member.user.joinedAt).fromNow()}**`, true)
-					.addField('❯ Member ID:', member.id, true)
-					.addField('❯ Membercount:', `${member.guild.memberCount} **Members**`, true)
-					.addField('❯ Member status:', member.presence.status, true)
+					.addField('❯ Join/Creation date', `\`${moment(member.user.createdAt).format('D/M/YYYY h:mm a')}\`\n**Created ${moment(member.user.createdAt).fromNow()}**\n\`${moment(member.user.joinedAt).format('D/M/YYYY h:mm a')}\`\n**Joined ${moment(member.user.joinedAt).fromNow()}**`, true)
+					.addField('❯ Member ID', member.id, true)
+					.addField('❯ Membercount', `${member.guild.memberCount} **Members**`, true)
+					.addField('❯ Member status', member.presence.status, true)
 					.setFooter(member.user.tag, member.user.displayAvatarURL)
 					.setThumbnail(member.user.displayAvatarURL)
-					.setColor('#e74c3c')
+					.setColor('#e76969')
 					.setTimestamp();
 				goodbyeChannel.send(embed);
 			} else if (goodbye.type === 'image') {

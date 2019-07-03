@@ -68,7 +68,7 @@ class guildMemberAddEvent extends Listener {
 					.addField('❯ Member status', member.presence.status, true)
 					.setFooter(member.user.tag, member.user.displayAvatarURL)
 					.setThumbnail(member.user.displayAvatarURL)
-					.setColor(0x00FF00)
+					.setColor('#00ffc0')
 					.setTimestamp();
 				wlcchannel.send(embed);
 			} else if (welcome.type === 'image') {
