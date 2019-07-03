@@ -24,7 +24,7 @@ class MessageInvaildListener extends Listener {
 
 		if (this.client.settings.get(message.guild.id, 'antinsfw', 'on')) {
 			const model = await nsfw.load();
-			if (message.attachment.size > 0 && message.attachment.width > 1) {
+			if (message.attachment.width) {
 				const predictions = await model.classify(message.attachment);
 				message.channel.send(predictions)
 			}
