@@ -20,16 +20,16 @@ class guildCreateAddEvent extends Listener {
 			.setColor('GREEN')
 			.setTitle('Abayro joined a new server!')
 			.setDescription(`
-**- Server name** : \`${guild.name}\`
-**- Server ID** : \`${guild.id}\`
-**- Server owner** : ${guild.owner.user.tag}
-**- Membercount** : \`${guild.memberCount}\`
-**- Abayro is now in** : \`${this.client.guilds.size}\` Servers`)
+**Server name** : ${guild.name}
+**Server ID** : ${guild.id}
+**Server owner** : ${guild.owner.user.tag}
+**Membercount** : ${guild.memberCount}
+**Abayro is now in** : ${this.client.guilds.size} **Servers**`)
 			.setFooter('Abayro', this.client.user.avatarURL);
 		this.client.channels.get(channels.logs).send(embed);
 		if (guild.defaultChannel) {
 			try {
-				guild.defChannel.send(`Hello! I'am **${this.client.user.username}**.\n▫ Start using me by typing: **${this.client.user.tag} help**\n▫ My website is: ** https://abayro.xyz **\n▫ Support, feedback, bugs and changelog goes here: https://discord.gg/USrsqKG`);
+				guild.defChannel.send(`Hello! I'am **${this.client.user.username}**.\n▫ Start using me by typing: **${this.client.user.tag} help**\n▫ My website is: ** https://abayro.xyz **\n▫ Support, feedback, bugs and my changelog goes here: https://discord.gg/USrsqKG`);
 			} catch (e) {
 				throw new Error(e);
 			}

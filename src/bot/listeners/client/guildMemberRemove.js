@@ -12,31 +12,32 @@ class guildMemberRemoveEvent extends Listener {
 	}
 
 	exec(member) {
-		if (this.client.settings.get(member.guild.id, 'gdbstatus') === 'off') return;
-		if (this.client.settings.get(member.guild.id, 'gdbstatus') === 'on') {
-			const msg = this.client.settings.get(member.guild.id, 'gdbmsg', '[member] Left the server');
-			if (!msg || msg === null) return;
-			const gdbmc = this.client.settings.get(member.guild.id, 'gdbchannel');
-			const gdbmChannel = member.guild.channels.get(gdbmc);
-			if (!gdbmChannel) return;
-			if (this.client.settings.get(member.guild.id, 'gdbtype') === 'text') {
-				gdbmChannel.send(msg.replace('[member]', member).replace('[membername]', member.user.username).replace('[server]', member.guild.name));
-			} else if (this.client.settings.get(member.guild.id, 'gdbtype') === 'embed') {
-				gdbmChannel.send(msg.replace('[member]', member).replace('[membername]', member.user.username).replace('[server]', member.guild.name));
+		const goodbye = this.client.settings.get(member.guild, 'gdbstatus') && {
+			channel: this.client.settings.get(member.guild, 'gdbchannel', undefined),
+			type: this.client.settings.get(member.guild, 'gdbtype', 'text'),
+			message: this.client.settings.get(member.guild, 'gdbmsg', '[member] Left the server')
+		};
+		if (!goodbye) return;
+		const goodbyeChannel = member.guild.channels.get(goodbye.channel);
+		if (goodbyeChannel) {
+			if (goodbye.type === 'text') {
+				goodbyeChannel.send(goodbye.message.replace('[member]', member).replace('[membername]', member.user.username).replace('[server]', member.guild.name));
+			} else if (goodbye.type === 'embed') {
+				goodbyeChannel.send(goodbye.message.replace('[member]', member).replace('[membername]', member.user.username).replace('[server]', member.guild.name));
 				const embed = new Embed()
 					.setAuthor('Member left !', member.guild.iconURL)
-					.addField('**❯** Join/Creation date:', `\`${moment(member.user.createdAt).format('D/M/YYYY h:mm a')}\`\n**Created ${moment(member.user.createdAt).fromNow()}**\n\`${moment(member.user.joinedAt).format('D/M/YYYY h:mm a')}\`\n**Joined ${moment(member.user.joinedAt).fromNow()}**`, true)
-					.addField('**❯** Member ID:', member.id, true)
-					.addField('**❯** Membercount:', `${member.guild.memberCount} **Members**`, true)
-					.addField('**❯** Member status:', member.presence.status, true)
+					.addField('❯ Join/Creation date:', `\`${moment(member.user.createdAt).format('D/M/YYYY h:mm a')}\`\n**Created ${moment(member.user.createdAt).fromNow()}**\n\`${moment(member.user.joinedAt).format('D/M/YYYY h:mm a')}\`\n**Joined ${moment(member.user.joinedAt).fromNow()}**`, true)
+					.addField('❯ Member ID:', member.id, true)
+					.addField('❯ Membercount:', `${member.guild.memberCount} **Members**`, true)
+					.addField('❯ Member status:', member.presence.status, true)
 					.setFooter(member.user.tag, member.user.displayAvatarURL)
 					.setThumbnail(member.user.displayAvatarURL)
 					.setColor('#e74c3c')
 					.setTimestamp();
-				gdbmChannel.send(embed);
-			} else if (this.client.settings.get(member.guild.id, 'gdbtype') === 'image') {
+				goodbyeChannel.send(embed);
+			} else if (goodbye.type === 'image') {
 				// TODO: add canvas welcoming & Captcha system
-				gdbmChannel.send(msg.replace('[member]', member).replace('[membername]', member.user.username).replace('[server]', member.guild.name));
+				goodbyeChannel.send(goodbye.message.replace('[member]', member).replace('[membername]', member.user.username).replace('[server]', member.guild.name));
 			}
 		}
 	}

@@ -18,7 +18,7 @@ class guildMemberAddEvent extends Listener {
 		const welcome = this.client.settings.get(member.guild, 'wlc') && {
 			channel: this.client.settings.get(member.guild, 'wlcChannel', undefined),
 			type: this.client.settings.get(member.guild, 'wlcType', 'text'),
-			message: this.client.settings.get(member.guild, 'wlcType', '[member] Joined the server')
+			message: this.client.settings.get(member.guild, 'wlcMsg', '[member] Joined the server')
 		};
 
 		/** @LOGS */
@@ -48,13 +48,13 @@ class guildMemberAddEvent extends Listener {
 				}, 10000); // To avoid rate limits
 			}
 		}
-		//  if (this.client.settings.get(member.guild.id, 'antibotj') === 'on') {
-		//     if (member.user.bot && member.kickable) member.kick('Abayro protection: Anti-bot joining');
-		//  }
+		  if (this.client.settings.get(member.guild.id, 'antibotj') === 'on') {
+		     if (member.user.bot && member.kickable) member.kick('Abayro protection: Anti-bot joining');
+		  }
 
 		/** @WELCOME_MESSAGE */
 		if (!welcome) return;
-		const wlcchannel = member.guild.channels.get(welcome.message);
+		const wlcchannel = member.guild.channels.get(welcome.channel);
 		if (wlcchannel) {
 			if (welcome.type === 'text') {
 				wlcchannel.send(welcome.message.replace('[member]', member).replace('[membername]', member.user.username).replace('[server]', member.guild.name));
