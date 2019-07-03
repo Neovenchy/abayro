@@ -1,6 +1,7 @@
 const { Listener } = require('discord-akairo');
 const { increase, find } = require('../../database/Users');
 const { randomNumber } = require('../../util/Util');
+const nsfw = require('nsfwjs');
 
 class MessageInvaildListener extends Listener {
 	constructor() {
@@ -21,7 +22,13 @@ class MessageInvaildListener extends Listener {
 	async exec(message) {
 		if (!message.guild || message.author.bot) return;
 
-
+		if (this.client.settings.get(message.guild.id, 'antinsfw', 'on')) {
+			const model = await nsfwjs.load();
+			if (message.attachment.size > 0 && message.attachment.width > 1) {
+				const predictions = await model.classify(message.attachment);
+				message.channel.send(predictions)
+			}
+		}
 		const userExp = await find(message.author.id, 'textxp', 0);
 		const userLvl = await find(message.author.id, 'textlevel', 0);
 		const userExpLvl = Math.floor(0.115 * Math.sqrt(userExp)) + 1;
