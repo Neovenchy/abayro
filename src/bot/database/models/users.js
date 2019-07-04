@@ -20,11 +20,11 @@ module.exports = (sequelize, DataTypes) =>
 		},
 		textlevel: {
 			type: DataTypes.INTEGER,
-			defaultValue: 0
+			defaultValue: 1
 		},
 		voicelevel: {
 			type: DataTypes.INTEGER,
-			defaultValue: 0
+			defaultValue: 1
 		},
 		rep: {
 			type: DataTypes.INTEGER,

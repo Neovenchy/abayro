@@ -1,4 +1,5 @@
-const { models: { users }, QueryTypes: { SELECT } } = require('../structures/Database');
+const sequelize = require('../structures/Database');
+const { models: { users } } = sequelize;
 /**
  * @param {String} id - The id for the user or member
  * @param {String} item - The item you looking for , example: 'credits' or leave it if you are looking for all things!
@@ -6,13 +7,10 @@ const { models: { users }, QueryTypes: { SELECT } } = require('../structures/Dat
 */
 exports.find = async (id, item, defaultValue) => {
 	if (!id) throw new Error(`[Users Helpful Database Tool] You didn't set id!`);
-	const user = Boolean(item) ? await users.findByPk(id, { attributes: [item] }) : await users.findByPk(id);
-	if (user && !item) {
-		return user.dataValues;
-	} else if (user && item) {
-		return user.get(item);
-	}
-	return defaultValue;
+	const user = await users.findByPk(id, { attributes: [item] });
+	const value = user.get(item);
+
+	return value || defaultValue;
 };
 
 /**
@@ -48,9 +46,8 @@ exports.decrease = async (id, item, newValue) => {
  */
 exports.rank = async (id, method, defaultValue) => {
 	if (!id) throw new Error(`[Users Helpful Database Tool] You didn't set id!`);
-	const sequelize = require('../structures/Database');
-	const rank = await sequelize.query(`SELECT ranks.rank FROM ( SELECT id, DENSE_RANK() OVER (ORDER BY ${method} DESC) AS rank FROM users ) ranks WHERE id='${id}' LIMIT 1;`, { type: SELECT });
-	return rank[0] || defaultValue;
+	const [rank] = await sequelize.query(`SELECT ranks.rank FROM ( SELECT id, DENSE_RANK() OVER (ORDER BY ${method} DESC) AS rank FROM users ) ranks WHERE id='${id}' LIMIT 1;`, { type: sequelize.QueryTypes.SELECT });
+	return rank || defaultValue;
 };
 /**
  * @description ONLY USE THIS IF YOU KNOW WHAT YOU ARE DOING!

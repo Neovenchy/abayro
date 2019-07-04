@@ -1,6 +1,6 @@
 const { Command } = require('discord-akairo');
 const { emojis, assets } = require('../../util/Constants');
-const { find, rank } = require('../../database/Users');
+const { users, rank } = require('../../database/Users');
 // TODO: use request-promise instead of jimp! (https://www.npmjs.com/package/request-promise)
 const { read, MIME_PNG } = require('jimp');
 const { wrapText, trimString } = require('../../util/Util');
@@ -40,7 +40,7 @@ class ProfileCommand extends Command {
 		if (user.bot) return message.channel.send(`${emojis.no} | **Bots** doesn't have a **profile card**`);
 
 		/*  Getting User Data  */
-		const _user = await find(user.id, '', false); // this will search for all things if there's no user this will return false
+		const [_user] = await users.findOrCreate({ where: { id: message.author.id } });
 		const ptitle = _user.ptitle || 'I like cheese.';
 		const pcolor = _user.pcolor || '#007fff';
 		const credits = _user.credits || 0;
