@@ -1,7 +1,7 @@
 const { Listener } = require('discord-akairo');
-const { increase, find } = require('../../database/Users');
+const { users } = require('../../database/Users');
 const { randomNumber } = require('../../util/Util');
-const nsfw = require('nsfwjs');
+// const nsfw = require('nsfwjs');
 
 class MessageInvaildListener extends Listener {
 	constructor() {
@@ -11,10 +11,6 @@ class MessageInvaildListener extends Listener {
 			category: 'commandHandler'
 		});
 	}
-
-	addxp() {
-		return randomNumber(1, 5);
-	  }
 
 	/**
  * @param { import('discord.js').Message } message
@@ -29,21 +25,30 @@ class MessageInvaildListener extends Listener {
 				message.channel.send(predictions)
 			}
 		} */
-		const userExp = await find(message.author.id, 'textxp', 0);
-		const userLvl = await find(message.author.id, 'textlevel', 0);
-		const userExpLvl = Math.floor(0.115 * Math.sqrt(userExp)) + 1;
 
-		if (userExpLvl > userLvl) {
-			increase(message.author.id, 'textlevel', userExpLvl);
-			if (this.client.settings.get(message.guild.id, 'lvlup-msg') === 'enabled') {
-				return message.channel.send(`:up: ${message.author} You've leveld up to ${userExpLvl}!`);
+		const [user] = await users.findOrCreate({
+			where: {
+				id: message.author.id
 			}
+		});
+
+		const eligible = Date.now() > (new Date(user.textupdatedAt).getTime() + 30e3);
+
+		if (eligible) {
+			const xp = randomNumber(1, 5);
+			const userExpLvl = Math.floor(0.115 * Math.sqrt(user.textxp)) + 1;
+			const now = new Date();
+
+			await user.increment('textxp', { by: xp });
+
+			if (userExpLvl > user.textlevel) {
+				if (this.client.settings.get(message.guild.id, 'lvlup-msg') === 'enabled') {
+					return message.channel.send(`:up: ${message.author} You've leveld up to ${userExpLvl}!`);
+				}
+			}
+
+		   user.update({ textupdatedAt: now });
 		}
-
-
-		setTimeout(() => {
-			increase(message.author.id, 'textxp', this.addxp());
-		}, 30 * 1000);
 	}
 }
 

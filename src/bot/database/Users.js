@@ -1,4 +1,4 @@
-const { models: { users } } = require('../structures/Database');
+const { models: { users }, QueryTypes: { SELECT } } = require('../structures/Database');
 /**
  * @param {String} id - The id for the user or member
  * @param {String} item - The item you looking for , example: 'credits' or leave it if you are looking for all things!
@@ -23,35 +23,23 @@ exports.find = async (id, item, defaultValue) => {
 exports.update = async (id, item, value) => {
 	if (!id) throw new Error(`[Users Helpful Database Tool] You didn't set id!`);
 	if (!item) throw new Error(`[Users Helpful Database Tool] You didn't set an item!`);
-	await users.findOrCreate({ where: { id } }).spread(foundOrCreatedUser => {
-		if (foundOrCreatedUser) {
-			foundOrCreatedUser.set(item, value);
-			return foundOrCreatedUser.save();
-		}
-		throw new Error(`[Users Helpful Database Tool] Couldn't find user in findOrCreate!`);
-	});
+	const [user] = await users.findOrCreate({ where: { id } });
+	user.set(item, value);
+	return user.save();
 };
 
 exports.increase = async (id, item, newValue) => {
 	if (!id) throw new Error(`[Users Helpful Database Tool] You didn't set id!`);
 	if (!item) throw new Error(`[Users Helpful Database Tool] You didn't set an item!`);
-	await users.findOrCreate({ where: { id } }).spread(foundOrCreatedUser => {
-		if (foundOrCreatedUser) {
-			return foundOrCreatedUser.increment(item, { by: newValue });
-		}
-		throw new Error(`[Users Helpful Database Tool] Couldn't find user in findOrCreate!`);
-	});
+	const [user] = await users.findOrCreate({ where: { id } });
+	return user.increment(item, { by: newValue });
 };
 
 exports.decrease = async (id, item, newValue) => {
 	if (!id) throw new Error(`[Users Helpful Database Tool] You didn't set id!`);
 	if (!item) throw new Error(`[Users Helpful Database Tool] You didn't set an item!`);
-	await users.findOrCreate({ where: { id } }).spread(foundOrCreatedUser => {
-		if (foundOrCreatedUser) {
-			return foundOrCreatedUser.decrement(item, { by: newValue });
-		}
-		throw new Error(`[Users Helpful Database Tool] Couldn't find user in findOrCreate!`);
-	});
+	const [user] = await users.findOrCreate({ where: { id } });
+	return user.decrement(item, { by: newValue });
 };
 /**
  * @param {string} id - The user id
@@ -61,7 +49,7 @@ exports.decrease = async (id, item, newValue) => {
 exports.rank = async (id, method, defaultValue) => {
 	if (!id) throw new Error(`[Users Helpful Database Tool] You didn't set id!`);
 	const sequelize = require('../structures/Database');
-	const rank = await sequelize.query(`SELECT ranks.rank FROM ( SELECT id, DENSE_RANK() OVER (ORDER BY ${method} DESC) AS rank FROM users ) ranks WHERE id='${id}' LIMIT 1;`, { type: sequelize.QueryTypes.SELECT });
+	const rank = await sequelize.query(`SELECT ranks.rank FROM ( SELECT id, DENSE_RANK() OVER (ORDER BY ${method} DESC) AS rank FROM users ) ranks WHERE id='${id}' LIMIT 1;`, { type: SELECT });
 	return rank[0] || defaultValue;
 };
 /**

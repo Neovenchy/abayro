@@ -49,6 +49,7 @@ class ProfileCommand extends Command {
 		const { rank: textrank } = await rank(user.id, 'textxp', '000');
 		const textlevel = _user.textlevel || 0;
 		const textxp = _user.textxp || 0;
+		const upperBound = Math.ceil((textlevel / 0.115) ** 2);
 
 		/*  CANVAS  */
 		registerFont(assets('fonts/Uni-Sans-Heavy.otf'), { family: 'UniSans' });
@@ -125,11 +126,11 @@ class ProfileCommand extends Command {
 					ctx.fontSize = '20px';
 					ctx.fillStyle = '#f5f6fa';
 					ctx.textAlign = 'center';
-					ctx.fillText(`TOTAL XP: ${textxp}`, 239, 581);
+					ctx.fillText(`XP: ${textxp} / ${upperBound}`, 239, 581);
 
 					/* XP BAR*/
 					ctx.fillStyle = pcolor;
-					ctx.fillRect(0, 593, (593 / 100) * textxp / Math.ceil((textlevel / 0.115) ** 2) * 100, 8);
+					ctx.fillRect(0, 593, (593 / 100) * textxp / upperBound * 100, 8);
 
 					/* === BADGES CANVAS === */
 

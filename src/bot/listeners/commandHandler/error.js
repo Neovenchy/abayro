@@ -14,6 +14,7 @@ class ErrorListner extends Listener {
 	// TODO: instead of this way, use sentry(raven) for better error tracking!
 	exec(error, message, command) {
 		if (command) {
+			this.client.logger.error(`[COMMAND ERROR] ${error.message}`, error.stack);
             const errorMessage = error.message.replace(/[\u001b\u009b][[()#;?]*(?:[0-9]{1,4}(?:;[0-9]{0,4})*)?[0-9A-ORZcf-nqry=><]/g, ''); //eslint-disable-line
 			const id = command.id + errorMessage.length + command.id.length;
 			this.client.logger.error(error);
@@ -29,8 +30,9 @@ class ErrorListner extends Listener {
 				.setFooter(id)
 				.setThumbnail('https://image.flaticon.com/icons/png/512/559/559347.png')
 				.setColor('RED'));
+		} else {
+			this.client.logger.error(`[INHIBITOR ERROR] ${error.message}`, error.stack);
 		}
-		this.client.logger.error(error, error.stack);
 	}
 }
 module.exports = ErrorListner;

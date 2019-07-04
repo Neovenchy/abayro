@@ -1,10 +1,8 @@
 // const { Listener } = require('discord-akairo');
-// const { resolve } = require('path');
-// const dbPath = resolve(__dirname, '../../', 'database', 'sqlite', 'userdata.sqlite');
-// const database = require('sqlite');
-// const sqlite = database.open(dbPath, { Promise });
+// const { users } = require('../../database/Users');
+// const { randomNumber } = require('../../util/Util');
 
-// class VoiceEvent extends Listener {
+// class voiceStateUpdate extends Listener {
 // 	constructor() {
 // 		super('voiceStateUpdate', {
 // 			emitter: 'client',
@@ -13,33 +11,32 @@
 // 		});
 // 	}
 
-// 	async exec(oldMember, newMember) {
-// 		const sql = await sqlite;
+// 	/**
+//      * @param {import('discord.js').GuildMember} oldMember
+//      * @param {import('discord.js').GuildMember} newMember
+//      */
+// 	async exec(_, newMember) {
+// 		const [user] = await users.findOrCreate({
+// 			where: {
+// 				id: newMember.id
+// 			}
+// 		});
+
+// 		if (!newMember.voiceChannel || newMember.selfDeaf) return;
+
 // 		setInterval(() => {
-// 			sql.get(`SELECT * FROM scores WHERE userId ="${newMember.id}" AND guildId = "${newMember.guild.id}"`).then(row => {
-// 				// eslint-disable-next-line no-negated-condition
-// 				if (!row) {
-// 					sql.run('CREATE TABLE IF NOT EXISTS scores (vcpoints INTEGER, vclevel INTEGER)').then(() => {
-// 						sql.run('INSERT INTO scores (vcpoints, vclevel) VALUES (?, ?)', [1, 1]);
-// 					});
-// 				} else {
-// 					const curLevel = row.vclevel * (row.vclevel * 200) / 2.5;
-// 					if (row.vcpoints >= curLevel) {
-// 						sql.run(`UPDATE scores SET vclevel = ${row.vclevel + 1} WHERE userId = ${newMember.id} AND guildId = "${newMember.guild.id}"`);
-// 					} else if (newMember.voiceChannel !== undefined) {
-// 						if (!newMember.selfDeaf || !newMember.selfMute) {
-// 							sql.run(`UPDATE scores SET vcpoints = ${row.vcpoints + 1} WHERE userId = ${newMember.id} AND guildId = "${newMember.guild.id}"`);
-// 						}
-// 					}
-// 				}
-// 			}).catch(err => {
-// 				this.client.logger.error(err);
-// 				sql.run('CREATE TABLE IF NOT EXISTS scores (vcpoints INTEGER, vclevel INTEGER)').then(() => {
-// 					sql.run('INSERT INTO scores (vcpoints, vclevel) VALUES (?, ?)', [1, 1]);
-// 				});
-// 			});
-// 		}, 60 * 6000);
+// 			const xp = randomNumber(1, 5);
+// 			const now = new Date();
+
+// 			this.client.logger.info(`...`);
+
+// 			if (newMember.voiceChannel && !newMember.selfDeaf) {
+// 				this.client.logger.info(`...`);
+// 				user.increment('voicexp', { by: xp });
+// 				user.update({ voiceupdatedAt: now });
+// 			}
+// 		}, 10e3);
 // 	}
 // }
 
-// module.exports = VoiceEvent;
+// module.exports = voiceStateUpdate;

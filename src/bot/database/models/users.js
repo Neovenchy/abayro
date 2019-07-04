@@ -11,42 +11,48 @@ module.exports = (sequelize, DataTypes) =>
 			allowNull: false
 		},
 		textxp: {
-			type: DataTypes.INTEGER(),
+			type: DataTypes.INTEGER,
 			defaultValue: 0
 		},
 		voicexp: {
-			type: DataTypes.INTEGER(),
+			type: DataTypes.INTEGER,
 			defaultValue: 0
 		},
 		textlevel: {
-			type: DataTypes.INTEGER(),
+			type: DataTypes.INTEGER,
 			defaultValue: 0
 		},
 		voicelevel: {
-			type: DataTypes.INTEGER(),
+			type: DataTypes.INTEGER,
 			defaultValue: 0
 		},
 		rep: {
-			type: DataTypes.INTEGER(),
+			type: DataTypes.INTEGER,
 			defaultValue: 0
 		},
 		repdaily: {
-			type: DataTypes.REAL()
+			type: DataTypes.REAL
 		},
 		credits: {
-			type: DataTypes.INTEGER(),
+			type: DataTypes.INTEGER,
 			defaultValue: 0
 		},
 		daily: {
-			type: DataTypes.REAL()
+			type: DataTypes.REAL
 		},
 		ptitle: {
-			type: DataTypes.TEXT(),
+			type: DataTypes.TEXT,
 			defaultValue: 'I like cheese.'
 		},
 		pcolor: {
-			type: DataTypes.TEXT(),
+			type: DataTypes.TEXT,
 			defaultValue: '#007fff'
+		},
+		textupdatedAt: {
+			type: DataTypes.DATE
+		},
+		voiceupdatedAt: {
+			type: DataTypes.DATE
 		}
 	}, {
 		timestamps: false,

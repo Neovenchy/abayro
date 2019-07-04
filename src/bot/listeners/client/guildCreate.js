@@ -17,15 +17,14 @@ class guildCreateAddEvent extends Listener {
      */
 	exec(guild) {
 		const embed = new Embed()
+			.setAuthor('Guild Join', guild.iconURL)
 			.setColor('GREEN')
-			.setTitle('Abayro joined a new server!')
-			.setDescription(`
-**Server name** : ${guild.name}
-**Server ID** : ${guild.id}
-**Server owner** : ${guild.owner.user.tag}
-**Membercount** : ${guild.memberCount}
-**Abayro is now in** : ${this.client.guilds.size} **Servers**`)
-			.setFooter('Abayro', this.client.user.avatarURL);
+			.setThumbnail(guild.iconURL)
+			.setDescription(`${this.client.user.username} has **__joined__** **${guild.name}** (${guild.id}).`)
+			.addField('❯ Owner', `**${guild.owner.user.tag}** (${guild.owner.id})`, true)
+			.addField('❯ Members', `**${guild.memberCount}** member/s`, true)
+			.addField('❯ Number (guilds size)', `**${this.client.guilds.size}** guild/s`, true)
+			.setTimestamp();
 		this.client.channels.get(channels.logs).send(embed);
 		if (guild.defaultChannel) {
 			try {
