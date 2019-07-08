@@ -31,8 +31,6 @@ class AbayroClient extends AkairoClient {
 
 		this.logger = logger;
 
-		this.db = database;
-
 		this.settings = new SettingsProvider(database.model('settings'));
 
 		this.commandHandler = new CommandHandler(this, {

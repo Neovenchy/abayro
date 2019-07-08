@@ -25,7 +25,7 @@ class guildMemberRemoveEvent extends Listener {
 			} else if (goodbye.type === 'embed') {
 				goodbyeChannel.send(goodbye.message.replace('[member]', member).replace('[membername]', member.user.username).replace('[server]', member.guild.name));
 				const embed = new Embed()
-					.setAuthor('Member left !', member.guild.iconURL)
+					.setAuthor('Member left', member.guild.iconURL)
 					.addField('❯ Join/Creation date', `\`${moment(member.user.createdAt).format('D/M/YYYY h:mm a')}\`\n**Created ${moment(member.user.createdAt).fromNow()}**\n\`${moment(member.user.joinedAt).format('D/M/YYYY h:mm a')}\`\n**Joined ${moment(member.user.joinedAt).fromNow()}**`, true)
 					.addField('❯ Member ID', member.id, true)
 					.addField('❯ Membercount', `${member.guild.memberCount} **Members**`, true)
