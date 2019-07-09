@@ -17,7 +17,6 @@ class ErrorListner extends Listener {
 			this.client.logger.error(`[COMMAND ERROR] ${error.message}`, error.stack);
             const errorMessage = error.message.replace(/[\u001b\u009b][[()#;?]*(?:[0-9]{1,4}(?:;[0-9]{0,4})*)?[0-9A-ORZcf-nqry=><]/g, ''); //eslint-disable-line
 			const id = command.id + errorMessage.length + command.id.length;
-			this.client.logger.error(error);
 			message.client.channels.get(channels.error).send(new Embed()
 				.setTitle(`**Error ${command.id.replace(/(\b\w)/gi, lc => lc.toUpperCase())}** \`\`${id}\`\``)
 				.setURL('https://abayro.xyz/command-error/')
