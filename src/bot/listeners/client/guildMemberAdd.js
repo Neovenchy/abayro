@@ -25,7 +25,7 @@ class guildMemberAddEvent extends Listener {
 		if (logs) {
 			const logschannel = member.guild.channels.get(logs);
 			if (!logschannel) return;
-			const embed = new Embed()
+			const embed = new Embed({})
 				.setColor(0x00FF00)
 				.setAuthor('Member Join', 'https://i.imgur.com/BFzLaJV.png')
 				.setThumbnail(member.user.displayAvatarURL)
@@ -62,7 +62,7 @@ class guildMemberAddEvent extends Listener {
 				wlcchannel.send(welcome.message.replace('[member]', member).replace('[membername]', member.user.username).replace('[server]', member.guild.name));
 			} else if (welcome.type === 'embed') {
 				wlcchannel.send(welcome.message.replace('[member]', member).replace('[membername]', member.user.username).replace('[server]', member.guild.name));
-				const embed = new Embed()
+				const embed = new Embed({})
 					.setAuthor('New member joined', member.guild.iconURL)
 					.addField('❯ Creation date', `\`${moment(member.user.createdAt).format('D/M/YYYY h:mm a')}\`\n**Created ${moment(member.user.createdAt).fromNow()}**`, true)
 					.addField('❯ Member ID', member.id, true)

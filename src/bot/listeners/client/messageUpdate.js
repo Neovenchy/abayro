@@ -23,7 +23,7 @@ class messageUpdateListener extends Listener {
 
 		if (!channel) return;
 
-		const embed = new Embed()
+		const embed = new Embed({})
 			.setColor(0xDC143C)
 			.setAuthor('Message Edited', 'https://i.imgur.com/K1irEVh.png')
 			.setThumbnail(oldMessage.author.displayAvatarURL)

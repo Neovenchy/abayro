@@ -33,7 +33,7 @@ class LimitsCommand extends Command {
 		if (!limit) {
 			await message.channel.send(`${emojis.info}** | ${message.author.username}**, Current **limits settings** for **${message.guild.name}** is:`);
 			message.channel.send(
-				new Embed()
+				new Embed({})
 				 .setAuthor(message.guild.name, message.guild.iconURL)
 				 .addField('Bans limit:', `**${this.client.settings.get(message.guild.id, 'banlimit', 20)}** bans per day`, true)
 				 .addField('Kicks limit:', `**${this.client.settings.get(message.guild.id, 'kicklimit', 20)}** kicks per day`, true)

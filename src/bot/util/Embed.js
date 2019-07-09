@@ -6,7 +6,7 @@ class Embed extends RichEmbed {
 	 * @param {object} options
 	 * @param {colors} options.color
 	 *  */
-	constructor(color = colors.default) {
+	constructor({color = colors.default}) {
 		super();
 		this.setColor(color); // default color
 	}

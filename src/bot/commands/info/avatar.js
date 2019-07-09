@@ -24,7 +24,7 @@ class AvatarCommand extends Command {
 	exec(message, { user }) {
 		if (!user) return message.channel.send(`${emojis.no} | The **user** could not be **found**.`);
 
-		const embed = new Embed()
+		const embed = new Embed({})
 			.setTitle(`${user.username}'s Avatar`)
 			.setURL(user.displayAvatarURL)
 			.setColor('#307FFF')

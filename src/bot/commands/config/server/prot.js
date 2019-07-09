@@ -33,7 +33,7 @@ class PROTCommand extends Command {
 		if (!mhandler) {
 			await message.channel.send(`${emojis.info}** | ${message.author.username}**, Current **protection settings** for **${message.guild.name}** is:`);
 			message.channel.send(
-				new Embed()
+				new Embed({})
 				 .setAuthor(message.guild.name, message.guild.iconURL)
 				 .addField('Anti-NSFW:', `**${this.client.settings.get(message.guild.id, 'antinsfw', 'off').replace('off', 'OFF `(not active)`').replace('on', 'ON `(active)`')}**`, true)
 				 .addField('Anti-bot joining:', `**${this.client.settings.get(message.guild.id, 'antibotj', 'off').replace('off', 'OFF `(not active)`').replace('on', 'ON `(active)`')}**`, true)

@@ -81,7 +81,7 @@ class HelpCommand extends Command {
 			return message.author.send(store.join('').toString());
 		}
 		if (!command.aliases) return message.channel.send(`${emojis.no} | No command with the name **${command}** was found.`);
-		const embed = new Embed()
+		const embed = new Embed({})
 			.setAuthor(`${command.aliases[0].replace(/(\b\w)/gi, lc => lc.toUpperCase())} Command Help`, 'https://cdn.discordapp.com/emojis/520644584632745994.png?v=1')
 			.addField('• Description:', command.description.content || '\u200b');
 		if (command.aliases.length > 1) embed.addField('• Aliases:', `\`${command.aliases.join('` `')}\``, true);
