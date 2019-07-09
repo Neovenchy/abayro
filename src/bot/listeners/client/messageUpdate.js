@@ -25,7 +25,7 @@ class messageUpdateListener extends Listener {
 
 		const embed = new Embed()
 			.setColor(0xDC143C)
-			.setAuthor('Message Edited', 'https://www.flaticon.com/premium-icon/icons/svg/1428/1428326.svg')
+			.setAuthor('Message Edited', 'https://i.imgur.com/K1irEVh.png')
 			.setThumbnail(oldMessage.author.displayAvatarURL)
 			.addField('❯ User', `${oldMessage.author.tag} (${oldMessage.author.id}) `, true)
 			.addField('❯ Channel', oldMessage.channel, true)
