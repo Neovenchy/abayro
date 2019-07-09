@@ -1,9 +1,8 @@
 /* eslint-disable valid-jsdoc */
 const { Command } = require('discord-akairo');
-const { MessageEmbed } = require('discord.js');
+const Embed = require('../../util/Embed');
 const { stripIndents } = require('common-tags');
-const paginate = require('../../../util/paginate');
-const timeString = require('../../../util/timeString');
+const { paginate, timeString } = require('../../util/Util');
 
 class QueueCommand extends Command {
 	constructor() {
@@ -43,7 +42,7 @@ class QueueCommand extends Command {
 		const paginated = paginate(decoded.slice(1), page);
 		let index = 10 * (paginated.page - 1);
 
-		const embed = new MessageEmbed()
+		const embed = new Embed()
 			.setAuthor(`${message.guild.name}'s Queue`, message.guild.iconURL())
 			.setDescription(stripIndents`
 				__**Now playing:**__

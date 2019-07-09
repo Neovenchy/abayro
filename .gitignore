@@ -83,3 +83,6 @@ build
 
 #Misc
 .env
+nohup.out
+Lavalink.jar
+application.yml

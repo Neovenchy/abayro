@@ -66,3 +66,27 @@ exports.splitMessage = (text, { maxLength = 2000, char = '\n', prepend = '', app
  * @param min the min amount
  */
 exports.randomNumber = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
+
+exports.paginate = (items, page = 1, pageLength = 10) => {
+	const maxPage = Math.ceil(items.length / pageLength);
+	if (page < 1) page = 1;
+	if (page > maxPage) page = maxPage;
+	const startIndex = (page - 1) * pageLength;
+
+	return {
+		items: items.length > pageLength ? items.slice(startIndex, startIndex + pageLength) : items,
+		page,
+		maxPage,
+		pageLength
+	};
+};
+
+exports.timeString = (seconds, forceHours = false, ms = true) => {
+	if (ms) seconds /= 1000;
+	if (seconds > 86400000) return '\\🔴 **LIVE**';
+
+	const hours = Math.floor(seconds / 3600);
+	const minutes = Math.floor(seconds % 3600 / 60);
+
+	return `${forceHours || hours >= 1 ? `${hours}:` : ''}${hours >= 1 ? `0${minutes}`.slice(-2) : minutes}:${`0${Math.floor(seconds % 60)}`.slice(-2)}`;
+};
