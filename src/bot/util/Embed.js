@@ -1,14 +1,15 @@
 const { RichEmbed } = require('discord.js');
+const { colors } = require('../util/Constants');
 
 class Embed extends RichEmbed {
-	constructor() {
+	/**
+	 * @param {object} options
+	 * @param {colors} options.color
+	 *  */
+	constructor(options) {
 		super();
-		this.setColor('#aab2ff');
+		this.setColor(colors[options.color] || colors.default); // default color
 	}
-	// modeartion(modUser, user) {
-	// 	this.setAuthor(`${user.tag} (${user.id})`);
-	// 	this.setFooter(`${modUser.tag} (${modUser.id})`);
-	// }
 }
 
 module.exports = Embed;

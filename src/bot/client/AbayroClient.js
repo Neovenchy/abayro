@@ -1,5 +1,4 @@
 const { AkairoClient, CommandHandler, ListenerHandler, InhibitorHandler } = require('discord-akairo');
-const { staff, tokens } = require('../util/Constants');
 const { join } = require('path');
 // const { createServer } = require('http');
 // const { parse } = require('url');
@@ -9,10 +8,8 @@ const database = require('../structures/Database');
 const SettingsProvider = require('../structures/SettingsProvider');
 
 class AbayroClient extends AkairoClient {
-	constructor() {
-		super({
-			ownerID: staff
-		}, {
+	constructor({ staff }) {
+		super({ ownerID: staff }, {
 			messageCacheMaxSize: 1000,
 			disableEveryone: true,
 			disabledEvents: [
@@ -65,9 +62,9 @@ class AbayroClient extends AkairoClient {
 		this.logger.info('[DATABASE] Synced modules!');
 	}
 
-	async start() {
+	async start(token) {
 		await this._init();
-		return this.login(tokens.discord);
+		return this.login(token);
 	}
 }
 

@@ -1,15 +1,18 @@
-require('dotenv').config();
-const { version } = require('../../../package.json');
-const { version: djsVersion } = require('discord.js');
 const { resolve } = require('path');
 
+exports.assets = path => resolve(__dirname, '..', 'assets', path);
+
 exports.library = {
-	version,
+	version: require('../../../package').version,
 	node: process.version,
-	dj: djsVersion
+	dj: require('discord.js').version
 };
 
-exports.staff = ['171259176029257728', '556036680352792596', '168375981050953728'];
+exports.staff = [
+	'171259176029257728',
+	'556036680352792596',
+	'168375981050953728'
+];
 
 exports.emojis = {
 	yes: ':white_check_mark:',
@@ -26,10 +29,8 @@ exports.channels = {
 	logs: '579400058416660500'
 };
 
-exports.assets = path => resolve(__dirname, '..', 'assets', path);
 
-exports.tokens = {
-	discord: process.env.TOKEN,
-	youtube: process.env.YOUTUBE,
-	dbl: process.env.DBL
+exports.colors = {
+	'RED': 0xDC143C,
+	'default': 0xaab2ff
 };
