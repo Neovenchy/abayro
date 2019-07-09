@@ -34,7 +34,9 @@ class guildMemberAddEvent extends Listener {
 				.addField('❯ Member Number', `**${member.guild.memberCount}**`, true)
 				.setFooter(member.user.tag, member.user.displayAvatarURL)
 				.setTimestamp();
-			return logschannel.send(embed);
+		    try {
+				logschannel.send(embed);
+			} catch {}
 		}
 
 		/** @AUTROLE */
