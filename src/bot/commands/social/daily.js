@@ -3,6 +3,7 @@ const { emojis } = require('../../util/Constants');
 const { randomNumber: randomDaily } = require('../../util/Util');
 const { find, update, increase } = require('../../database/Users');
 const moment = require('moment');
+require('moment-duration-format');
 
 class DailyCommand extends Command {
 	constructor() {
@@ -25,7 +26,7 @@ class DailyCommand extends Command {
 		const time = cooldown - (Date.now() - daily);
 
 		if (daily !== null && time > 0) {
-			return message.channel.send(`${emojis.info} **| ${message.author.username}**, You can get another **daily pounds** in **${moment.duration(time, 'milliseconds').format('hh [ hours], mm [ minutes] [and] ss [ seconds]', { trim: false })}**.`);
+			return message.channel.send(`${emojis.info} **| ${message.author.username}**, You can get another **daily pounds** in **${moment.duration(time).format('h __, m __ [and] s __')}**.`);
 		}
 
 		const dailyAmount = randomDaily(100, 300);

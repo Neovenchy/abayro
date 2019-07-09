@@ -11,7 +11,7 @@ class CreditsCommand extends Command {
 			category: 'social',
 			channelRestriction: 'guild',
 			description: {
-				content: 'Shows your credit card balancce',
+				content: 'Shows your credit card balance',
 				examples: ['', '354716386716811264', '@NourEliden'],
 				usage: ['[user]']
 			},

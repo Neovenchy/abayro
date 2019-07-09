@@ -8,7 +8,7 @@ const { models: { users } } = sequelize;
 exports.find = async (id, item, defaultValue) => {
 	if (!id) throw new Error(`[Users Helpful Database Tool] You didn't set id!`);
 	const user = await users.findByPk(id, { attributes: [item] });
-	const value = user.get(item);
+	const value = user[item];
 
 	return value || defaultValue;
 };

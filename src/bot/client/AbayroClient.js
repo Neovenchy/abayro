@@ -61,7 +61,7 @@ class AbayroClient extends AkairoClient {
 		await this.loadAll();
 		await this.logger.info(`[DATABASE] Syncing modules to database...`);
 		await this.settings.init();
-		await this.db.sync();
+		await database.sync();
 		this.logger.info('[DATABASE] Synced modules!');
 	}
 
