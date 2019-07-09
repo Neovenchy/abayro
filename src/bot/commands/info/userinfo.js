@@ -53,7 +53,7 @@ class UserInfoCommand extends Command {
 
 		if (member.user.bot) return message.channel.send(`${emojis.no} | **This is \`userInfo\` command, no bots please**.`);
 
-		const embed = new Embed({})
+		const embed = new Embed()
 			.setColor('#307FFF')
 			.setAuthor(member.user.tag, member.user.displayAvatarURL)
 			.setThumbnail(member.user.displayAvatarURL)

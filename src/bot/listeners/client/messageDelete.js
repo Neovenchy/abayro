@@ -23,7 +23,7 @@ class messageDeleteListener extends Listener {
 
 		if (!channel) return;
 
-		const embed = new Embed('red.500')
+		const embed = new Embed()
 			.setAuthor('Message Delete', 'https://i.imgur.com/EUGvQJJ.png')
 			.setThumbnail(message.author.displayAvatarURL)
 			.addField('❯ User', `${message.author.tag} (${message.author.id}) `, true)

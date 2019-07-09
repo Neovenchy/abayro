@@ -12,7 +12,7 @@ class guildCreateAddEvent extends Listener {
 	}
 
 	exec(guild) {
-		const embed = new Embed({})
+		const embed = new Embed()
 			.setAuthor('Guild Leave', guild.iconURL)
 			.setColor('RED')
 			.setThumbnail(guild.iconURL)

@@ -39,7 +39,7 @@ class MediaCommand extends Command {
 		if (!autor) {
 			await message.channel.send(`${emojis.info}** | ${message.author.username}**, Current **media settings** for **${message.guild.name}** is:`);
 			message.channel.send(
-				new Embed({})
+				new Embed()
 				 .setAuthor(message.guild.name, message.guild.iconURL)
 				 .addField('Status:', `**${this.client.settings.get(message.guild.id, 'media', 'off').replace('off', 'OFF `(not active)`').replace('on', 'ON `(active)`')}**`, true)
 				 .addField('Media channel:', `**<#${this.client.settings.get(message.guild.id, 'mediaChannel', '*No channel set.*')}>**

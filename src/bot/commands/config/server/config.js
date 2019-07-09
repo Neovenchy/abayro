@@ -33,7 +33,7 @@ class ConfigsCommand extends Command {
 		if (!mhandler) {
 			await message.channel.send(`${emojis.info}** | ${message.author.username}**, Current **config** for **${message.guild.name}** is:`);
 			message.channel.send(
-				new Embed({})
+				new Embed()
 					.setAuthor(message.guild.name, message.guild.iconURL)
 					.addField('Level UP Message:', `**${this.client.settings.get(message.guild.id, 'lvlup-msg', 'disabled')}**
 

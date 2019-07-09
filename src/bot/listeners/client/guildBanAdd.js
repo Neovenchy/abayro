@@ -23,7 +23,7 @@ class guildBanAddListener extends Listener {
 			const channel = guild.channels.get(logs);
 			const auditlogs = await guild.fetchAuditLogs({ type: 22, limit: 1 });
 			const { executor, reason } = auditlogs.entries.first().target === user ? auditlogs.entries.first() : { executor: null, reason: "Couldn't fetch reason." };
-			const embed = new Embed({color: 'RED'})
+			const embed = new Embed('red.100')
 				.setAuthor('Member Ban', 'https://i.imgur.com/wqXmpIY.png')
 				.setThumbnail(user.displayAvatarURL)
 				.setDescription(`**${user.tag}** (${user.id}) got **__banned__** by ${executor ? `**${executor.tag}** (${executor.id})` : "Couldn't fetch mod."}`)

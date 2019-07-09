@@ -16,7 +16,7 @@ class guildCreateAddEvent extends Listener {
      * @param {import('discord.js').Guild} guild
      */
 	exec(guild) {
-		const embed = new Embed({})
+		const embed = new Embed()
 			.setAuthor('Guild Join', guild.iconURL)
 			.setColor('GREEN')
 			.setThumbnail(guild.iconURL)

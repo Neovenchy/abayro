@@ -1,7 +1,7 @@
 require('dotenv').config();
 const { staff } = require('./bot/util/Constants');
 const AbayroClient = require('./bot/client/AbayroClient');
-const client = new AbayroClient({ owners: staff });
+const client = new AbayroClient({ staff });
 
 // if (process.env.NODE_ENV === 'production') {
 // 	const DBL = require('dblapi.js');

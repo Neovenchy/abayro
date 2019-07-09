@@ -43,7 +43,7 @@ class ServerInfoCommand extends Command {
 			emojis = message.channel.guild.emojis.map(e => e).join(' ');
 		}
 
-		const embed = new Embed({})
+		const embed = new Embed()
 			.setThumbnail(message.guild.iconURL)
 			.setAuthor(message.guild.name, message.guild.iconURL)
 			.setTitle('Server info:')
@@ -66,7 +66,7 @@ class ServerInfoCommand extends Command {
 			.setTimestamp()
 			.setColor('#307FFF');
 		await message.channel.send(embed);
-		message.channel.send(new Embed({}).setDescription(`• **Emojis** : ${emojis}`));
+		message.channel.send(new Embed().setDescription(`• **Emojis** : ${emojis}`));
 	}
 }
 
