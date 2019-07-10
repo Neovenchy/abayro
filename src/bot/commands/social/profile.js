@@ -41,15 +41,9 @@ class ProfileCommand extends Command {
 
 		/*  Getting User Data  */
 		const [_user] = await users.findOrCreate({ where: { id: user.id } });
-		const ptitle = _user.ptitle || 'I like cheese.';
-		const pcolor = _user.pcolor || '#007fff';
-		const credits = _user.credits || 0;
-		const rep = _user.rep || 0;
 
 		const { rank: textrank } = await rank(user.id, 'textxp', '000');
-		const textlevel = _user.textlevel || 0;
-		const textxp = _user.textxp || 0;
-		const upperBound = Math.ceil((textlevel / 0.115) ** 2);
+		const upperBound = Math.ceil((_user.textlevel / 0.115) ** 2);
 
 		/*  CANVAS  */
 		registerFont(assets('fonts/Uni-Sans-Heavy.otf'), { family: 'UniSans' });
@@ -58,7 +52,7 @@ class ProfileCommand extends Command {
 
 		const canvas = createCanvas(500, 600);
 		const ctx = canvas.getContext('2d');
-		const lines = await wrapText(ctx, ptitle, 110);
+		const lines = await wrapText(ctx, _user.ptitle, 110);
 		const username = trimString(user.username, 15);
 		const avatarURL = user.displayAvatarURL.endsWith('.webp') ? `${user.displayAvatarURL.slice(5, -20)}.png` : user.displayAvatarURL;
 
@@ -98,7 +92,7 @@ class ProfileCommand extends Command {
 					ctx.fontSize = '20px';
 					ctx.fillStyle = '#f5f6fa';
 					ctx.textAlign = 'center';
-					ctx.fillText(`£${credits}`, 408, 581);
+					ctx.fillText(`£${_user.credits}`, 408, 581);
 
 					/* TEXT RANK */
 					ctx.font = '20px UniSans';
@@ -112,33 +106,33 @@ class ProfileCommand extends Command {
 					ctx.fontSize = '40px';
 					ctx.fillStyle = '#f5f6fa';
 					ctx.textAlign = 'center';
-					ctx.fillText(textlevel, 405, 512);
+					ctx.fillText(_user.textlevel, 405, 512);
 
 					/* LIKES / REPUTATION */
 					ctx.font = '40px UniSans';
 					ctx.fontSize = '40px';
 					ctx.fillStyle = '#f5f6fa';
 					ctx.textAlign = 'center';
-					ctx.fillText(`+${rep}`, 71, 512);
+					ctx.fillText(`+${_user.rep}`, 71, 512);
 
 					/* XP */
 					ctx.font = '20px Montserrat';
 					ctx.fontSize = '20px';
 					ctx.fillStyle = '#f5f6fa';
 					ctx.textAlign = 'center';
-					ctx.fillText(`XP: ${textxp} / ${upperBound}`, 239, 581);
+					ctx.fillText(`XP: ${_user.textxp} / ${upperBound}`, 239, 581);
 
 					/* XP BAR*/
-					ctx.fillStyle = pcolor;
-					ctx.fillRect(0, 593, (593 / 100) * textxp / upperBound * 100, 8);
+					ctx.fillStyle = _user.pcolor;
+					ctx.fillRect(0, 593, (593 / 100) * _user.textxp / upperBound * 100, 8);
 
 					/* === BADGES CANVAS === */
 
 					/* Badge LVL 10 */
-					if (textlevel > 9) {
+					if (_user.textlevel > 9) {
 						ctx.beginPath();
 						ctx.arc(210, 460, 27, 0, Math.PI * 2, false);
-						ctx.fillStyle = pcolor;
+						ctx.fillStyle = _user.pcolor;
 						ctx.fill();
 						ctx.lineWidth = 5;
 						// ///////////
@@ -149,10 +143,10 @@ class ProfileCommand extends Command {
 						ctx.fillText(`L10`, 209, 469.9);
 					}
 					/* Badge LVL 20 */
-					if (textlevel > 19) {
+					if (_user.textlevel > 19) {
 						ctx.beginPath();
 						ctx.arc(275, 460, 27, 0, Math.PI * 2, false);
-						ctx.fillStyle = pcolor;
+						ctx.fillStyle = _user.pcolor;
 						ctx.fill();
 						ctx.lineWidth = 5;
 						// ///////////
@@ -164,10 +158,10 @@ class ProfileCommand extends Command {
 					}
 
 					/* Badge Rep 50 */
-					if (rep > 50) {
+					if (_user.rep > 50) {
 						ctx.beginPath();
 						ctx.arc(210, 525, 27, 0, Math.PI * 2, false);
-						ctx.fillStyle = pcolor;
+						ctx.fillStyle = _user.pcolor;
 						ctx.fill();
 						ctx.lineWidth = 5;
 						// ///////////
@@ -178,10 +172,10 @@ class ProfileCommand extends Command {
 						ctx.fillText(`R50`, 209, 535);
 					}
 					/* Badge Rep 100 */
-					if (rep > 100) {
+					if (_user.rep > 100) {
 						ctx.beginPath();
 						ctx.arc(275, 525, 27, 0, Math.PI * 2, false);
-						ctx.fillStyle = pcolor;
+						ctx.fillStyle = _user.pcolor;
 						ctx.fill();
 						ctx.lineWidth = 5;
 						// ///////////
@@ -199,7 +193,7 @@ class ProfileCommand extends Command {
 
 					ctx.beginPath();
 					ctx.arc(251.5, 158.5, 135.6, 0, Math.PI * 2, true);
-					ctx.fillStyle = pcolor;
+					ctx.fillStyle = _user.pcolor;
 					ctx.fill();
 
 					/* END OF AVATAR BORDER */
