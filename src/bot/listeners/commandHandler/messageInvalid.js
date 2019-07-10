@@ -42,6 +42,7 @@ class MessageInvaildListener extends Listener {
 			await user.increment('textxp', { by: xp });
 
 			if (userExpLvl > user.textlevel) {
+				await users.increment('textlevel');
 				if (this.client.settings.get(message.guild.id, 'lvlup-msg') === 'enabled') {
 					return message.channel.send(`:up: ${message.author} You've leveld up to ${userExpLvl}!`);
 				}
