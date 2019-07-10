@@ -42,7 +42,7 @@ class ProfileCommand extends Command {
 		/*  Getting User Data  */
 		const [_user] = await users.findOrCreate({ where: { id: user.id } });
 
-		const { rank: textrank } = await rank(user.id, 'textxp', '000');
+		const { rank: textrank } = await rank(user.id, 'textxp');
 		const upperBound = Math.ceil((_user.textlevel / 0.115) ** 2);
 
 		/*  CANVAS  */

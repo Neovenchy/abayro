@@ -7,10 +7,12 @@ const { models: { users } } = sequelize;
 */
 exports.find = async (id, item, defaultValue) => {
 	if (!id) throw new Error(`[Users Helpful Database Tool] You didn't set id!`);
-	const user = await users.findByPk(id, { attributes: [item] });
-	const value = user[item];
-
-	return value || defaultValue;
+	try {
+		const user = await users.findByPk(id, { attributes: [item] });
+		return user[item];
+	} catch {
+		return defaultValue;
+	}
 };
 
 /**
@@ -44,10 +46,10 @@ exports.decrease = async (id, item, newValue) => {
  * @param {string} method - the method: 'textxp' 'voicexp' 'credits'
  * @param {string} defaultValue - default value if user is not on database
  */
-exports.rank = async (id, method, defaultValue) => {
+exports.rank = async (id, method) => {
 	if (!id) throw new Error(`[Users Helpful Database Tool] You didn't set id!`);
 	const [rank] = await sequelize.query(`SELECT ranks.rank FROM ( SELECT id, DENSE_RANK() OVER (ORDER BY ${method} DESC) AS rank FROM users ) ranks WHERE id='${id}' LIMIT 1;`, { type: sequelize.QueryTypes.SELECT });
-	return rank || defaultValue;
+	return rank;
 };
 /**
  * @description ONLY USE THIS IF YOU KNOW WHAT YOU ARE DOING!
