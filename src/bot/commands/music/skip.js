@@ -1,8 +1,6 @@
 const { Command } = require('discord-akairo');
 const { stripIndents } = require('common-tags');
 const Embed = require('../../util/Embed');
-const paginate = require('../../../util/paginate');
-const timeString = require('../../../util/timeString');
 
 class SkipCommand extends Command {
 	constructor() {
@@ -48,6 +46,7 @@ class SkipCommand extends Command {
 		const totalLength = decoded.reduce((prev, song) => prev + song.info.length, 0);
 		const paginated = paginate(decoded, 1, 10);
 		let index = (paginated.page - 1) * 10;
+    
 		const embed = new Embed()
 			.setDescription(stripIndents`
 		**Skipped songs:**
