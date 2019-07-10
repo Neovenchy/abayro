@@ -40,7 +40,7 @@ class ProfileCommand extends Command {
 		if (user.bot) return message.channel.send(`${emojis.no} | **Bots** doesn't have a **profile card**`);
 
 		/*  Getting User Data  */
-		const [_user] = await users.findOrCreate({ where: { id: message.author.id } });
+		const [_user] = await users.findOrCreate({ where: { id: user.id } });
 		const ptitle = _user.ptitle || 'I like cheese.';
 		const pcolor = _user.pcolor || '#007fff';
 		const credits = _user.credits || 0;
