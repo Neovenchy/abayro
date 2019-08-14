@@ -22,7 +22,7 @@
   "homepage": "https://github.com/Abady321x123/abayro#README",
   "dependencies": {
     "@abayro/ms": "^2.2.1",
-    "canvas": "^2.5.0",
+    "canvas": "^2.6.0",
     "common-tags": "^1.8.0",
     "dblapi.js": "^2.2.0",
     "discord-akairo": "^7.5.6",
