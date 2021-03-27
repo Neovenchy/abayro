@@ -7,9 +7,9 @@
 <p>
 <a href="https://www.codacy.com?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=abayro/abayro&amp;utm_campaign=Badge_Grade"><img src="https://api.codacy.com/project/badge/Grade/d2b9adf32ac14713801100bea16b53a4"/></a>
 <a href="https://www.codefactor.io/repository/github/abady321x123/abayro"><img src="https://www.codefactor.io/repository/github/nouridio/abayro/badge" alt="CodeFactor" /></a>
-<a href="https://circleci.com/gh/abayro"> <img src="https://circleci.com/gh/nouridio/abayro.svg?style=svg&circle-token=89a232300e2d509b5fee8def3e0cf0901a2b2042" alt="Circle CI" /></a>  </p>
+<a href="https://circleci.com/gh/abayro"> <img src="https://circleci.com/gh/nouridio/abayro.svg?style=svg /></a>  </p>
 </div>
-
+[![CircleCI](https://circleci.com/gh/circleci/circleci-docs.svg?style=svg)](https://circleci.com/gh/circleci/circleci-docs)
 ## Abayro
 > Super Duper Bot
 
