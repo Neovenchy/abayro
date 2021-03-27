@@ -9,7 +9,7 @@
 <a href="https://www.codefactor.io/repository/github/abady321x123/abayro"><img src="https://www.codefactor.io/repository/github/nouridio/abayro/badge" alt="CodeFactor" /></a>
 <a href="https://circleci.com/gh/abayro"> <img src="https://circleci.com/gh/nouridio/abayro.svg?style=svg /></a>  </p>
 </div>
-[![CircleCI](https://circleci.com/gh/circleci/circleci-docs.svg?style=svg)](https://circleci.com/gh/circleci/circleci-docs)
+
 ## Abayro
 > Super Duper Bot
 
