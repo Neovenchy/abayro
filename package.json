@@ -6,9 +6,9 @@
   "private": false,
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Abady321x123/abayro.git"
+    "url": "git+https://github.com/nouridio/abayro.git"
   },
-  "author": "NourEldien",
+  "author": "Nouridio",
   "contributors": [
     {
       "name": "Abady",
@@ -17,9 +17,9 @@
   ],
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/Abady321x123/abayro/issues"
+    "url": "https://github.com/nouridio/abayro/issues"
   },
-  "homepage": "https://github.com/Abady321x123/abayro#README",
+  "homepage": "https://github.com/nouridio/abayro#README",
   "dependencies": {
     "@abayro/ms": "^2.2.1",
     "canvas": "^2.5.0",
